@@ -73,6 +73,15 @@ class ChannelControls:
     color: tk.StringVar
 
 
+@dataclass
+class CursorItem:
+    cursor_id: int
+    channel: str
+    x: float
+    y: float
+    color: str
+
+
 class OscilloscopeCSVGUI:
     def __init__(self, root: tk.Tk):
         self.root = root
@@ -88,9 +97,12 @@ class OscilloscopeCSVGUI:
         self.controls: dict[str, ChannelControls] = {}
 
         self.cursor_mode = tk.BooleanVar(value=False)
-        self.cursor_clicks: list[float] = []
-        self.cursor_lines = []
-        self.cursor_text = None
+        self.move_cursor_mode = tk.BooleanVar(value=False)
+        self.dragging_cursor = False
+        self.cursors: list[CursorItem] = []
+        self.cursor_artists = []
+        self.next_cursor_id = 1
+        self.selected_cursor_id: Optional[int] = None
         self.pick_cid = None
 
         self._build_variables()
@@ -114,6 +126,10 @@ class OscilloscopeCSVGUI:
         self.xy_mode_var = tk.BooleanVar(value=False)
         self.xy_x_var = tk.StringVar(value="")
         self.xy_y_var = tk.StringVar(value="")
+        self.cursor_channel_var = tk.StringVar(value="")
+        self.cursor_x_var = tk.StringVar(value="")
+        self.cursor_y_var = tk.StringVar(value="")
+        self.cursor_ref_var = tk.StringVar(value="Ninguno")
         self.status_var = tk.StringVar(value="Cargá un archivo .csv")
 
     def _build_layout(self) -> None:
@@ -165,12 +181,62 @@ class OscilloscopeCSVGUI:
         ttk.Checkbutton(grid_box, text="Escala logarítmica X", variable=self.log_x_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
         ttk.Checkbutton(grid_box, text="Escala logarítmica Y", variable=self.log_y_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
 
-        markers_box = ttk.LabelFrame(left, text="Puntos importantes y cursores")
+        markers_box = ttk.LabelFrame(left, text="Puntos importantes")
         markers_box.pack(fill=tk.X, pady=(0, 8))
         ttk.Checkbutton(markers_box, text="Marcar máximos", variable=self.mark_max_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
         ttk.Checkbutton(markers_box, text="Marcar mínimos", variable=self.mark_min_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
-        ttk.Checkbutton(markers_box, text="Cursores caseros", variable=self.cursor_mode, command=self._toggle_cursor_mode).pack(anchor="w", padx=8, pady=2)
-        ttk.Button(markers_box, text="Borrar cursores", command=self._clear_cursors).pack(fill=tk.X, padx=8, pady=4)
+
+        cursor_box = ttk.LabelFrame(left, text="Cursores")
+        cursor_box.pack(fill=tk.X, pady=(0, 8))
+        ttk.Checkbutton(cursor_box, text="Agregar cursor con clic", variable=self.cursor_mode, command=self._toggle_cursor_mode).pack(anchor="w", padx=8, pady=2)
+        ttk.Checkbutton(cursor_box, text="Mover cursor seleccionado", variable=self.move_cursor_mode, command=self._toggle_move_cursor_mode).pack(anchor="w", padx=8, pady=2)
+
+        cursor_channel_row = ttk.Frame(cursor_box)
+        cursor_channel_row.pack(fill=tk.X, padx=8, pady=2)
+        ttk.Label(cursor_channel_row, text="Canal:").pack(side=tk.LEFT)
+        self.cursor_channel_menu = ttk.OptionMenu(cursor_channel_row, self.cursor_channel_var, "")
+        self.cursor_channel_menu.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(4, 0))
+
+        coords = ttk.Frame(cursor_box)
+        coords.pack(fill=tk.X, padx=8, pady=2)
+        ttk.Label(coords, text="X").grid(row=0, column=0, sticky="w")
+        ttk.Entry(coords, textvariable=self.cursor_x_var, width=10).grid(row=0, column=1, sticky="ew", padx=3)
+        ttk.Label(coords, text="Y auto").grid(row=0, column=2, sticky="w")
+        y_label = ttk.Label(coords, textvariable=self.cursor_y_var, width=11, relief=tk.SUNKEN, anchor="e")
+        y_label.grid(row=0, column=3, sticky="ew", padx=3)
+        coords.columnconfigure(1, weight=1)
+        coords.columnconfigure(3, weight=1)
+
+        refrow = ttk.Frame(cursor_box)
+        refrow.pack(fill=tk.X, padx=8, pady=2)
+        ttk.Label(refrow, text="Comparar con:").pack(side=tk.LEFT)
+        self.cursor_ref_menu = ttk.OptionMenu(refrow, self.cursor_ref_var, "Ninguno")
+        self.cursor_ref_menu.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(4, 0))
+
+        buttons = ttk.Frame(cursor_box)
+        buttons.pack(fill=tk.X, padx=8, pady=4)
+        ttk.Button(buttons, text="Agregar", command=self._add_cursor_from_entries).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 2))
+        ttk.Button(buttons, text="Actualizar", command=self._update_selected_cursor_from_entries).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+        ttk.Button(buttons, text="Borrar", command=self._delete_selected_cursor).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(2, 0))
+
+        self.cursor_tree = ttk.Treeview(
+            cursor_box,
+            columns=("canal", "color", "x", "y", "dx", "dy"),
+            show="headings",
+            height=6,
+        )
+        for col, title, width in [
+            ("canal", "Canal", 58),
+            ("color", "Color", 55),
+            ("x", "X", 62),
+            ("y", "Y", 62),
+            ("dx", "ΔX", 62),
+            ("dy", "ΔY", 62),
+        ]:
+            self.cursor_tree.heading(col, text=title)
+            self.cursor_tree.column(col, width=width, stretch=False)
+        self.cursor_tree.pack(fill=tk.X, padx=8, pady=(0, 8))
+        self.cursor_tree.bind("<<TreeviewSelect>>", self._on_cursor_select)
 
         xy_box = ttk.LabelFrame(left, text="Modo XY / Lissajous")
         xy_box.pack(fill=tk.X, pady=(0, 8))
@@ -218,6 +284,10 @@ class OscilloscopeCSVGUI:
 
     def _connect_events(self) -> None:
         self.pick_cid = self.fig.canvas.mpl_connect("button_press_event", self._on_plot_click)
+        self.fig.canvas.mpl_connect("motion_notify_event", self._on_plot_motion)
+        self.fig.canvas.mpl_connect("button_release_event", self._on_plot_release)
+        self.root.bind("<Left>", lambda e: self._move_selected_cursor_by_key(-1))
+        self.root.bind("<Right>", lambda e: self._move_selected_cursor_by_key(1))
 
     def _plot_empty(self) -> None:
         self.ax.clear()
@@ -268,6 +338,9 @@ class OscilloscopeCSVGUI:
         self.status_var.set(f"Cargado: {len(time)} muestras, {len(channels)} canal(es)")
         self._rebuild_channel_controls()
         self._rebuild_xy_menus()
+        self._rebuild_cursor_channel_menu()
+        self.cursors.clear()
+        self._refresh_cursor_tree()
         self.update_plot()
 
     def _detect_delimiter(self, path: str) -> str:
@@ -371,6 +444,27 @@ class OscilloscopeCSVGUI:
             for name in names:
                 menu.add_command(label=name, command=lambda value=name, v=var: (v.set(value), self.update_plot()))
 
+    def _rebuild_cursor_channel_menu(self) -> None:
+        names = list(self.channels.keys())
+        if names and self.cursor_channel_var.get() not in names:
+            self.cursor_channel_var.set(names[0])
+        elif not names:
+            self.cursor_channel_var.set("")
+
+        menu = self.cursor_channel_menu["menu"]
+        menu.delete(0, "end")
+        for name in names:
+            menu.add_command(label=name, command=lambda value=name: self.cursor_channel_var.set(value))
+
+    def _rebuild_cursor_ref_menu(self) -> None:
+        values = ["Ninguno"] + [f"C{c.cursor_id} - {c.channel}" for c in self.cursors]
+        if self.cursor_ref_var.get() not in values:
+            self.cursor_ref_var.set("Ninguno")
+        menu = self.cursor_ref_menu["menu"]
+        menu.delete(0, "end")
+        for value in values:
+            menu.add_command(label=value, command=lambda v=value: (self.cursor_ref_var.set(v), self._refresh_cursor_tree()))
+
     def _choose_color(self, channel_name: str) -> None:
         initial = self.controls[channel_name].color.get()
         selected = colorchooser.askcolor(color=initial, title=f"Color para {channel_name}")
@@ -402,7 +496,7 @@ class OscilloscopeCSVGUI:
 
         self.ax.clear()
         self.ax.set_axis_on()
-        self._clear_cursors(draw=False)
+        self.cursor_artists.clear()
 
         x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
         y_factor = Y_UNITS.get(self.y_unit_var.get(), 1.0)
@@ -424,6 +518,7 @@ class OscilloscopeCSVGUI:
         self.ax.set_title(self.title_var.get())
         self._apply_grid_and_scales()
         self.ax.legend(loc="best")
+        self._redraw_cursors()
         self.fig.tight_layout()
         self.canvas.draw_idle()
 
@@ -474,46 +569,280 @@ class OscilloscopeCSVGUI:
             self.ax.grid(False)
 
     def _toggle_cursor_mode(self) -> None:
-        if not self.cursor_mode.get():
-            self._clear_cursors()
+        if self.cursor_mode.get():
+            self.move_cursor_mode.set(False)
+            self.status_var.set("Cursores: elegí un canal y hacé clic. Cada clic agrega un cursor; Y se calcula automáticamente.")
         else:
-            self.status_var.set("Cursores: hacé dos clics sobre el gráfico para medir Δx y Δy")
+            self.status_var.set("Modo agregar cursor desactivado")
+
+    def _toggle_move_cursor_mode(self) -> None:
+        if self.move_cursor_mode.get():
+            self.cursor_mode.set(False)
+            self.status_var.set("Mover cursor: seleccioná uno en la tabla y movelo con clic/arrastre o flechas izquierda/derecha.")
+        else:
+            self.dragging_cursor = False
+            self.status_var.set("Modo mover cursor desactivado")
 
     def _on_plot_click(self, event) -> None:
-        if not self.cursor_mode.get() or event.inaxes != self.ax or event.xdata is None:
+        if event.inaxes != self.ax or event.xdata is None:
             return
-        self.cursor_clicks.append(float(event.xdata))
-        if len(self.cursor_clicks) > 2:
-            self.cursor_clicks = [self.cursor_clicks[-1]]
-            self._clear_cursors(draw=False)
+        if self.xy_mode_var.get():
+            if self.cursor_mode.get() or self.move_cursor_mode.get():
+                messagebox.showinfo("Cursores", "Los cursores por canal están pensados para el modo temporal, no para modo XY.")
+            return
 
-        line = self.ax.axvline(event.xdata, linestyle="--", linewidth=1)
-        self.cursor_lines.append(line)
+        if self.move_cursor_mode.get():
+            cursor = self._selected_cursor()
+            if cursor is None:
+                messagebox.showwarning("Sin selección", "Seleccioná un cursor de la tabla para moverlo.")
+                return
+            self.dragging_cursor = True
+            self._move_cursor_to_x(cursor, float(event.xdata))
+            return
 
-        if len(self.cursor_clicks) == 2:
-            x1, x2 = self.cursor_clicks
-            dx = x2 - x1
-            msg = f"x1={x1:.6g}, x2={x2:.6g}, Δx={dx:.6g} {self.x_unit_var.get() if not self.xy_mode_var.get() else self.y_unit_var.get()}"
-            self.status_var.set(msg)
-            self.cursor_text = self.ax.text(0.02, 0.98, msg, transform=self.ax.transAxes, va="top", bbox={"boxstyle": "round", "alpha": 0.2})
-        self.canvas.draw_idle()
+        if self.cursor_mode.get():
+            channel = self.cursor_channel_var.get()
+            if channel not in self.channels:
+                messagebox.showwarning("Canal inválido", "Elegí un canal para el cursor.")
+                return
+            x = float(event.xdata)
+            y = self._interp_channel_y(channel, x)
+            self._add_cursor(channel, x, y)
+
+    def _on_plot_motion(self, event) -> None:
+        if not self.dragging_cursor or not self.move_cursor_mode.get():
+            return
+        if event.inaxes != self.ax or event.xdata is None:
+            return
+        cursor = self._selected_cursor()
+        if cursor is not None:
+            self._move_cursor_to_x(cursor, float(event.xdata))
+
+    def _on_plot_release(self, _event) -> None:
+        self.dragging_cursor = False
+
+    def _interp_channel_y(self, channel: str, x_display_units: float) -> float:
+        """Devuelve Y del canal en las unidades mostradas, interpolando según X mostrada."""
+        x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
+        y_factor = Y_UNITS.get(self.y_unit_var.get(), 1.0)
+        xdata = self.time * x_factor
+        ydata = self._transformed_channel(channel) * y_factor
+        finite = np.isfinite(xdata) & np.isfinite(ydata)
+        if not finite.any():
+            return 0.0
+        xf = xdata[finite]
+        yf = ydata[finite]
+        order = np.argsort(xf)
+        xf = xf[order]
+        yf = yf[order]
+        return float(np.interp(x_display_units, xf, yf))
+
+    def _parse_cursor_ref_id(self) -> Optional[int]:
+        text = self.cursor_ref_var.get().strip()
+        m = re.match(r"C(\d+)\b", text)
+        return int(m.group(1)) if m else None
+
+    def _cursor_by_id(self, cursor_id: int) -> Optional[CursorItem]:
+        for cursor in self.cursors:
+            if cursor.cursor_id == cursor_id:
+                return cursor
+        return None
+
+    def _selected_cursor(self) -> Optional[CursorItem]:
+        if self.selected_cursor_id is None:
+            return None
+        return self._cursor_by_id(self.selected_cursor_id)
+
+    def _add_cursor(self, channel: str, x: float, y: float) -> None:
+        color = self.controls[channel].color.get() if channel in self.controls else "black"
+        cursor = CursorItem(self.next_cursor_id, channel, x, y, color)
+        self.next_cursor_id += 1
+        self.cursors.append(cursor)
+        self.selected_cursor_id = cursor.cursor_id
+        self.cursor_x_var.set(f"{cursor.x:.8g}")
+        self.cursor_y_var.set(f"{cursor.y:.8g}")
+        self._refresh_cursor_tree()
+        self.update_plot()
+        self.status_var.set(f"Agregado cursor C{cursor.cursor_id} en {channel}")
+
+    def _add_cursor_from_entries(self) -> None:
+        channel = self.cursor_channel_var.get()
+        if channel not in self.channels:
+            messagebox.showwarning("Canal inválido", "Elegí un canal válido.")
+            return
+        try:
+            x = float(self.cursor_x_var.get().replace(",", "."))
+        except Exception:
+            messagebox.showwarning("X inválida", "Escribí una coordenada X numérica.")
+            return
+        y = self._interp_channel_y(channel, x)
+        self._add_cursor(channel, x, y)
+
+    def _update_selected_cursor_from_entries(self) -> None:
+        cursor = self._selected_cursor()
+        if cursor is None:
+            messagebox.showwarning("Sin selección", "Seleccioná un cursor de la tabla para modificarlo.")
+            return
+        channel = self.cursor_channel_var.get()
+        if channel not in self.channels:
+            messagebox.showwarning("Canal inválido", "Elegí un canal válido.")
+            return
+        try:
+            x = float(self.cursor_x_var.get().replace(",", "."))
+        except Exception:
+            messagebox.showwarning("X inválida", "Escribí una coordenada X numérica.")
+            return
+        cursor.channel = channel
+        cursor.color = self.controls[channel].color.get() if channel in self.controls else cursor.color
+        self._move_cursor_to_x(cursor, x)
+        self.status_var.set(f"Actualizado cursor C{cursor.cursor_id}; Y recalculada automáticamente")
+
+    def _move_cursor_to_x(self, cursor: CursorItem, x: float) -> None:
+        cursor.x = x
+        cursor.y = self._interp_channel_y(cursor.channel, cursor.x)
+        cursor.color = self.controls[cursor.channel].color.get() if cursor.channel in self.controls else cursor.color
+        self.selected_cursor_id = cursor.cursor_id
+        self.cursor_channel_var.set(cursor.channel)
+        self.cursor_x_var.set(f"{cursor.x:.8g}")
+        self.cursor_y_var.set(f"{cursor.y:.8g}")
+        self._refresh_cursor_tree()
+        self.update_plot()
+
+    def _move_selected_cursor_by_key(self, direction: int) -> None:
+        if not self.move_cursor_mode.get() or self.xy_mode_var.get():
+            return
+        cursor = self._selected_cursor()
+        if cursor is None or self.time is None:
+            return
+        x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
+        xdata = np.asarray(self.time, dtype=float) * x_factor
+        finite = np.isfinite(xdata)
+        if not finite.any():
+            return
+        xs = np.sort(np.unique(xdata[finite]))
+        idx = int(np.searchsorted(xs, cursor.x))
+        if direction < 0:
+            idx = max(0, idx - 1)
+        else:
+            idx = min(len(xs) - 1, idx + 1)
+        self._move_cursor_to_x(cursor, float(xs[idx]))
+
+    def _delete_selected_cursor(self) -> None:
+        cursor = self._selected_cursor()
+        if cursor is None:
+            messagebox.showwarning("Sin selección", "Seleccioná un cursor de la tabla para borrarlo.")
+            return
+        self.cursors = [c for c in self.cursors if c.cursor_id != cursor.cursor_id]
+        self.selected_cursor_id = None
+        self.cursor_x_var.set("")
+        self.cursor_y_var.set("")
+        self._refresh_cursor_tree()
+        self.update_plot()
+        self.status_var.set(f"Borrado cursor C{cursor.cursor_id}")
+
+    def _on_cursor_select(self, _event=None) -> None:
+        selected = self.cursor_tree.selection()
+        if not selected:
+            return
+        try:
+            cursor_id = int(selected[0])
+        except Exception:
+            return
+        cursor = self._cursor_by_id(cursor_id)
+        if cursor is None:
+            return
+        self.selected_cursor_id = cursor.cursor_id
+        self.cursor_channel_var.set(cursor.channel)
+        self.cursor_x_var.set(f"{cursor.x:.8g}")
+        self.cursor_y_var.set(f"{cursor.y:.8g}")
+
+    def _refresh_cursor_tree(self) -> None:
+        if not hasattr(self, "cursor_tree"):
+            return
+        self._rebuild_cursor_ref_menu()
+        for item in self.cursor_tree.get_children():
+            self.cursor_tree.delete(item)
+        ref = self._cursor_by_id(self._parse_cursor_ref_id()) if self._parse_cursor_ref_id() is not None else None
+        for cursor in self.cursors:
+            if ref is not None and ref.cursor_id != cursor.cursor_id:
+                dx = cursor.x - ref.x
+                dy = cursor.y - ref.y
+                dx_text = f"{dx:.5g}"
+                dy_text = f"{dy:.5g}"
+            else:
+                dx_text = "-"
+                dy_text = "-"
+            values = (
+                cursor.channel,
+                cursor.color,
+                f"{cursor.x:.5g}",
+                f"{cursor.y:.5g}",
+                dx_text,
+                dy_text,
+            )
+            self.cursor_tree.insert("", "end", iid=str(cursor.cursor_id), values=values)
+        if self.selected_cursor_id is not None and self.cursor_tree.exists(str(self.selected_cursor_id)):
+            self.cursor_tree.selection_set(str(self.selected_cursor_id))
+
+
+
+    def _redraw_cursors(self) -> None:
+        if self.xy_mode_var.get():
+            return
+
+        for cursor in self.cursors:
+            color = cursor.color
+
+            selected = cursor.cursor_id == self.selected_cursor_id
+            lw = 2.0 if selected else 1.2
+            marker_size = 60 if selected else 35
+
+            # Línea vertical: marca la X del cursor
+            vline = self.ax.axvline(
+                cursor.x,
+                linestyle="--",
+                linewidth=lw,
+                color=color,
+                alpha=0.85,
+            )
+
+            # Línea horizontal: marca la Y del cursor
+            hline = self.ax.axhline(
+                cursor.y,
+                linestyle=":",
+                linewidth=lw,
+                color=color,
+                alpha=0.85,
+            )
+
+            # Punto de intersección sobre la curva
+            marker = self.ax.scatter(
+                [cursor.x],
+                [cursor.y],
+                color=color,
+                s=marker_size,
+                zorder=5,
+            )
+
+            text = self.ax.annotate(
+                f"C{cursor.cursor_id}\n{cursor.channel}",
+                (cursor.x, cursor.y),
+                textcoords="offset points",
+                xytext=(7, 7),
+                fontsize=8,
+                color=color,
+            )
+
+            self.cursor_artists.extend([vline, hline, marker, text])
 
     def _clear_cursors(self, draw: bool = True) -> None:
-        self.cursor_clicks.clear()
-        for line in self.cursor_lines:
-            try:
-                line.remove()
-            except Exception:
-                pass
-        self.cursor_lines.clear()
-        if self.cursor_text is not None:
-            try:
-                self.cursor_text.remove()
-            except Exception:
-                pass
-            self.cursor_text = None
+        self.cursors.clear()
+        self.selected_cursor_id = None
+        self.cursor_x_var.set("")
+        self.cursor_y_var.set("")
+        self._refresh_cursor_tree()
         if draw:
-            self.canvas.draw_idle()
+            self.update_plot()
 
 
 def main() -> None:
