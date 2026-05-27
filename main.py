@@ -96,6 +96,7 @@ class OscilloscopeCSVGUI:
         self.units_row: list[str] = []
         self.time: Optional[np.ndarray] = None
         self.channel_times: dict[str, np.ndarray] = {}
+        self.channel_kinds: dict[str, str] = {}  # 'time', 'bode_mag' o 'bode_phase'
         self.channels: dict[str, np.ndarray] = {}
         self.controls: dict[str, ChannelControls] = {}
 
@@ -369,6 +370,7 @@ class OscilloscopeCSVGUI:
 
         new_channels: dict[str, np.ndarray] = {}
         new_times: dict[str, np.ndarray] = {}
+        new_kinds: dict[str, str] = {}
         loaded_info: list[str] = []
         last_units: list[str] = []
 
@@ -377,7 +379,7 @@ class OscilloscopeCSVGUI:
 
         for path in valid_paths:
             try:
-                time, channels, units = self._read_oscilloscope_csv(path)
+                time, channels, units, kind = self._read_any_csv(path)
             except Exception as exc:
                 rejected.append(f"{os.path.basename(path)} ({exc})")
                 continue
@@ -394,8 +396,11 @@ class OscilloscopeCSVGUI:
                 final_name = self._unique_channel_name(base_name)
                 self.channels[final_name] = y
                 self.channel_times[final_name] = time
+                final_kind = self._kind_for_channel(kind, ch_name)
+                self.channel_kinds[final_name] = final_kind
                 new_channels[final_name] = y
                 new_times[final_name] = time
+                new_kinds[final_name] = final_kind
 
             loaded_info.append(f"{os.path.basename(path)}: {len(time)} muestras, {len(channels)} canal(es)")
             last_units = units
@@ -419,8 +424,16 @@ class OscilloscopeCSVGUI:
             self.file_label.config(text=f"{len(self.file_paths)} CSV cargados")
 
         total_samples = sum(len(t) for t in self.channel_times.values())
+        kinds_loaded = sorted(set(new_kinds.values()))
+        tipo_txt = ", ".join(kinds_loaded)
+        tipo_txt = (
+            tipo_txt
+            .replace("bode_mag", "Bode magnitud")
+            .replace("bode_phase", "Bode fase")
+            .replace("time", "tiempo")
+        )
         self.status_var.set(
-            f"Agregados {len(new_channels)} canal(es) de {len(valid_paths)} archivo(s). "
+            f"Agregados {len(new_channels)} canal(es) de {len(valid_paths)} archivo(s) ({tipo_txt}). "
             f"Total: {len(self.channels)} canal(es), {total_samples} muestras"
         )
         if rejected:
@@ -445,6 +458,172 @@ class OscilloscopeCSVGUI:
         except Exception:
             return ","
 
+    def _read_any_csv(self, path: str) -> tuple[np.ndarray, dict[str, np.ndarray], list[str], str]:
+        """Detecta automáticamente si el CSV es temporal/osciloscopio o Bode.
+
+        Tipos soportados:
+        - Osciloscopio/transitorio: tiempo + canales.
+        - Bode de LTspice: Freq. + celdas tipo (magnituddB,fase°).
+        - Bode exportado del osciloscopio: columnas tipo Frequency, Amplitude,
+          Gain (dB) y Phase.
+        """
+        if self._looks_like_ltspice_bode(path):
+            x, channels, units = self._read_ltspice_bode_csv(path)
+            return x, channels, units, "bode"
+
+        if self._looks_like_named_bode_csv(path):
+            x, channels, units = self._read_named_bode_csv(path)
+            return x, channels, units, "bode"
+
+        x, channels, units = self._read_oscilloscope_csv(path)
+        return x, channels, units, "time"
+
+    def _kind_for_channel(self, file_kind: str, channel_label: str) -> str:
+        """Clasifica cada canal dentro de un archivo.
+
+        En archivos Bode no hay que graficar todas las columnas como si fueran señales.
+        La magnitud y la fase se mandan a subgráficos distintos.
+        """
+        if file_kind != "bode":
+            return file_kind
+        label = channel_label.lower()
+        if "phase" in label or "fase" in label or "°" in label:
+            return "bode_phase"
+        return "bode_mag"
+
+    def _looks_like_named_bode_csv(self, path: str) -> bool:
+        """Detecta Bode tabular: Frequency/Amplitude/Gain/Phase."""
+        sep = self._detect_delimiter(path)
+        try:
+            df = pd.read_csv(path, sep=sep, nrows=5, engine="python", encoding="utf-8-sig", encoding_errors="ignore")
+        except Exception:
+            return False
+        cols = [str(c).strip().lower() for c in df.columns]
+        has_freq = any("freq" in c or "frequency" in c or "frecuencia" in c for c in cols)
+        has_gain = any(("gain" in c and "db" in c) or "db" in c or "magnitud" in c for c in cols)
+        has_phase = any("phase" in c or "fase" in c for c in cols)
+        return has_freq and (has_gain or has_phase)
+
+    def _read_named_bode_csv(self, path: str) -> tuple[np.ndarray, dict[str, np.ndarray], list[str]]:
+        """Lee Bode con columnas nombradas.
+
+        Ejemplos de columnas:
+            Frequency (Hz), Amplitude (Vpp), Gain (dB), Phase (°)
+
+        Para el gráfico Bode se usan solamente Gain(dB) y Phase(°). La columna
+        Frequency se usa como eje X y no se grafica como canal.
+        """
+        sep = self._detect_delimiter(path)
+        df = pd.read_csv(path, sep=sep, engine="python", encoding="utf-8-sig", encoding_errors="ignore")
+        if df.shape[1] < 2:
+            raise ValueError("el Bode tiene menos de dos columnas")
+
+        cols = list(df.columns)
+        low = [str(c).strip().lower() for c in cols]
+
+        def find_col(pred):
+            for original, l in zip(cols, low):
+                if pred(l):
+                    return original
+            return None
+
+        freq_col = find_col(lambda c: "freq" in c or "frequency" in c or "frecuencia" in c)
+        gain_col = find_col(lambda c: ("gain" in c and "db" in c) or "db" in c or "magnitud" in c)
+        phase_col = find_col(lambda c: "phase" in c or "fase" in c)
+
+        if freq_col is None:
+            raise ValueError("no se encontró columna de frecuencia")
+
+        freq = pd.to_numeric(df[freq_col], errors="coerce").to_numpy(dtype=float)
+        channels: dict[str, np.ndarray] = {}
+
+        if gain_col is not None:
+            gain = pd.to_numeric(df[gain_col], errors="coerce").to_numpy(dtype=float)
+            if (np.isfinite(freq) & np.isfinite(gain)).any():
+                channels["Ganancia [dB]"] = gain
+
+        if phase_col is not None:
+            phase = pd.to_numeric(df[phase_col], errors="coerce").to_numpy(dtype=float)
+            if (np.isfinite(freq) & np.isfinite(phase)).any():
+                channels["Fase [°]"] = phase
+
+        if not channels:
+            raise ValueError("no se encontraron columnas Gain(dB) ni Phase")
+
+        return freq, channels, ["Hz", "dB", "°"]
+
+    def _looks_like_ltspice_bode(self, path: str) -> bool:
+        sep = self._detect_delimiter(path)
+        try:
+            with open(path, "r", encoding="utf-8-sig", errors="ignore") as f:
+                header = f.readline().strip()
+                first_data = f.readline().strip()
+        except Exception:
+            return False
+
+        header_cols = re.split(rf"{re.escape(sep)}", header) if header else []
+        if not header_cols:
+            return False
+
+        first_col = header_cols[0].strip().lower()
+        return (
+            first_col.startswith("freq")
+            and "(" in first_data
+            and "db" in first_data.lower()
+            and "," in first_data
+        )
+
+    def _parse_bode_cell(self, value) -> tuple[float, Optional[float]]:
+        """Parsea celdas LTspice tipo '(magnituddB,fase)'.
+
+        Devuelve (magnitud_db, fase_grados). Si no encuentra fase, la fase es None.
+        """
+        text = str(value).strip()
+        text = text.strip('"').strip("'").strip()
+        text = text.strip("()")
+        # Ejemplo: '2.5e-4dB,-1.47e-1'
+        parts = [p.strip() for p in text.split(",")]
+        mag_txt = parts[0].replace("dB", "").replace("DB", "").replace("db", "").strip()
+        mag = float(mag_txt)
+        phase = None
+        if len(parts) > 1 and parts[1] != "":
+            phase = float(parts[1].replace("°", "").strip())
+        return mag, phase
+
+    def _read_ltspice_bode_csv(self, path: str) -> tuple[np.ndarray, dict[str, np.ndarray], list[str]]:
+        sep = self._detect_delimiter(path)
+        df = pd.read_csv(path, sep=sep, engine="python", encoding="utf-8-sig", encoding_errors="ignore")
+        if df.shape[1] < 2:
+            raise ValueError("el Bode tiene menos de dos columnas")
+
+        freq = pd.to_numeric(df.iloc[:, 0], errors="coerce").to_numpy(dtype=float)
+        channels: dict[str, np.ndarray] = {}
+
+        for col in df.columns[1:]:
+            mags: list[float] = []
+            phases: list[float] = []
+            for cell in df[col]:
+                try:
+                    mag, phase = self._parse_bode_cell(cell)
+                except Exception:
+                    mag, phase = np.nan, np.nan
+                mags.append(mag)
+                phases.append(np.nan if phase is None else phase)
+
+            mag_y = np.asarray(mags, dtype=float)
+            phase_y = np.asarray(phases, dtype=float)
+            base = str(col).strip()
+
+            if (np.isfinite(freq) & np.isfinite(mag_y)).any():
+                channels[f"{base} - Ganancia [dB]"] = mag_y
+            if (np.isfinite(freq) & np.isfinite(phase_y)).any():
+                channels[f"{base} - Fase [°]"] = phase_y
+
+        if not channels:
+            raise ValueError("no se encontraron magnitud/fase en el CSV de Bode")
+
+        return freq, channels, ["Hz", "dB", "°"]
+
     def _read_oscilloscope_csv(self, path: str) -> tuple[np.ndarray, dict[str, np.ndarray], list[str]]:
         sep = self._detect_delimiter(path)
         with open(path, "r", encoding="utf-8-sig", errors="ignore") as f:
@@ -458,7 +637,7 @@ class OscilloscopeCSVGUI:
         if looks_like_scope:
             names = [c.strip() for c in first]
             units = [c.strip() for c in second]
-            df = pd.read_csv(path, sep=sep, skiprows=2, header=None, engine="python")
+            df = pd.read_csv(path, sep=sep, skiprows=2, header=None, engine="python", encoding="utf-8-sig", encoding_errors="ignore")
             df = df.apply(pd.to_numeric, errors="coerce").dropna(how="all")
             df = df.dropna(axis=1, how="all")
             if df.shape[1] < 2:
@@ -474,13 +653,13 @@ class OscilloscopeCSVGUI:
 
         # Fallback: intenta CSV común con encabezado y, si falla, sin encabezado.
         try:
-            df = pd.read_csv(path, sep=sep, engine="python")
+            df = pd.read_csv(path, sep=sep, engine="python", encoding="utf-8-sig", encoding_errors="ignore")
             numeric = df.apply(pd.to_numeric, errors="coerce")
             if numeric.shape[1] < 2 or numeric.dropna(how="all").empty:
                 raise ValueError
             labels = list(df.columns)
         except Exception:
-            df = pd.read_csv(path, sep=sep, header=None, engine="python")
+            df = pd.read_csv(path, sep=sep, header=None, engine="python", encoding="utf-8-sig", encoding_errors="ignore")
             numeric = df.apply(pd.to_numeric, errors="coerce")
             labels = [f"Columna {i+1}" for i in range(numeric.shape[1])]
 
@@ -607,60 +786,158 @@ class OscilloscopeCSVGUI:
         return y * scale + offset
 
     def _time_for_channel_display(self, name: str) -> Optional[np.ndarray]:
-        """Devuelve el tiempo del canal en la unidad elegida.
+        """Devuelve el eje X del canal.
 
-        Si está activado "Alinear cada CSV a t = 0", resta el primer tiempo
-        de ese archivo/canal. Esto permite superponer medición y simulación
-        aunque cada CSV empiece en un tiempo absoluto distinto.
+        - Canales temporales: tiempo en la unidad elegida, con alineación a t=0
+          y offset X manual si corresponde.
+        - Canales Bode: frecuencia en Hz, sin alineación temporal ni offset X.
         """
         t = self.channel_times.get(name, self.time)
         if t is None:
             return None
+
         t = np.asarray(t, dtype=float)
+        kind = self.channel_kinds.get(name, "time")
+
+        if kind in {"bode_mag", "bode_phase"}:
+            # En Bode el eje X es frecuencia en Hz. No se escala a us/ms ni se alinea a t=0.
+            return t
+
         if self.align_time_var.get() and t.size > 0:
             finite = np.isfinite(t)
             if finite.any():
                 t = t - t[finite][0]
+
         x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
         x = t * x_factor
+
         ctrl = self.controls.get(name)
         if ctrl is not None:
             x = x + self._safe_float(ctrl.x_offset.get(), 0.0)
+
         return x
+
+    def _y_for_channel_display(self, name: str) -> np.ndarray:
+        """Devuelve el eje Y ya transformado.
+
+        Para Bode, la magnitud ya viene en dB; no se multiplica por V/mV.
+        """
+        y = self._transformed_channel(name)
+        if self.channel_kinds.get(name, "time") in {"bode_mag", "bode_phase"}:
+            return y
+        y_factor = Y_UNITS.get(self.y_unit_var.get(), 1.0)
+        return y * y_factor
 
     def update_plot(self) -> None:
         if self.time is None or not self.channels:
             return
 
-        self.ax.clear()
-        self.ax.set_axis_on()
+        self.fig.clear()
         self.cursor_artists.clear()
 
-        x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
         y_factor = Y_UNITS.get(self.y_unit_var.get(), 1.0)
+        enabled_names = [
+            name for name in self.channels.keys()
+            if name in self.controls and self.controls[name].enabled.get()
+        ]
+        enabled_kinds = {self.channel_kinds.get(name, "time") for name in enabled_names}
+        only_bode = bool(enabled_names) and enabled_kinds.issubset({"bode_mag", "bode_phase"})
+
+        if only_bode:
+            self._plot_bode(enabled_names)
+            self.fig.tight_layout()
+            self.canvas.draw_idle()
+            return
+
+        self.ax = self.fig.add_subplot(111)
+        self.ax.set_axis_on()
 
         if self.xy_mode_var.get():
             self._plot_xy(y_factor)
         else:
-            for name in self.channels.keys():
+            for name in enabled_names:
                 ctrl = self.controls[name]
-                if not ctrl.enabled.get():
-                    continue
                 x = self._time_for_channel_display(name)
                 if x is None:
                     continue
-                y = self._transformed_channel(name) * y_factor
+                y = self._y_for_channel_display(name)
                 self.ax.plot(x, y, label=name, color=ctrl.color.get())
                 self._mark_points(x, y, name, ctrl.color.get())
-            self.ax.set_xlabel(f"{self.xlabel_var.get()} [{self.x_unit_var.get()}]")
-            self.ax.set_ylabel(f"{self.ylabel_var.get()} [{self.y_unit_var.get()}]")
+
+            if {"bode_mag", "bode_phase"} & enabled_kinds:
+                self.ax.set_xlabel("X: tiempo o frecuencia")
+                self.ax.set_ylabel("Y: tensión, magnitud o fase")
+                self.ax.text(
+                    0.02, 0.02,
+                    "Aviso: hay canales temporales y Bode activos a la vez.\n"
+                    "Para ver el Bode correcto, dejá activos solo canales Bode.",
+                    transform=self.ax.transAxes,
+                    fontsize=8,
+                    va="bottom",
+                )
+            else:
+                self.ax.set_xlabel(f"{self.xlabel_var.get()} [{self.x_unit_var.get()}]")
+                self.ax.set_ylabel(f"{self.ylabel_var.get()} [{self.y_unit_var.get()}]")
 
         self.ax.set_title(self.title_var.get())
         self._apply_grid_and_scales()
-        self.ax.legend(loc="best")
+
+        if enabled_names:
+            self.ax.legend(loc="best")
         self._redraw_cursors()
         self.fig.tight_layout()
         self.canvas.draw_idle()
+
+    def _plot_bode(self, enabled_names: list[str]) -> None:
+        """Grafica Bode verdadero: magnitud(dB) y fase(°) vs frecuencia logarítmica."""
+        ax_mag = self.fig.add_subplot(211)
+        ax_phase = self.fig.add_subplot(212, sharex=ax_mag)
+        self.ax = ax_mag
+
+        mag_count = 0
+        phase_count = 0
+
+        for name in enabled_names:
+            kind = self.channel_kinds.get(name, "time")
+            x = self._time_for_channel_display(name)
+            if x is None:
+                continue
+            y = self._y_for_channel_display(name)
+            ctrl = self.controls[name]
+            finite = np.isfinite(x) & np.isfinite(y) & (x > 0)
+            if not finite.any():
+                continue
+            xf = np.asarray(x, dtype=float)[finite]
+            yf = np.asarray(y, dtype=float)[finite]
+
+            if kind == "bode_phase":
+                ax_phase.semilogx(xf, yf, label=name, color=ctrl.color.get())
+                phase_count += 1
+            else:
+                ax_mag.semilogx(xf, yf, label=name, color=ctrl.color.get())
+                mag_count += 1
+
+        ax_mag.set_title(self.title_var.get() if self.title_var.get() else "Diagrama de Bode")
+        ax_mag.set_ylabel("Magnitud [dB]")
+        ax_phase.set_ylabel("Fase [°]")
+        ax_phase.set_xlabel("Frecuencia [Hz]")
+
+        if self.grid_var.get():
+            ax_mag.grid(True, which="both", alpha=0.35)
+            ax_phase.grid(True, which="both", alpha=0.35)
+        else:
+            ax_mag.grid(False)
+            ax_phase.grid(False)
+
+        if mag_count:
+            ax_mag.legend(loc="best")
+        else:
+            ax_mag.text(0.5, 0.5, "No hay canal de magnitud/Gain [dB] activo", ha="center", va="center", transform=ax_mag.transAxes)
+
+        if phase_count:
+            ax_phase.legend(loc="best")
+        else:
+            ax_phase.text(0.5, 0.5, "No hay canal de fase activo", ha="center", va="center", transform=ax_phase.transAxes)
 
     def _plot_xy(self, y_factor: float) -> None:
         x_name = self.xy_x_var.get()
@@ -869,12 +1146,10 @@ class OscilloscopeCSVGUI:
 
     def _interp_channel_y(self, channel: str, x_display_units: float) -> float:
         """Devuelve Y del canal en las unidades mostradas, interpolando según X mostrada."""
-        x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
-        y_factor = Y_UNITS.get(self.y_unit_var.get(), 1.0)
         xdata = self._time_for_channel_display(channel)
         if xdata is None:
             return 0.0
-        ydata = self._transformed_channel(channel) * y_factor
+        ydata = self._y_for_channel_display(channel)
         finite = np.isfinite(xdata) & np.isfinite(ydata)
         if not finite.any():
             return 0.0
@@ -985,6 +1260,7 @@ class OscilloscopeCSVGUI:
         self.units_row = []
         self.time = None
         self.channel_times.clear()
+        self.channel_kinds.clear()
         self.channels.clear()
         self.controls.clear()
         self.cursors.clear()
