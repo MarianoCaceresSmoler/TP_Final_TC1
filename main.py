@@ -70,6 +70,7 @@ class ChannelControls:
     enabled: tk.BooleanVar
     scale: tk.StringVar
     offset: tk.StringVar
+    x_offset: tk.StringVar
     color: tk.StringVar
 
 
@@ -90,15 +91,20 @@ class OscilloscopeCSVGUI:
         self.root.minsize(1100, 700)
 
         self.file_path: Optional[str] = None
+        self.file_paths: list[str] = []
         self.raw_df: Optional[pd.DataFrame] = None
         self.units_row: list[str] = []
         self.time: Optional[np.ndarray] = None
+        self.channel_times: dict[str, np.ndarray] = {}
         self.channels: dict[str, np.ndarray] = {}
         self.controls: dict[str, ChannelControls] = {}
 
         self.cursor_mode = tk.BooleanVar(value=False)
         self.move_cursor_mode = tk.BooleanVar(value=False)
+        self.shift_channel_mode = tk.BooleanVar(value=False)
         self.dragging_cursor = False
+        self.dragging_channel_shift = False
+        self.last_shift_x: Optional[float] = None
         self.cursors: list[CursorItem] = []
         self.cursor_artists = []
         self.next_cursor_id = 1
@@ -119,6 +125,7 @@ class OscilloscopeCSVGUI:
         self.grid_var = tk.BooleanVar(value=True)
         self.grid_x_step_var = tk.StringVar(value="")
         self.grid_y_step_var = tk.StringVar(value="")
+        self.align_time_var = tk.BooleanVar(value=True)
         self.log_x_var = tk.BooleanVar(value=False)
         self.log_y_var = tk.BooleanVar(value=False)
         self.mark_max_var = tk.BooleanVar(value=False)
@@ -130,6 +137,7 @@ class OscilloscopeCSVGUI:
         self.cursor_x_var = tk.StringVar(value="")
         self.cursor_y_var = tk.StringVar(value="")
         self.cursor_ref_var = tk.StringVar(value="Ninguno")
+        self.shift_channel_var = tk.StringVar(value="")
         self.status_var = tk.StringVar(value="Cargá un archivo .csv")
 
     def _build_layout(self) -> None:
@@ -145,7 +153,8 @@ class OscilloscopeCSVGUI:
         file_box = ttk.LabelFrame(left, text="Archivo")
         file_box.pack(fill=tk.X, pady=(0, 8))
 
-        ttk.Button(file_box, text="Abrir CSV", command=self.open_file).pack(fill=tk.X, padx=8, pady=6)
+        ttk.Button(file_box, text="Agregar CSV", command=self.open_file).pack(fill=tk.X, padx=8, pady=6)
+        ttk.Button(file_box, text="Limpiar todo", command=self.clear_all_files).pack(fill=tk.X, padx=8, pady=(0, 6))
         self.file_label = ttk.Label(file_box, text="Ningún archivo cargado", wraplength=260)
         self.file_label.pack(fill=tk.X, padx=8, pady=(0, 6))
 
@@ -176,10 +185,21 @@ class OscilloscopeCSVGUI:
         grid_box = ttk.LabelFrame(left, text="Grilla y escalas")
         grid_box.pack(fill=tk.X, pady=(0, 8))
         ttk.Checkbutton(grid_box, text="Mostrar grilla", variable=self.grid_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
+        ttk.Checkbutton(grid_box, text="Alinear cada CSV a t = 0", variable=self.align_time_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
         self._entry(grid_box, "Paso grilla X", self.grid_x_step_var)
         self._entry(grid_box, "Paso grilla Y", self.grid_y_step_var)
         ttk.Checkbutton(grid_box, text="Escala logarítmica X", variable=self.log_x_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
         ttk.Checkbutton(grid_box, text="Escala logarítmica Y", variable=self.log_y_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
+
+        shift_box = ttk.LabelFrame(left, text="Ajuste temporal / fase")
+        shift_box.pack(fill=tk.X, pady=(0, 8))
+        ttk.Checkbutton(shift_box, text="Mover canal seleccionado en X", variable=self.shift_channel_mode, command=self._toggle_shift_channel_mode).pack(anchor="w", padx=8, pady=2)
+        shift_row = ttk.Frame(shift_box)
+        shift_row.pack(fill=tk.X, padx=8, pady=2)
+        ttk.Label(shift_row, text="Canal:").pack(side=tk.LEFT)
+        self.shift_channel_menu = ttk.OptionMenu(shift_row, self.shift_channel_var, "")
+        self.shift_channel_menu.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(4, 0))
+        ttk.Label(shift_box, text="También podés escribir el desplazamiento X de cada canal en la lista de canales.", wraplength=260).pack(fill=tk.X, padx=8, pady=(2, 6))
 
         markers_box = ttk.LabelFrame(left, text="Puntos importantes")
         markers_box.pack(fill=tk.X, pady=(0, 8))
@@ -286,8 +306,8 @@ class OscilloscopeCSVGUI:
         self.pick_cid = self.fig.canvas.mpl_connect("button_press_event", self._on_plot_click)
         self.fig.canvas.mpl_connect("motion_notify_event", self._on_plot_motion)
         self.fig.canvas.mpl_connect("button_release_event", self._on_plot_release)
-        self.root.bind("<Left>", lambda e: self._move_selected_cursor_by_key(-1))
-        self.root.bind("<Right>", lambda e: self._move_selected_cursor_by_key(1))
+        self.root.bind("<Left>", lambda e: self._handle_left_right_key(-1, e))
+        self.root.bind("<Right>", lambda e: self._handle_left_right_key(1, e))
 
     def _plot_empty(self) -> None:
         self.ax.clear()
@@ -296,50 +316,123 @@ class OscilloscopeCSVGUI:
         self.canvas.draw_idle()
 
     def open_file(self) -> None:
-        path = filedialog.askopenfilename(
-            title="Seleccionar CSV",
+        paths = filedialog.askopenfilenames(
+            title="Seleccionar uno o más CSV",
             filetypes=[("Archivos CSV", "*.csv"), ("Todos los archivos", "*.*")],
         )
-        if path:
-            self.load_file(path)
+        if paths:
+            self.load_files(list(paths))
 
     def _on_drop(self, event) -> None:
         raw = event.data.strip()
-        paths = self.root.tk.splitlist(raw)
+        paths = list(self.root.tk.splitlist(raw))
         if paths:
-            self.load_file(paths[0])
+            self.load_files(paths)
 
     def load_file(self, path: str) -> None:
-        path = os.path.abspath(path)
-        if not path.lower().endswith(".csv"):
-            messagebox.showwarning("Archivo rechazado", "El archivo seleccionado no tiene extensión .csv")
+        """Compatibilidad: agrega un único archivo al gráfico actual."""
+        self.load_files([path])
+
+    def _unique_channel_name(self, base: str) -> str:
+        """Evita nombres repetidos cuando se cargan varios CSV."""
+        if base not in self.channels:
+            return base
+        i = 2
+        while f"{base} ({i})" in self.channels:
+            i += 1
+        return f"{base} ({i})"
+
+    def load_files(self, paths: list[str]) -> None:
+        """Carga uno o varios CSV y coloca cada canal encontrado como un canal independiente.
+
+        Si se arrastran dos CSV a la vez, los canales de ambos quedan en el mismo gráfico.
+        Cada canal conserva su propio eje de tiempo, por eso no hace falta que todos los
+        archivos tengan exactamente las mismas muestras.
+        """
+        valid_paths: list[str] = []
+        rejected: list[str] = []
+
+        for path in paths:
+            path = os.path.abspath(path)
+            if not path.lower().endswith(".csv"):
+                rejected.append(os.path.basename(path))
+                continue
+            if not os.path.exists(path):
+                rejected.append(os.path.basename(path))
+                continue
+            valid_paths.append(path)
+
+        if not valid_paths:
+            messagebox.showwarning("Archivo rechazado", "No se recibió ningún archivo .csv válido.")
             self.status_var.set("Archivo rechazado: no es .csv")
             return
-        if not os.path.exists(path):
-            messagebox.showerror("Error", "El archivo no existe.")
+
+        new_channels: dict[str, np.ndarray] = {}
+        new_times: dict[str, np.ndarray] = {}
+        loaded_info: list[str] = []
+        last_units: list[str] = []
+
+        # No limpiamos lo anterior: cada operación de abrir/drop AGREGA canales
+        # para poder superponer CSV tirados en momentos distintos.
+
+        for path in valid_paths:
+            try:
+                time, channels, units = self._read_oscilloscope_csv(path)
+            except Exception as exc:
+                rejected.append(f"{os.path.basename(path)} ({exc})")
+                continue
+
+            if time.size == 0 or len(channels) == 0:
+                rejected.append(f"{os.path.basename(path)} (sin datos)")
+                continue
+
+            stem = os.path.splitext(os.path.basename(path))[0]
+            for ch_name, y in channels.items():
+                # Prefijamos siempre con el nombre del archivo para distinguir
+                # CSV cargados en operaciones separadas.
+                base_name = f"{stem} - {ch_name}"
+                final_name = self._unique_channel_name(base_name)
+                self.channels[final_name] = y
+                self.channel_times[final_name] = time
+                new_channels[final_name] = y
+                new_times[final_name] = time
+
+            loaded_info.append(f"{os.path.basename(path)}: {len(time)} muestras, {len(channels)} canal(es)")
+            last_units = units
+
+        if not new_channels:
+            messagebox.showerror("No se pudo leer ningún CSV", "Revisá el formato de los archivos.\n\n" + "\n".join(rejected))
+            self.status_var.set("Error al leer los CSV")
             return
 
-        try:
-            time, channels, units = self._read_oscilloscope_csv(path)
-        except Exception as exc:
-            messagebox.showerror("No se pudo leer el CSV", f"Revisá el formato del archivo.\n\nDetalle: {exc}")
-            self.status_var.set("Error al leer el CSV")
-            return
+        for path in valid_paths:
+            if path not in self.file_paths:
+                self.file_paths.append(path)
+        self.file_path = self.file_paths[0] if self.file_paths else valid_paths[0]
+        # self.time queda para compatibilidad con partes viejas del código; las curvas usan channel_times.
+        self.time = next(iter(self.channel_times.values()))
+        self.units_row = last_units
 
-        if time.size == 0 or len(channels) == 0:
-            messagebox.showerror("CSV vacío", "No se encontraron datos numéricos suficientes.")
-            return
+        if len(self.file_paths) == 1:
+            self.file_label.config(text=os.path.basename(self.file_paths[0]))
+        else:
+            self.file_label.config(text=f"{len(self.file_paths)} CSV cargados")
 
-        self.file_path = path
-        self.time = time
-        self.channels = channels
-        self.units_row = units
-        self.file_label.config(text=os.path.basename(path))
-        self.status_var.set(f"Cargado: {len(time)} muestras, {len(channels)} canal(es)")
+        total_samples = sum(len(t) for t in self.channel_times.values())
+        self.status_var.set(
+            f"Agregados {len(new_channels)} canal(es) de {len(valid_paths)} archivo(s). "
+            f"Total: {len(self.channels)} canal(es), {total_samples} muestras"
+        )
+        if rejected:
+            messagebox.showwarning(
+                "Algunos archivos se omitieron",
+                "Se cargaron los CSV válidos, pero se omitieron:\n\n" + "\n".join(rejected),
+            )
+
         self._rebuild_channel_controls()
         self._rebuild_xy_menus()
         self._rebuild_cursor_channel_menu()
-        self.cursors.clear()
+        self._rebuild_shift_channel_menu()
         self._refresh_cursor_tree()
         self.update_plot()
 
@@ -400,6 +493,9 @@ class OscilloscopeCSVGUI:
         return time, channels, []
 
     def _rebuild_channel_controls(self) -> None:
+        # Conserva los valores que el usuario ya había puesto al agregar más CSV.
+        old_controls = self.controls.copy()
+
         for child in self.channel_inner.winfo_children():
             child.destroy()
         self.controls.clear()
@@ -408,20 +504,26 @@ class OscilloscopeCSVGUI:
             box = ttk.Frame(self.channel_inner, padding=4)
             box.pack(fill=tk.X, pady=2)
 
-            enabled = tk.BooleanVar(value=True)
-            scale = tk.StringVar(value="1")
-            offset = tk.StringVar(value="0")
-            color = tk.StringVar(value=DEFAULT_COLORS[idx % len(DEFAULT_COLORS)])
-            self.controls[name] = ChannelControls(name, enabled, scale, offset, color)
+            old = old_controls.get(name)
+            enabled = tk.BooleanVar(value=old.enabled.get() if old else True)
+            scale = tk.StringVar(value=old.scale.get() if old else "1")
+            offset = tk.StringVar(value=old.offset.get() if old else "0")
+            x_offset = tk.StringVar(value=old.x_offset.get() if old and hasattr(old, "x_offset") else "0")
+            color = tk.StringVar(value=old.color.get() if old else DEFAULT_COLORS[idx % len(DEFAULT_COLORS)])
+            self.controls[name] = ChannelControls(name, enabled, scale, offset, x_offset, color)
 
             ttk.Checkbutton(box, text=name, variable=enabled, command=self.update_plot).grid(row=0, column=0, columnspan=4, sticky="w")
-            ttk.Label(box, text="Escala").grid(row=1, column=0, sticky="w")
+            ttk.Label(box, text="Escala Y").grid(row=1, column=0, sticky="w")
             ttk.Entry(box, textvariable=scale, width=8).grid(row=1, column=1, sticky="ew")
-            ttk.Label(box, text="Offset").grid(row=1, column=2, sticky="w", padx=(6, 0))
+            ttk.Label(box, text="Offset Y").grid(row=1, column=2, sticky="w", padx=(6, 0))
             ttk.Entry(box, textvariable=offset, width=8).grid(row=1, column=3, sticky="ew")
-            ttk.Button(box, text="Color", command=lambda n=name: self._choose_color(n)).grid(row=2, column=0, columnspan=4, sticky="ew", pady=(3, 0))
 
-            for v in (scale, offset):
+            ttk.Label(box, text="Offset X").grid(row=2, column=0, sticky="w")
+            ttk.Entry(box, textvariable=x_offset, width=8).grid(row=2, column=1, sticky="ew")
+            ttk.Label(box, text=f"[{self.x_unit_var.get()}]").grid(row=2, column=2, sticky="w", padx=(6, 0))
+            ttk.Button(box, text="Color", command=lambda n=name: self._choose_color(n)).grid(row=2, column=3, sticky="ew")
+
+            for v in (scale, offset, x_offset):
                 v.trace_add("write", lambda *_: self._safe_update_plot())
             box.columnconfigure(1, weight=1)
             box.columnconfigure(3, weight=1)
@@ -455,6 +557,20 @@ class OscilloscopeCSVGUI:
         menu.delete(0, "end")
         for name in names:
             menu.add_command(label=name, command=lambda value=name: self.cursor_channel_var.set(value))
+
+    def _rebuild_shift_channel_menu(self) -> None:
+        names = list(self.channels.keys())
+        if names and self.shift_channel_var.get() not in names:
+            self.shift_channel_var.set(names[0])
+        elif not names:
+            self.shift_channel_var.set("")
+
+        if not hasattr(self, "shift_channel_menu"):
+            return
+        menu = self.shift_channel_menu["menu"]
+        menu.delete(0, "end")
+        for name in names:
+            menu.add_command(label=name, command=lambda value=name: self.shift_channel_var.set(value))
 
     def _rebuild_cursor_ref_menu(self) -> None:
         values = ["Ninguno"] + [f"C{c.cursor_id} - {c.channel}" for c in self.cursors]
@@ -490,6 +606,28 @@ class OscilloscopeCSVGUI:
         offset = self._safe_float(ctrl.offset.get(), 0.0)
         return y * scale + offset
 
+    def _time_for_channel_display(self, name: str) -> Optional[np.ndarray]:
+        """Devuelve el tiempo del canal en la unidad elegida.
+
+        Si está activado "Alinear cada CSV a t = 0", resta el primer tiempo
+        de ese archivo/canal. Esto permite superponer medición y simulación
+        aunque cada CSV empiece en un tiempo absoluto distinto.
+        """
+        t = self.channel_times.get(name, self.time)
+        if t is None:
+            return None
+        t = np.asarray(t, dtype=float)
+        if self.align_time_var.get() and t.size > 0:
+            finite = np.isfinite(t)
+            if finite.any():
+                t = t - t[finite][0]
+        x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
+        x = t * x_factor
+        ctrl = self.controls.get(name)
+        if ctrl is not None:
+            x = x + self._safe_float(ctrl.x_offset.get(), 0.0)
+        return x
+
     def update_plot(self) -> None:
         if self.time is None or not self.channels:
             return
@@ -504,10 +642,12 @@ class OscilloscopeCSVGUI:
         if self.xy_mode_var.get():
             self._plot_xy(y_factor)
         else:
-            x = self.time * x_factor
             for name in self.channels.keys():
                 ctrl = self.controls[name]
                 if not ctrl.enabled.get():
+                    continue
+                x = self._time_for_channel_display(name)
+                if x is None:
                     continue
                 y = self._transformed_channel(name) * y_factor
                 self.ax.plot(x, y, label=name, color=ctrl.color.get())
@@ -528,13 +668,37 @@ class OscilloscopeCSVGUI:
         if x_name not in self.channels or y_name not in self.channels:
             self.ax.text(0.5, 0.5, "Elegí dos canales válidos", ha="center", va="center", transform=self.ax.transAxes)
             return
+
+        tx = self.channel_times.get(x_name, self.time)
+        ty = self.channel_times.get(y_name, self.time)
+        if tx is None or ty is None:
+            return
+
         x_data = self._transformed_channel(x_name) * y_factor
         y_data = self._transformed_channel(y_name) * y_factor
+
+        # Si vienen de CSV distintos, pueden tener ejes de tiempo distintos.
+        # Para modo XY interpolamos Y sobre el eje temporal de X.
+        if len(x_data) != len(y_data) or not np.array_equal(tx, ty):
+            finite_x = np.isfinite(tx) & np.isfinite(x_data)
+            finite_y = np.isfinite(ty) & np.isfinite(y_data)
+            txf, xdf = tx[finite_x], x_data[finite_x]
+            tyf, ydf = ty[finite_y], y_data[finite_y]
+            if txf.size == 0 or tyf.size == 0:
+                return
+            order_y = np.argsort(tyf)
+            y_interp = np.interp(txf, tyf[order_y], ydf[order_y])
+            x_plot = xdf
+            y_plot = y_interp
+        else:
+            x_plot = x_data
+            y_plot = y_data
+
         color = self.controls.get(y_name, next(iter(self.controls.values()))).color.get()
-        self.ax.plot(x_data, y_data, color=color, label=f"{y_name} vs {x_name}")
+        self.ax.plot(x_plot, y_plot, color=color, label=f"{y_name} vs {x_name}")
         self.ax.set_xlabel(f"{x_name} [{self.y_unit_var.get()}]")
         self.ax.set_ylabel(f"{y_name} [{self.y_unit_var.get()}]")
-        self._mark_points(x_data, y_data, y_name, color)
+        self._mark_points(x_plot, y_plot, y_name, color)
 
     def _mark_points(self, x: np.ndarray, y: np.ndarray, name: str, color: str) -> None:
         finite = np.isfinite(x) & np.isfinite(y)
@@ -568,9 +732,68 @@ class OscilloscopeCSVGUI:
         else:
             self.ax.grid(False)
 
+    def _toggle_shift_channel_mode(self) -> None:
+        if self.shift_channel_mode.get():
+            self.cursor_mode.set(False)
+            self.move_cursor_mode.set(False)
+            self.dragging_cursor = False
+            self.status_var.set("Ajuste temporal: elegí un canal y arrastrá horizontalmente el mouse, o usá flechas izquierda/derecha.")
+        else:
+            self.dragging_channel_shift = False
+            self.last_shift_x = None
+            self.status_var.set("Modo ajuste temporal desactivado")
+
+    def _selected_shift_channel(self) -> Optional[str]:
+        name = self.shift_channel_var.get()
+        return name if name in self.channels and name in self.controls else None
+
+    def _channel_step_display_units(self, channel: str) -> float:
+        x = self._time_for_channel_display(channel)
+        if x is None:
+            return 1.0
+        x = np.asarray(x, dtype=float)
+        finite = np.isfinite(x)
+        if finite.sum() < 2:
+            return 1.0
+        xs = np.sort(np.unique(x[finite]))
+        diffs = np.diff(xs)
+        diffs = diffs[diffs > 0]
+        if diffs.size == 0:
+            return 1.0
+        return float(np.median(diffs))
+
+    def _shift_channel_by(self, channel: str, dx_display_units: float) -> None:
+        ctrl = self.controls.get(channel)
+        if ctrl is None:
+            return
+        current = self._safe_float(ctrl.x_offset.get(), 0.0)
+        new_value = current + dx_display_units
+        ctrl.x_offset.set(f"{new_value:.8g}")
+        self.status_var.set(f"{channel}: offset X = {new_value:.8g} {self.x_unit_var.get()}")
+        # El trace del StringVar ya llama a update_plot(), pero forzamos que los cursores se refresquen bien.
+        self._refresh_cursor_tree()
+
+    def _handle_left_right_key(self, direction: int, event=None):
+        if self.shift_channel_mode.get():
+            channel = self._selected_shift_channel()
+            if channel is None:
+                return "break"
+            step = self._channel_step_display_units(channel)
+            # Shift + flecha mueve 10 muestras; Ctrl + flecha mueve 0.1 muestra.
+            state = getattr(event, "state", 0) if event is not None else 0
+            if state & 0x0001:
+                step *= 10
+            if state & 0x0004:
+                step *= 0.1
+            self._shift_channel_by(channel, direction * step)
+            return "break"
+        self._move_selected_cursor_by_key(direction)
+        return "break"
+
     def _toggle_cursor_mode(self) -> None:
         if self.cursor_mode.get():
             self.move_cursor_mode.set(False)
+            self.shift_channel_mode.set(False)
             self.status_var.set("Cursores: elegí un canal y hacé clic. Cada clic agrega un cursor; Y se calcula automáticamente.")
         else:
             self.status_var.set("Modo agregar cursor desactivado")
@@ -578,6 +801,7 @@ class OscilloscopeCSVGUI:
     def _toggle_move_cursor_mode(self) -> None:
         if self.move_cursor_mode.get():
             self.cursor_mode.set(False)
+            self.shift_channel_mode.set(False)
             self.status_var.set("Mover cursor: seleccioná uno en la tabla y movelo con clic/arrastre o flechas izquierda/derecha.")
         else:
             self.dragging_cursor = False
@@ -589,6 +813,15 @@ class OscilloscopeCSVGUI:
         if self.xy_mode_var.get():
             if self.cursor_mode.get() or self.move_cursor_mode.get():
                 messagebox.showinfo("Cursores", "Los cursores por canal están pensados para el modo temporal, no para modo XY.")
+            return
+
+        if self.shift_channel_mode.get():
+            channel = self._selected_shift_channel()
+            if channel is None:
+                messagebox.showwarning("Sin canal", "Seleccioná un canal para desplazarlo en X.")
+                return
+            self.dragging_channel_shift = True
+            self.last_shift_x = float(event.xdata)
             return
 
         if self.move_cursor_mode.get():
@@ -610,6 +843,17 @@ class OscilloscopeCSVGUI:
             self._add_cursor(channel, x, y)
 
     def _on_plot_motion(self, event) -> None:
+        if self.dragging_channel_shift and self.shift_channel_mode.get():
+            if event.inaxes != self.ax or event.xdata is None or self.last_shift_x is None:
+                return
+            channel = self._selected_shift_channel()
+            if channel is not None:
+                x_now = float(event.xdata)
+                dx = x_now - self.last_shift_x
+                self.last_shift_x = x_now
+                self._shift_channel_by(channel, dx)
+            return
+
         if not self.dragging_cursor or not self.move_cursor_mode.get():
             return
         if event.inaxes != self.ax or event.xdata is None:
@@ -620,12 +864,16 @@ class OscilloscopeCSVGUI:
 
     def _on_plot_release(self, _event) -> None:
         self.dragging_cursor = False
+        self.dragging_channel_shift = False
+        self.last_shift_x = None
 
     def _interp_channel_y(self, channel: str, x_display_units: float) -> float:
         """Devuelve Y del canal en las unidades mostradas, interpolando según X mostrada."""
         x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
         y_factor = Y_UNITS.get(self.y_unit_var.get(), 1.0)
-        xdata = self.time * x_factor
+        xdata = self._time_for_channel_display(channel)
+        if xdata is None:
+            return 0.0
         ydata = self._transformed_channel(channel) * y_factor
         finite = np.isfinite(xdata) & np.isfinite(ydata)
         if not finite.any():
@@ -714,8 +962,10 @@ class OscilloscopeCSVGUI:
         cursor = self._selected_cursor()
         if cursor is None or self.time is None:
             return
-        x_factor = X_UNITS.get(self.x_unit_var.get(), 1.0)
-        xdata = np.asarray(self.time, dtype=float) * x_factor
+        xdata = self._time_for_channel_display(cursor.channel)
+        if xdata is None:
+            return
+        xdata = np.asarray(xdata, dtype=float)
         finite = np.isfinite(xdata)
         if not finite.any():
             return
@@ -726,6 +976,29 @@ class OscilloscopeCSVGUI:
         else:
             idx = min(len(xs) - 1, idx + 1)
         self._move_cursor_to_x(cursor, float(xs[idx]))
+
+    def clear_all_files(self) -> None:
+        """Limpia todos los CSV, canales, controles y cursores."""
+        self.file_path = None
+        self.file_paths = []
+        self.raw_df = None
+        self.units_row = []
+        self.time = None
+        self.channel_times.clear()
+        self.channels.clear()
+        self.controls.clear()
+        self.cursors.clear()
+        self.selected_cursor_id = None
+        self.cursor_x_var.set("")
+        self.cursor_y_var.set("")
+        self.file_label.config(text="Ningún archivo cargado")
+        for child in self.channel_inner.winfo_children():
+            child.destroy()
+        self._rebuild_xy_menus()
+        self._rebuild_cursor_channel_menu()
+        self._refresh_cursor_tree()
+        self.status_var.set("Cargá un archivo .csv")
+        self._plot_empty()
 
     def _delete_selected_cursor(self) -> None:
         cursor = self._selected_cursor()
