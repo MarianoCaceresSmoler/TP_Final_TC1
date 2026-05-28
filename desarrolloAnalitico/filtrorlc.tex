@@ -1,0 +1,529 @@
+\documentclass[12pt,a4paper]{article}
+
+% -----------------------------
+% Paquetes
+% -----------------------------
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{circuitikz}
+\usepackage{hyperref}
+
+\geometry{margin=2.5cm}
+
+\sisetup{
+    output-decimal-marker={,},
+    per-mode=symbol
+}
+
+\begin{document}
+
+\section{Diseño del filtro pasabanda RLC con buffer}
+
+El filtro diseñado se compone de dos etapas en cascada separadas mediante un seguidor de tensión. La primera etapa corresponde a un filtro pasabajos RLC de segundo orden, mientras que la segunda etapa corresponde a un filtro pasaaltos RLC de segundo orden. El buffer se utiliza para desacoplar ambas etapas, evitando que la impedancia de entrada de la segunda etapa modifique la respuesta en frecuencia de la primera.
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[american]
+        % Fuente y etapa pasabajos
+        \draw
+        (0,0) node[ground]{} 
+        to[sV, l=$v_i$] (0,2)
+        to[R, l=$R_1$] (2,2)
+        to[L, l=$L_1$] (4,2)
+        to[short, -*] (5,2) coordinate (va);
+
+        \draw
+        (va) to[C, l=$C_1$] (5,0) node[ground]{};
+
+        % Buffer
+        \node[op amp, noinv input up] (opamp) at (7,2) {};
+        \draw
+        (va) -- (opamp.+);
+        \draw
+        (opamp.out) -- ++(0.8,0) coordinate (vbuffer);
+        \draw
+        (opamp.-) -- ++(-0.4,0) |- (opamp.out);
+
+        % Etapa pasaaltos
+        \draw
+        (vbuffer) to[R, l=$R_2$] ++(2,0)
+        to[C, l=$C_2$] ++(2,0)
+        to[short, -*] ++(1,0) coordinate (vout);
+
+        \draw
+        (vout) to[L, l=$L_2$] ++(0,-2) node[ground]{};
+
+        \draw
+        (vout) node[above]{$v_o$};
+    \end{circuitikz}
+    \caption{Filtro pasabanda implementado mediante una etapa pasabajos RLC, un buffer y una etapa pasaaltos RLC.}
+    \label{fig:filtro_pasba_r_l_c}
+\end{figure}
+
+\subsection{Etapa pasabajos}
+
+La primera etapa está formada por una resistencia $R_1$, una inductancia $L_1$ y un capacitor $C_1$. La salida de esta etapa se toma sobre el capacitor. Por lo tanto, la impedancia del capacitor es:
+
+\begin{equation}
+    Z_{C_1}=\frac{1}{sC_1}
+    \label{eq:zc1}
+\end{equation}
+
+La transferencia de la etapa pasabajos se obtiene mediante divisor de tensión:
+
+\begin{equation}
+    H_{PB}(s)=\frac{V_A(s)}{V_i(s)}
+    =
+    \frac{Z_{C_1}}{R_1+sL_1+Z_{C_1}}
+    \label{eq:divisor_pb}
+\end{equation}
+
+Reemplazando $Z_{C_1}$:
+
+\begin{equation}
+    H_{PB}(s)=
+    \frac{\frac{1}{sC_1}}
+    {R_1+sL_1+\frac{1}{sC_1}}
+    \label{eq:hpb_intermedia}
+\end{equation}
+
+Multiplicando numerador y denominador por $sC_1$:
+
+\begin{equation}
+    H_{PB}(s)=
+    \frac{1}
+    {sR_1C_1+s^2L_1C_1+1}
+    \label{eq:hpb}
+\end{equation}
+
+Ordenando:
+
+\begin{equation}
+    \boxed{
+    H_{PB}(s)=
+    \frac{1}
+    {s^2L_1C_1+sR_1C_1+1}
+    }
+    \label{eq:hpb_final}
+\end{equation}
+
+Esta transferencia corresponde a un filtro pasabajos de segundo orden, ya que para $s\to 0$ la ganancia tiende a uno, mientras que para frecuencias altas la ganancia tiende a cero.
+
+Para escribirla en forma normalizada, se divide numerador y denominador por $L_1C_1$:
+
+\begin{equation}
+    H_{PB}(s)=
+    \frac{\frac{1}{L_1C_1}}
+    {s^2+s\frac{R_1}{L_1}+\frac{1}{L_1C_1}}
+    \label{eq:hpb_normalizada}
+\end{equation}
+
+Comparando con la forma canónica de un filtro pasabajos de segundo orden:
+
+\begin{equation}
+    H_{PB}(s)=
+    \frac{\omega_{01}^2}
+    {s^2+\frac{\omega_{01}}{Q_1}s+\omega_{01}^2}
+    \label{eq:hpb_canonica}
+\end{equation}
+
+se obtiene:
+
+\begin{equation}
+    \boxed{
+    \omega_{01}=\frac{1}{\sqrt{L_1C_1}}
+    }
+    \label{eq:w01}
+\end{equation}
+
+\begin{equation}
+    \boxed{
+    Q_1=\frac{\omega_{01}L_1}{R_1}
+    }
+    \label{eq:q1}
+\end{equation}
+
+Se eligió una respuesta tipo Butterworth, por lo que:
+
+\begin{equation}
+    Q_1=\frac{1}{\sqrt{2}}\approx 0{,}707
+    \label{eq:q_butterworth_pb}
+\end{equation}
+
+Esta elección permite obtener una respuesta sin pico de resonancia y con una atenuación de aproximadamente \SI{-3}{dB} en la frecuencia de corte.
+
+La frecuencia de corte superior elegida para la banda de voz fue:
+
+\begin{equation}
+    f_{c,PB}=\SI{3.4}{kHz}
+    \label{eq:fc_pb}
+\end{equation}
+
+Por lo tanto:
+
+\begin{equation}
+    \omega_{01}=2\pi f_{c,PB}
+    \label{eq:w01_fc}
+\end{equation}
+
+Como se fijó:
+
+\begin{equation}
+    L_1=\SI{1}{mH}
+    \label{eq:l1_valor}
+\end{equation}
+
+el capacitor se calcula como:
+
+\begin{equation}
+    C_1=
+    \frac{1}{\omega_{01}^2L_1}
+    \label{eq:c1_calculo}
+\end{equation}
+
+Reemplazando:
+
+\begin{equation}
+    C_1=
+    \frac{1}
+    {(2\pi\cdot 3400)^2\cdot 1\cdot 10^{-3}}
+    \label{eq:c1_reemplazo}
+\end{equation}
+
+\begin{equation}
+    \boxed{
+    C_1\approx \SI{2.19}{\micro F}
+    }
+    \label{eq:c1_resultado}
+\end{equation}
+
+Se adopta el valor comercial:
+
+\begin{equation}
+    \boxed{
+    C_1=\SI{2.2}{\micro F}
+    }
+    \label{eq:c1_comercial}
+\end{equation}
+
+La resistencia se obtiene a partir del factor de calidad:
+
+\begin{equation}
+    Q_1=\frac{\omega_{01}L_1}{R_1}
+    \label{eq:q1_resistencia}
+\end{equation}
+
+Despejando:
+
+\begin{equation}
+    R_1=\frac{\omega_{01}L_1}{Q_1}
+    \label{eq:r1_calculo}
+\end{equation}
+
+Reemplazando:
+
+\begin{equation}
+    R_1=
+    \frac{2\pi\cdot 3400\cdot 1\cdot 10^{-3}}
+    {0{,}707}
+    \label{eq:r1_reemplazo}
+\end{equation}
+
+\begin{equation}
+    \boxed{
+    R_1\approx \SI{30.2}{\ohm}
+    }
+    \label{eq:r1_resultado}
+\end{equation}
+
+Se adopta:
+
+\begin{equation}
+    \boxed{
+    R_1=\SI{30}{\ohm}
+    }
+    \label{eq:r1_comercial}
+\end{equation}
+
+\subsection{Etapa pasaaltos}
+
+La segunda etapa está formada por una resistencia $R_2$, un capacitor $C_2$ y una inductancia $L_2$. La salida se toma sobre la inductancia. La impedancia del capacitor y de la inductancia son:
+
+\begin{equation}
+    Z_{C_2}=\frac{1}{sC_2}
+    \label{eq:zc2}
+\end{equation}
+
+\begin{equation}
+    Z_{L_2}=sL_2
+    \label{eq:zl2}
+\end{equation}
+
+La transferencia de la etapa pasaaltos se obtiene mediante divisor de tensión:
+
+\begin{equation}
+    H_{PA}(s)=\frac{V_o(s)}{V_A(s)}
+    =
+    \frac{Z_{L_2}}{R_2+Z_{C_2}+Z_{L_2}}
+    \label{eq:divisor_pa}
+\end{equation}
+
+Reemplazando las impedancias:
+
+\begin{equation}
+    H_{PA}(s)=
+    \frac{sL_2}
+    {R_2+\frac{1}{sC_2}+sL_2}
+    \label{eq:hpa_intermedia}
+\end{equation}
+
+Multiplicando numerador y denominador por $sC_2$:
+
+\begin{equation}
+    H_{PA}(s)=
+    \frac{s^2L_2C_2}
+    {sR_2C_2+1+s^2L_2C_2}
+    \label{eq:hpa}
+\end{equation}
+
+Ordenando:
+
+\begin{equation}
+    \boxed{
+    H_{PA}(s)=
+    \frac{s^2L_2C_2}
+    {s^2L_2C_2+sR_2C_2+1}
+    }
+    \label{eq:hpa_final}
+\end{equation}
+
+Esta transferencia corresponde a un filtro pasaaltos de segundo orden, ya que para $s\to 0$ la ganancia tiende a cero, mientras que para frecuencias altas la ganancia tiende a uno.
+
+Dividiendo numerador y denominador por $L_2C_2$:
+
+\begin{equation}
+    H_{PA}(s)=
+    \frac{s^2}
+    {s^2+s\frac{R_2}{L_2}+\frac{1}{L_2C_2}}
+    \label{eq:hpa_normalizada}
+\end{equation}
+
+Comparando con la forma canónica de un filtro pasaaltos de segundo orden:
+
+\begin{equation}
+    H_{PA}(s)=
+    \frac{s^2}
+    {s^2+\frac{\omega_{02}}{Q_2}s+\omega_{02}^2}
+    \label{eq:hpa_canonica}
+\end{equation}
+
+se obtiene:
+
+\begin{equation}
+    \boxed{
+    \omega_{02}=\frac{1}{\sqrt{L_2C_2}}
+    }
+    \label{eq:w02}
+\end{equation}
+
+\begin{equation}
+    \boxed{
+    Q_2=\frac{\omega_{02}L_2}{R_2}
+    }
+    \label{eq:q2}
+\end{equation}
+
+Nuevamente se eligió una respuesta Butterworth:
+
+\begin{equation}
+    Q_2=\frac{1}{\sqrt{2}}\approx 0{,}707
+    \label{eq:q_butterworth_pa}
+\end{equation}
+
+La frecuencia de corte inferior elegida para la banda de voz fue:
+
+\begin{equation}
+    f_{c,PA}=\SI{300}{Hz}
+    \label{eq:fc_pa}
+\end{equation}
+
+Entonces:
+
+\begin{equation}
+    \omega_{02}=2\pi f_{c,PA}
+    \label{eq:w02_fc}
+\end{equation}
+
+Como se fijó:
+
+\begin{equation}
+    L_2=\SI{1}{mH}
+    \label{eq:l2_valor}
+\end{equation}
+
+el capacitor se calcula como:
+
+\begin{equation}
+    C_2=
+    \frac{1}{\omega_{02}^2L_2}
+    \label{eq:c2_calculo}
+\end{equation}
+
+Reemplazando:
+
+\begin{equation}
+    C_2=
+    \frac{1}
+    {(2\pi\cdot 300)^2\cdot 1\cdot 10^{-3}}
+    \label{eq:c2_reemplazo}
+\end{equation}
+
+\begin{equation}
+    \boxed{
+    C_2\approx \SI{281}{\micro F}
+    }
+    \label{eq:c2_resultado}
+\end{equation}
+
+Se adopta el valor comercial:
+
+\begin{equation}
+    \boxed{
+    C_2=\SI{270}{\micro F}
+    }
+    \label{eq:c2_comercial}
+\end{equation}
+
+La resistencia se obtiene a partir de:
+
+\begin{equation}
+    Q_2=\frac{\omega_{02}L_2}{R_2}
+    \label{eq:q2_resistencia}
+\end{equation}
+
+Despejando:
+
+\begin{equation}
+    R_2=\frac{\omega_{02}L_2}{Q_2}
+    \label{eq:r2_calculo}
+\end{equation}
+
+Reemplazando:
+
+\begin{equation}
+    R_2=
+    \frac{2\pi\cdot 300\cdot 1\cdot 10^{-3}}
+    {0{,}707}
+    \label{eq:r2_reemplazo}
+\end{equation}
+
+\begin{equation}
+    \boxed{
+    R_2\approx \SI{2.66}{\ohm}
+    }
+    \label{eq:r2_resultado}
+\end{equation}
+
+Se adopta:
+
+\begin{equation}
+    \boxed{
+    R_2=\SI{2.7}{\ohm}
+    }
+    \label{eq:r2_comercial}
+\end{equation}
+
+\subsection{Transferencia total}
+
+Como ambas etapas se encuentran desacopladas mediante un buffer, la transferencia total del circuito se obtiene como el producto de las transferencias individuales:
+
+\begin{equation}
+    H(s)=\frac{V_o(s)}{V_i(s)}
+    =
+    H_{PB}(s)\cdot H_{PA}(s)
+    \label{eq:h_total_producto}
+\end{equation}
+
+Por lo tanto:
+
+\begin{equation}
+    \boxed{
+    H(s)=
+    \frac{1}
+    {s^2L_1C_1+sR_1C_1+1}
+    \cdot
+    \frac{s^2L_2C_2}
+    {s^2L_2C_2+sR_2C_2+1}
+    }
+    \label{eq:h_total}
+\end{equation}
+
+Agrupando en una única expresión:
+
+\begin{equation}
+    \boxed{
+    H(s)=
+    \frac{s^2L_2C_2}
+    {
+    \left(s^2L_1C_1+sR_1C_1+1\right)
+    \left(s^2L_2C_2+sR_2C_2+1\right)
+    }
+    }
+    \label{eq:h_total_expandida}
+\end{equation}
+
+Esta transferencia corresponde a un filtro pasabanda, ya que:
+
+\begin{equation}
+    \lim_{s\to 0}H(s)=0
+    \label{eq:limite_baja}
+\end{equation}
+
+y también:
+
+\begin{equation}
+    \lim_{s\to \infty}H(s)=0
+    \label{eq:limite_alta}
+\end{equation}
+
+Por lo tanto, el circuito atenúa tanto las bajas como las altas frecuencias, dejando pasar una banda intermedia. En este diseño, la banda pasante se encuentra aproximadamente entre:
+
+\begin{equation}
+    \boxed{
+    \SI{300}{Hz}\lesssim f \lesssim \SI{3.4}{kHz}
+    }
+    \label{eq:banda_pasante}
+\end{equation}
+
+lo cual resulta adecuado para realizar un primer filtrado de señales asociadas a la voz humana.
+
+\subsection{Valores adoptados}
+
+Los valores finales adoptados para la simulación y posterior implementación son:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+        \toprule
+        Componente & Valor calculado & Valor adoptado \\
+        \midrule
+        $L_1$ & Fijado & \SI{1}{mH} \\
+        $C_1$ & \SI{2.19}{\micro F} & \SI{2.2}{\micro F} \\
+        $R_1$ & \SI{30.2}{\ohm} & \SI{30}{\ohm} \\
+        \midrule
+        $L_2$ & Fijado & \SI{1}{mH} \\
+        $C_2$ & \SI{281}{\micro F} & \SI{270}{\micro F} \\
+        $R_2$ & \SI{2.66}{\ohm} & \SI{2.7}{\ohm} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Valores calculados y adoptados para el filtro pasabanda RLC.}
+    \label{tab:valores_filtro_rlc}
+\end{table}
+
+\end{document}
