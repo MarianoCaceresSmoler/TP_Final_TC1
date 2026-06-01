@@ -1,0 +1,7 @@
+Added Component: Designator=J4(MOLEX2)
+Added Pin To Net: NetName=GND Pin=J4-2
+Added Pin To Net: NetName=Vout Pin=J4-1
+Added Pin To Net: NetName=Vout Pin=U1-6
+Added Pin To Net: NetName=Vout Pin=U1-7
+Added Net: Name=Vout
+Added Member To Class: ClassName=Sheet1 Member=Component J4 MOLEX2
