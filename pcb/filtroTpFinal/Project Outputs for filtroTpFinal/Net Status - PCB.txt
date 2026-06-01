@@ -1,0 +1,18 @@
+Net Status Report
+Filename     : C:\Users\lucca\Desktop\TP_Final_TC1\pcb\filtroTpFinal\PCB.PcbDoc
+Date         : 6/1/2026
+Time         : 5:10:42 PM
+Time Elapsed : 00:00:00
+
+Nets, Layer, Length
+    +v, Signal Layers Only, 25.3367mm
+    -v, Signal Layers Only, 24.3037mm
+    GND, Signal Layers Only, 0mm
+    NetC1_1, Signal Layers Only, 11.7442mm
+    NetC2_1, Signal Layers Only, 25.8967mm
+    NetC3_1, Signal Layers Only, 10.743mm
+    NetC3_2, Signal Layers Only, 16.5519mm
+    NetC4_2, Signal Layers Only, 48.1888mm
+    Vin, Signal Layers Only, 21.6832mm
+    Vout, Signal Layers Only, 20.4433mm
+count : 10

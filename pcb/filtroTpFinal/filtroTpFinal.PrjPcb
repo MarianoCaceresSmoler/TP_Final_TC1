@@ -87,6 +87,10 @@ DocumentUniqueId=OWYGDSNH
 DocumentPath=Project Outputs for filtroTpFinal\Design Rule Check - PCB.html
 DItemRevisionGUID=
 
+[GeneratedDocument2]
+DocumentPath=Project Outputs for filtroTpFinal\Net Status - PCB.html
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
