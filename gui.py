@@ -26,6 +26,7 @@ import re
 import tkinter as tk
 from dataclasses import dataclass
 from pathlib import Path
+from datetime import datetime
 from tkinter import colorchooser, filedialog, messagebox, ttk
 from typing import Optional, Literal
 
@@ -169,6 +170,7 @@ class TC1CSVGUI:
         file_box.pack(fill=tk.X, pady=(0, 8))
         ttk.Button(file_box, text="Agregar CSV", command=self.open_files).pack(fill=tk.X, padx=8, pady=(8, 4))
         ttk.Button(file_box, text="Limpiar todo", command=self.clear_all).pack(fill=tk.X, padx=8, pady=4)
+        ttk.Button(file_box, text="Guardar gráfico como PDF", command=self.export_pdf).pack(fill=tk.X, padx=8, pady=(0, 6))
         ttk.Label(file_box, textvariable=self.mode_var, font=("Segoe UI", 9, "bold")).pack(anchor="w", padx=8, pady=(4, 2))
         self.file_label = ttk.Label(file_box, text="Sin archivos cargados", wraplength=340)
         self.file_label.pack(fill=tk.X, padx=8, pady=(0, 8))
@@ -347,6 +349,86 @@ class TC1CSVGUI:
         self.fig.canvas.mpl_connect("button_release_event", self._on_plot_release)
         self.root.bind("<Left>", lambda e: self._handle_left_right(-1, e))
         self.root.bind("<Right>", lambda e: self._handle_left_right(1, e))
+
+    # ------------------------------------------------------------------
+    # Exportación
+    # ------------------------------------------------------------------
+    def export_pdf(self) -> None:
+        """Guarda el gráfico actual en un PDF prolijo.
+
+        Exporta exactamente el modo activo:
+        - TIEMPO: un gráfico con los canales temporales visibles.
+        - BODE: dos gráficos, magnitud y fase, en la misma página.
+        - XY: gráfico XY actual.
+        """
+        if not self.channels:
+            messagebox.showinfo("Guardar PDF", "Primero cargá algún CSV para poder exportar el gráfico.")
+            return
+
+        default_name = "grafico_tc1.pdf"
+        if self.mode == "bode":
+            default_name = "bode_tc1.pdf"
+        elif self.xy_mode_var.get():
+            default_name = "xy_tc1.pdf"
+        elif self.loaded_files:
+            default_name = f"{Path(self.loaded_files[0]).stem}_grafico.pdf"
+
+        out_path = filedialog.asksaveasfilename(
+            title="Guardar gráfico como PDF",
+            defaultextension=".pdf",
+            initialfile=default_name,
+            filetypes=[("PDF", "*.pdf"), ("Todos los archivos", "*.*")],
+        )
+        if not out_path:
+            return
+
+        old_size = tuple(self.fig.get_size_inches())
+        try:
+            # Generamos una versión más limpia para el PDF, sin depender del tamaño de la ventana.
+            if self.mode == "bode":
+                self.fig.set_size_inches(11.0, 8.0)
+            else:
+                self.fig.set_size_inches(11.0, 6.8)
+
+            self.update_plot()
+
+            # Pie informativo discreto.
+            mode_text = {"empty": "Vacío", "time": "Tiempo", "bode": "Bode"}.get(self.mode, self.mode)
+            visible = [name for name, ctrl in self.controls.items() if ctrl.enabled.get()]
+            footer_parts = [f"Modo: {mode_text}"]
+            if self.loaded_files:
+                footer_parts.append("Archivos: " + ", ".join(Path(p).name for p in self.loaded_files[:3]))
+                if len(self.loaded_files) > 3:
+                    footer_parts.append(f"+{len(self.loaded_files)-3} más")
+            footer_parts.append(f"Canales visibles: {len(visible)}")
+            footer_parts.append(datetime.now().strftime("Exportado: %d/%m/%Y %H:%M"))
+            footer = "   |   ".join(footer_parts)
+
+            self.fig.text(
+                0.5, 0.012, footer,
+                ha="center", va="bottom", fontsize=8, color="#555555",
+            )
+            self.fig.subplots_adjust(bottom=0.10)
+
+            self.fig.savefig(
+                out_path,
+                format="pdf",
+                bbox_inches="tight",
+                facecolor="white",
+                edgecolor="none",
+                metadata={
+                    "Title": self.title_var.get() or "Gráfico TC1",
+                    "Author": "GUI TC1",
+                    "Subject": "Exportación de gráfico desde la GUI TC1",
+                },
+            )
+            self.status_var.set(f"PDF guardado: {out_path}")
+            messagebox.showinfo("PDF guardado", f"Se guardó el gráfico en:\n{out_path}")
+        except Exception as exc:
+            messagebox.showerror("Error al guardar PDF", f"No se pudo guardar el PDF.\n\nDetalle: {exc}")
+        finally:
+            self.fig.set_size_inches(*old_size)
+            self.update_plot()
 
     # ------------------------------------------------------------------
     # Carga y detección

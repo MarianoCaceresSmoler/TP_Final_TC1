@@ -1,6 +1,6 @@
 LTspice 26.0.1 for Windows
 Circuit: C:\Users\lucca\Desktop\TP_Final_TC1\desarrolloAnalitico\filtroFINAL.net
-Start Time: Tue Jun  2 07:53:28 2026
+Start Time: Tue Jun  2 10:53:23 2026
 solver = Normal
 Maximum thread count: 8
 tnom = 27
@@ -12,7 +12,7 @@ Gmin stepping failed to find operating point. Use".option gminsteps=0" to skip a
 Starting source stepping with srcstepmethod=0
 Source stepping succeeded in finding the operating point.
 
-Total elapsed time: 0.443 seconds.
+Total elapsed time: 0.163 seconds.
 
 Files loaded:
 C:\Users\lucca\Desktop\TP_Final_TC1\desarrolloAnalitico\filtroFINAL.net
