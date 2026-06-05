@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=GND Pin=IN_2-1
+Removed Pin From Net: NetName=Vin Pin=IN_2-3
+Change Component Designator: OldDesignator=IN_1 NewDesignator=IN_2
+Added Component: Designator=IN_1(CUI_SJ1-3525NG)
+Add component (AddParameter): Name = "Check_prices"; Value = "https://www.snapeda.com/parts/SJ1-3525NG/Same+Sky/view-part/?ref=eda"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Same Sky"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "SJ1-3525NG"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/SJ1-3525NG/Same+Sky/view-part/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=IN_1-1
+Added Pin To Net: NetName=Vin Pin=IN_1-2
+Added Member To Class: ClassName=Sheet1 Member=Component IN_2 MOLEX2
+Added Member To Class: ClassName=Sheet1 Member=Component U1 TL082P
