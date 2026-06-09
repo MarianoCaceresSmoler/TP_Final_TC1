@@ -1,0 +1,11 @@
+\section{Introducción}
+
+El objetivo general del trabajo fue integrar herramientas de análisis, simulación, medición y diseño de placas. Para ello se trabajó con tres ejes principales: una interfaz gráfica en Python para visualizar archivos CSV, simulaciones en LTspice de circuitos transitorios y filtros, y el diseño de un filtro pasabanda para voz humana implementable en una placa de circuito impreso.
+
+Todos los gráficos de respuesta en frecuencia se presentan en escala semilogarítmica, con la frecuencia expresada en hertz y la ganancia en decibeles. Además, se comparan los resultados teóricos, simulados y medidos cuando corresponde, indicando las diferencias observadas y sus posibles causas.
+
+\subsection{Criterio general de trabajo}
+
+Para el análisis de señales temporales se utilizaron archivos CSV provenientes del osciloscopio y de LTspice. Para la respuesta en frecuencia se emplearon archivos de Bode exportados tanto desde el osciloscopio como desde LTspice. La herramienta desarrollada en Python permitió superponer mediciones y simulaciones, modificar escalas, alinear señales, utilizar cursores y exportar gráficos para el informe.
+
+En la etapa de diseño se evaluaron distintas topologías de filtro pasabanda. Inicialmente se consideraron opciones basadas en redes RLC con inductores y buffers, pero finalmente se adoptó una solución RC con buffers debido a limitaciones prácticas de corriente, disponibilidad de inductores y facilidad de implementación en PCB.

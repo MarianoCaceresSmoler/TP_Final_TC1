@@ -1,0 +1,35 @@
+\section{Filtros de segundo orden}
+
+Se analizaron filtros de segundo orden a partir de su respuesta en frecuencia. Para cada circuito se determinó el tipo de filtro, se obtuvieron gráficos de magnitud y fase, y se compararon los resultados simulados con los medidos cuando se contaba con datos experimentales.
+
+\subsection{Circuito 2}
+
+El Circuito 2 corresponde a una red RLC cuya salida se toma sobre el capacitor. En bajas frecuencias el capacitor se comporta como circuito abierto y la tensión de salida tiende a la tensión de entrada. En altas frecuencias, el capacitor se aproxima a un cortocircuito y la salida tiende a cero. Por lo tanto, el circuito se comporta como un filtro pasabajos de segundo orden.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{\figpath bode_circuito2.pdf}
+    \caption{Respuesta en frecuencia del Circuito 2: comparación entre medición y simulación.}
+    \label{fig:bode_circuito2}
+\end{figure}
+
+La respuesta experimental sigue la tendencia del modelo simulado. Las diferencias se deben principalmente a tolerancias de componentes, resistencia serie del inductor y condiciones no ideales de medición.
+
+\subsection{Circuito 5 y efecto de la resistencia serie del inductor}
+
+En el Circuito 5 se evaluó el efecto de considerar o no la resistencia serie del inductor. Esta resistencia modifica el factor de calidad del circuito y, por lo tanto, el ancho de banda y el amortiguamiento de la respuesta.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{\figpath bode_circuito5_rl.pdf}
+    \caption{Respuesta del Circuito 5 comparando medición, simulación con resistencia serie del inductor y simulación sin resistencia serie.}
+    \label{fig:bode_circuito5}
+\end{figure}
+
+Incluir la resistencia serie permite representar de manera más realista el comportamiento del circuito armado. Al no considerarla, la simulación supone un inductor ideal, lo que puede producir un factor de calidad mayor al observado experimentalmente.
+
+\subsection{Polos, ceros y tipo de filtro}
+
+Los filtros pasabajos de segundo orden presentan dos polos y no poseen ceros finitos en la transferencia ideal normalizada. En cambio, los filtros pasaaltos de segundo orden presentan dos ceros en el origen, lo que explica la atenuación a bajas frecuencias. En los filtros pasabanda, la presencia de ceros en baja y alta frecuencia hace que la ganancia sea reducida fuera de una banda intermedia.
+
+La ubicación de los polos determina el amortiguamiento y el factor de calidad. Polos más cercanos al eje imaginario generan una respuesta más resonante, mientras que polos con mayor parte real negativa producen una respuesta más amortiguada.

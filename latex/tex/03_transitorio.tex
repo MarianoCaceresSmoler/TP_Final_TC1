@@ -1,0 +1,22 @@
+\section{Análisis transitorio}
+
+En esta sección se comparó la respuesta temporal obtenida mediante simulación en LTspice con la respuesta medida en el osciloscopio. Para poder superponer ambas curvas fue necesario alinear los ejes temporales, debido a que el archivo del osciloscopio no comenzaba en $t=0$ sino en el instante absoluto registrado por el instrumento. Por este motivo se utilizó:
+
+\begin{equation}
+    t_{\text{alineado}}=t-t_0
+\end{equation}
+
+De esta manera, la primera muestra de cada archivo queda ubicada en $t=0$ y se pueden comparar directamente las formas de onda.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{\figpath transitorio_2_1.pdf}
+    \caption{Comparación entre transitorio medido con osciloscopio y transitorio simulado en LTspice.}
+    \label{fig:transitorio_21}
+\end{figure}
+
+Se observa que la simulación reproduce la forma general del transitorio medido. Las diferencias entre ambas curvas pueden atribuirse a las tolerancias de los componentes, a resistencias parásitas no modeladas, a la resistencia interna del generador y a la carga introducida por las puntas del osciloscopio. Además, en el archivo experimental se observa ruido de medición que no aparece en la simulación ideal.
+
+\subsection{Comentarios sobre el modelo}
+
+Para lograr una comparación más realista, en LTspice se incluyeron resistencias asociadas a los componentes cuando fue necesario. En particular, el inductor real presenta una resistencia serie que modifica el amortiguamiento del circuito, por lo que su inclusión mejora la correspondencia entre simulación y medición.

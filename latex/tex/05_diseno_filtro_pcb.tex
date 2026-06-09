@@ -1,0 +1,141 @@
+\section{Diseño del filtro pasabanda para PCB}
+
+El objetivo del diseño fue obtener un primer filtrado de la voz humana. Se tomó como referencia una banda pasante aproximada entre:
+
+\begin{equation}
+    f_L \approx \SI{300}{Hz}
+    \qquad
+    f_H \approx \SI{3.4}{kHz}
+\end{equation}
+
+Esta banda permite conservar una parte importante del contenido de la voz y atenuar componentes de muy baja y muy alta frecuencia.
+
+\subsection{Alternativas consideradas}
+
+Antes de adoptar el circuito final se analizaron distintas alternativas. Las simulaciones correspondientes se incluyen en la carpeta \texttt{ltspice/} como \texttt{opcionA.asc}, \texttt{opcionB.asc} y \texttt{filtroFINAL.asc}.
+
+\subsubsection{Opción A: etapa RLC y etapa RC con buffer}
+
+La primera alternativa consistía en utilizar una etapa RLC para uno de los cortes y una etapa RC-RC para el otro corte, separadas mediante un buffer. La ventaja de esta opción era que permitía aprovechar una bobina disponible en el laboratorio. Sin embargo, la respuesta obtenida no resultaba simétrica respecto de la banda de interés y el diseño combinaba dos criterios de filtrado distintos. Por este motivo se descartó como diseño final.
+
+\subsubsection{Opción B: dos etapas RLC con buffer}
+
+La segunda alternativa consistía en utilizar dos etapas RLC, una pasabajos y otra pasaaltos, separadas por un buffer. Para una respuesta de tipo Butterworth se eligió inicialmente:
+
+\begin{equation}
+    Q=\frac{1}{\sqrt{2}}\approx 0{,}707
+\end{equation}
+
+El problema principal apareció al usar inductores de \SI{1}{mH}. Para lograr un corte inferior cercano a \SI{300}{Hz}, la reactancia del inductor resulta muy baja:
+
+\begin{equation}
+    X_L=2\pi f L
+    =2\pi\cdot 300\cdot 1\times 10^{-3}
+    \approx \SI{1.88}{\ohm}
+\end{equation}
+
+Como consecuencia, las resistencias necesarias quedaban del orden de pocos ohms y la salida del TL082 debía entregar una corriente elevada. En la simulación transitoria se observó una corriente de salida del orden de:
+
+\begin{equation}
+    I_{\text{opamp}}\approx \SI{27}{mA}
+\end{equation}
+
+Este valor no resulta conveniente para un TL082 trabajando como etapa de señal, ya que puede producir limitación de corriente, deformación de la señal y funcionamiento fuera de la región lineal.
+
+
+
+También se evaluó aumentar los valores de inductancia para obtener resistencias más razonables. Por ejemplo, para el corte inferior se requería una inductancia cercana a \SI{100}{mH}. Si bien esto mejora los valores de resistencia, no se contaba con inductores suficientemente grandes y adecuados para la implementación, por lo que esta alternativa no fue adoptada.
+
+\subsection{Diseño final adoptado}
+
+El diseño final se realizó mediante redes RC de segundo orden aproximadas, con buffers implementados con el TL082. La estructura general es:
+
+\begin{equation}
+    \text{pasa bajos RC-RC} \rightarrow \text{buffer} \rightarrow \text{pasa altos RC-RC} \rightarrow \text{buffer}
+\end{equation}
+
+El primer bloque atenúa altas frecuencias, mientras que el segundo bloque atenúa bajas frecuencias. En conjunto forman un filtro pasabanda. El uso de buffers permite desacoplar etapas y evitar que la carga de una etapa modifique fuertemente el comportamiento de la anterior.
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[american]
+        \draw
+        (0,0) node[left]{$v_i$} to[R,l=$R_1$] (2,0)
+        to[short,*-] (2.6,0)
+        to[R,l=$R_2$] (4.6,0)
+        to[short,*-] (5.1,0);
+        \draw (2.6,0) to[C,l_=$C_1$] (2.6,-1.8) node[ground]{};
+        \draw (5.1,0) to[C,l_=$C_2$] (5.1,-1.8) node[ground]{};
+
+        \node[op amp, noinv input up] (op1) at (7.1,0) {};
+        \draw (5.1,0) -- (op1.+);
+        \draw (op1.out) -- ++(0.8,0) coordinate (b1);
+        \draw (op1.-) -- ++(-0.35,0) |- (op1.out);
+
+        \draw (b1) to[C,l=$C_3$] ++(2,0) coordinate (n3)
+        to[C,l=$C_4$] ++(2,0) coordinate (n4)
+        -- ++(0.3,0);
+        \draw (n3) to[R,l_=$R_3$] ++(0,-1.8) node[ground]{};
+        \draw (n4) to[R,l_=$R_4$] ++(0,-1.8) node[ground]{};
+
+        \node[op amp, noinv input up] (op2) at (14.2,0) {};
+        \draw (n4) -- (op2.+);
+        \draw (op2.out) -- ++(0.8,0) node[right]{$v_o$};
+        \draw (op2.-) -- ++(-0.35,0) |- (op2.out);
+    \end{circuitikz}
+    \caption{Topología final adoptada para el filtro pasabanda.}
+    \label{fig:topologia_final}
+\end{figure}
+
+Los valores elegidos para el filtro final fueron:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+        \toprule
+        Etapa & Componente & Valor \\
+        \midrule
+        Pasabajos & $R_1=R_2$ & \SI{1.8}{k\ohm} \\
+        Pasabajos & $C_1=C_2$ & \SI{10}{nF} \\
+        Pasaaltos & $R_3=R_4$ & \SI{15}{k\ohm} \\
+        Pasaaltos & $C_3=C_4$ & \SI{100}{nF} \\
+        Buffers & U1A, U1B & TL082 \\
+        Alimentación & $+V$, $-V$ & $\pm\SI{12}{V}$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{Valores adoptados para el filtro final.}
+    \label{tab:valores_finales_filtro}
+\end{table}
+
+\subsection{Transferencia aproximada del filtro final}
+
+Cada bloque RC-RC se puede analizar como una red de segundo orden no ideal, ya que no existe un buffer entre los dos RC internos. Para dos resistencias y dos capacitores iguales, el pasabajos queda aproximado por:
+
+\begin{equation}
+    H_{PB}(s)=\frac{1}{(sRC)^2+3sRC+1}
+\end{equation}
+
+La red pasaaltos de dos RC en cascada presenta una forma análoga:
+
+\begin{equation}
+    H_{PA}(s)=\frac{(sRC)^2}{(sRC)^2+3sRC+1}
+\end{equation}
+
+Por lo tanto, la transferencia total aproximada del filtro final se expresa como:
+
+\begin{equation}
+    H(s)=H_{PB}(s)H_{PA}(s)
+\end{equation}
+
+La respuesta final fue ajustada y verificada mediante LTspice, ya que al no estar bufferizadas las dos celdas RC internas de cada bloque, las frecuencias de corte reales no coinciden exactamente con $1/(2\pi RC)$.
+
+\subsection{Esquemático en Altium}
+
+En la Figura~\ref{fig:esquematico_altium} se muestra el esquemático implementado en Altium. Se incluyeron entradas por conector, entrada por jack, salida por conector, bornera de alimentación y el circuito de filtrado con el TL082.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.98\textwidth]{\figpath esquematico_altium.png}
+    \caption{Esquemático del filtro final en Altium.}
+    \label{fig:esquematico_altium}
+\end{figure}

@@ -1,0 +1,31 @@
+\section{Resultados del filtro final}
+
+Una vez definido el diseño final, se simuló la respuesta en frecuencia y se comparó con mediciones realizadas en protoboard y en placa. La comparación permite evaluar tanto la validez del modelo como el efecto de la implementación física.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{\figpath bode_filtro_final.pdf}
+    \caption{Respuesta en frecuencia del filtro final: simulación, medición en protoboard y medición en placa.}
+    \label{fig:bode_filtro_final}
+\end{figure}
+
+Se observa el comportamiento pasabanda buscado: las bajas frecuencias son atenuadas por la etapa pasaaltos, mientras que las altas frecuencias son atenuadas por la etapa pasabajos. En la zona intermedia la atenuación es menor, por lo que el circuito permite conservar una parte importante del contenido asociado a la voz humana.
+
+Las diferencias entre simulación, protoboard y placa pueden deberse a:
+
+\begin{itemize}[itemsep=0.2em]
+    \item tolerancias de resistencias y capacitores;
+    \item capacitancias e inductancias parásitas del armado;
+    \item ruido de medición;
+    \item impedancia de salida del generador;
+    \item impedancia de entrada del instrumento de medición;
+    \item diferencias entre el modelo ideal del operacional y su comportamiento real.
+\end{itemize}
+
+\subsection{Comparación entre protoboard y placa}
+
+La medición en protoboard suele presentar mayor dispersión debido a contactos, cables y capacidades parásitas. En la placa final se espera una respuesta más repetible, ya que las pistas son más cortas y las conexiones se encuentran soldadas. Sin embargo, la placa también introduce sus propias parasitarias, especialmente si las pistas de entrada y salida quedan próximas o si no se dispone de un buen plano de referencia.
+
+\subsection{Criterio de cumplimiento}
+
+El producto se considera adecuado si conserva una banda útil para la voz y atenúa de forma apreciable las frecuencias por debajo y por encima de la banda de interés. Dado que se trata de un primer filtrado, no se busca eliminar completamente todo contenido fuera de banda, sino reducirlo lo suficiente para mejorar la selectividad del sistema.

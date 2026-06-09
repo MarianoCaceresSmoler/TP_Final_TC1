@@ -1,0 +1,9 @@
+\section{Conclusiones}
+
+Se logró desarrollar una herramienta en Python capaz de graficar datos temporales y diagramas de Bode provenientes de distintos instrumentos y simulaciones. La separación entre modo temporal y modo Bode permitió evitar errores de interpretación al superponer señales con distintos ejes físicos.
+
+En la etapa de simulación se verificó la importancia de incluir no idealidades, como la resistencia serie del inductor. Esta resistencia modifica el factor de calidad y puede explicar diferencias entre teoría, simulación y medición.
+
+En el diseño del filtro para voz se analizaron alternativas RLC y RC. Las alternativas RLC fueron descartadas para el diseño final debido a que, con inductores pequeños, las impedancias resultantes eran muy bajas y exigían corrientes elevadas al TL082. También se evaluó el uso de inductores de mayor valor, pero esta opción resultaba menos conveniente por disponibilidad y tamaño.
+
+Finalmente se adoptó un filtro pasabanda basado en redes RC y buffers con TL082. Esta solución presenta valores de componentes razonables, es más simple de implementar en PCB y cumple el objetivo de realizar un primer filtrado de la voz humana.
