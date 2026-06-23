@@ -8,7 +8,7 @@ La primera simulación corresponde al circuito RLC de la consigna. La fuente con
     \centering
     \begin{tikzpicture}[transform shape]
         % Fuente de entrada con signos + y - (v={$V_i$})
-        \draw (5, 1.5) to[square voltage source, v_={$V_i$}, american voltages] (5, -1.5);
+        \draw (5, 1.5) to[square voltage source, v_={$V_i$}, american voltages] (5, -2.5);
         
         % Resistencias superiores
         \draw (6.25, 1.5) to[american resistor, l={$R_i$}] (7.25, 1.5);
@@ -16,11 +16,12 @@ La primera simulación corresponde al circuito RLC de la consigna. La fuente con
         
         % Rama del capacitor y R2
         \draw (11.5, 1.25) to[capacitor, l={$C$}] (11.5, 0.25);
-        \draw (11.5, 0.25) to[american resistor, l={$R_2$}] (11.5, -1.5);
+        \draw (11.5, 0.25) to[american resistor, l={$R_2$}] (11.5, -2.5);
         
-        % Rama del inductor y R3
+        % Rama del inductor, Rl y R3
         \draw (13, 1.5) to[american inductor, l={$L$}] (13, -0);
-        \draw (13, -0) to[american resistor, l={$R_3$}] (13, -1.25);
+        \draw (13, 0) to[american resistor, l={$R_l$}] (13, -1.25);
+        \draw (13, -1.25) to[american resistor, l={$R_3$}] (13, -2.5);
         
         % Conexiones de cables (líneas horizontales y verticales)
         \draw (5, 1.5) -- (6.25, 1.5);
@@ -28,14 +29,14 @@ La primera simulación corresponde al circuito RLC de la consigna. La fuente con
         \draw (9.5, 1.5) -- (11.5, 1.5);
         \draw (11.5, 1.5) -| (11.5, 1.25);
         \draw (11.5, 1.5) -- (13, 1.5);
-        \draw (5, -1.5) -- (11.5, -1.5);
-        \draw (11.5, -1.5) -- (13, -1.5);
-        \draw (13, -1.25) -| (13, -1.5);
+        \draw (5, -2.5) -- (11.5, -2.5);
+        \draw (11.5, -2.5) -- (13, -2.5);
+        \draw (13, -2.5) -| (13, -2.5);
     
         % Extensión a la derecha para indicar Vo con sus signos + y - en paralelo
         \draw (13, 1.5) -- (14.5, 1.5) 
-              to[open, v={$V_o$}, american voltages] (14.5, -1.5) 
-              -- (13, -1.5);
+              to[open, v={$V_o$}, american voltages] (14.5, -2.5) 
+              -- (13, -2.5);
     \end{tikzpicture}
     \caption{Circuito utilizado para el análisis transitorio.}
     \label{fig:circuito_transitorio}
@@ -51,14 +52,18 @@ Los valores utilizados fueron:
     R_2=\SI{8.2}{\ohm}, \qquad R_3=\SI{6.8}{\ohm}, \qquad C=\SI{47}{nF}.
 \end{equation}
 
-En la simulación se agregó además la resistencia interna del generador y resistencias parásitas de los componentes cuando fue necesario, ya que influyen directamente en el amortiguamiento.
+Cabe aclarar que además de agregarse la resistencia interna del generador ($R_i=\SI{50}{\ohm}$), se incluyó la resistencia propia de la bobina ($R_l=\SI{14}{\ohm}$), ya que influye directamente en el amortiguamiento.
 
 \subsection{Modelo teórico}
 
-Durante cada intervalo en el que la llave permanece fija, el circuito se puede describir como un sistema lineal de segundo orden. La respuesta natural de una variable del circuito tiene la forma:
+El circuito se puede describir como un sistema lineal de segundo orden. La respuesta de una variable del circuito tiene la forma:
 
 \begin{equation}
-    x(t)=x_{\infty}+e^{-\alpha t}\left(A\cos(\omega_d t)+B\sin(\omega_d t)\right),
+    x(t)=x_{forzada}+x_{natural}(t)
+\end{equation}
+
+\begin{equation}
+\Rightarrow  x(t)=x_{\infty}+e^{-\alpha t}\left(A\cos(\omega_d t)+B\sin(\omega_d t)\right),
 \end{equation}
 
 si el caso es subamortiguado. La frecuencia amortiguada es:
@@ -81,23 +86,33 @@ El sobrepico se calcula comparando el máximo de la señal con el valor final:
 
 \subsection{Comparación entre simulación y medición}
 
-Los archivos medidos y simulados no poseen el mismo origen temporal. Por lo tanto, antes de compararlos se alineó cada señal con:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{\figpath transitorio_2_1_tensiones_comparacion_alineado.pdf}
+    \caption{Comparación entre transitorio medido y transitorio simulado, alineados temporalmente.}
+    \label{fig:transitorio_21_tensiones}
+\end{figure}
 
-\begin{equation}
-    t_{\mathrm{alineado}}=t-t_0.
-\end{equation}
+A partir de la figura \ref{fig:transitorio_21_tensiones} se observa que la señal medida experimentalmente sigue con notable precisión la morfología y los valores de la simulación de la rama completa ($L + R_3$). Durante los flancos de subida y bajada de la señal de entrada, se producen picos de tensión controlados por el comportamiento inductivo, alcanzando máximos cercanos a los $6\text{ V}$.La diferencia más crítica entre los modelos simulados radica en el estado estacionario (zonas planas de la onda): mientras que la tensión puramente inductiva decae por completo hasta $0\text{ V}$ debido a que un inductor ideal actúa como un cortocircuito en corriente continua, la curva experimental y la simulación de la rama completa se estabilizan en un valor constante no nulo de aproximadamente $1.7\text{ V}$. Esto demuestra empíricamente que la tensión de salida medida $V_o$ corresponde a la caída de potencial total de la rama paralela derecha del circuito, viéndose afectada directamente por la conducción de corriente sobre la resistencia $R_3$.
 
-Luego se aplicó un desplazamiento horizontal adicional para que los primeros máximos positivos coincidieran. Este procedimiento no modifica la forma ni la amplitud de las señales, solo permite comparar ambas respuestas en fase.
+En cuanto a los posibles errores y discrepancias, sobre todo se puede observar que la curva del osciloscopio muestra un ruido ausente en las simulaciones ideales, fenómeno propio de la interferencia electromagnética externa y el ruido de los componentes reales. Luego, existen ligeras diferencias en las amplitudes máximas y mínimas absolutas entre la señal real y la simulada, así como también hay pequeñas variaciones en los valores temporales del transitorio, lo que podría atribuirse a la tolerancia de los componentes utilizados. Sin embargo, la coincidencia entre los resultados obtenidos por simulación y por medición experimental es lo suficientemente buena como para validar el modelo teórico.
+
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.92\textwidth]{\figpath transitorio_2_1.pdf}
-    \caption{Comparación entre transitorio medido y transitorio simulado, alineados temporalmente.}
-    \label{fig:transitorio_21}
+    \includegraphics[width=0.92\textwidth]{\figpath transitorio_2_1_corriente_capacitor_simulada.pdf}
+    \caption{Corriente en el capacitor durante el transitorio, unicamente simulado.}
+    \label{fig:transitorio_21_corriente}
 \end{figure}
 
-Se observa que la simulación reproduce correctamente la forma general del transitorio. Las diferencias se atribuyen a tolerancias de los componentes, resistencia interna del generador, resistencia serie de la bobina, contactos de protoboard y ruido de medición. La medición presenta ruido superpuesto, mientras que la simulación ideal es suave.
+La figura \ref{fig:transitorio_21_corriente}  ilustra de forma exclusiva el comportamiento simulado en LTspice de la corriente que circula a través del capacitor en respuesta a la señal cuadrada de entrada. La curva describe una respuesta transitoria subamortiguada clásica de un circuito de segundo orden.
+
+Cuando la señal de entrada conmuta al estado alto, la corriente no cambia instantáneamente, pero que experimenta un crecimiento rápido hasta alcanzar un valor máximo sobreamortiguado de $85.68\text{ mA}$ a los $29.45\ \mu\text{s}$. Posteriormente, la corriente se estabiliza en un valor estacionario de aproximadamente $83\text{ mA}$.En el proceso de conmutación inversa (flanco de bajada), la corriente cae abruptamente buscando el valor cero, llegando a presentar un leve valor mínimo negativo de $-2.90\text{ mA}$ a los $129.33\ \mu\text{s}$ antes de asentarse por completo en $0\text{ mA}$.
+
+\subsection{Pseudofrecuencia de oscilación y valor máximo de sobrepico}
 
 \subsection{Caso ideal con resistencias nulas}
 
 Si las resistencias fueran nulas, el circuito no tendría disipación de energía. En un modelo ideal, la energía intercambiaría indefinidamente entre el capacitor y el inductor, obteniéndose una oscilación sin amortiguamiento. En la realidad esto no ocurre porque siempre existen resistencias parásitas: resistencia de cables, resistencia serie de inductores, resistencia interna de la fuente, pérdidas dieléctricas y pérdidas por contacto. Por lo tanto, aunque no se agreguen resistencias externas, el circuito real siempre presenta amortiguamiento.
+
+\subsection{Montecarlo de tolerancias}

@@ -31,7 +31,9 @@ Con $R=\SI{50}{\ohm}$, $L=\SI{1}{mH}$ y $C=\SI{82}{nF}$:
 \begin{equation}
     f_0\approx\SI{17.6}{kHz},
     \qquad
-    Q\approx 2.21.
+    Q\approx 2.21,
+    \qquad
+    B\approx \frac{f_0}{Q}\approx\SI{7.96}{kHz}.
 \end{equation}
 
 \subsection{Circuitos analizados}
@@ -41,8 +43,8 @@ Con $R=\SI{50}{\ohm}$, $L=\SI{1}{mH}$ y $C=\SI{82}{nF}$:
     \begin{subfigure}{0.48\textwidth}
         \centering
         \begin{circuitikz}[american, scale=0.82, transform shape]
-            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[L,l=$L$] (4,2.5) to[C,l=$C$] (4,0) node[ground]{};
-            \draw (4,2.5) to[open,v^=$v_o$] (4,0);
+            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[L,l=$L$] (4,2.5) to[C,l_=$C$] (4,0) node[ground]{};
+            \draw (5,2.5) to[open,v^=$v_o$] (5, 0);
         \end{circuitikz}
         \caption{Circuito 2.}
     \end{subfigure}
@@ -50,8 +52,8 @@ Con $R=\SI{50}{\ohm}$, $L=\SI{1}{mH}$ y $C=\SI{82}{nF}$:
     \begin{subfigure}{0.48\textwidth}
         \centering
         \begin{circuitikz}[american, scale=0.82, transform shape]
-            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[C,l=$C$] (4,2.5) to[L,l=$L$] (4,0) node[ground]{};
-            \draw (4,2.5) to[open,v^=$v_o$] (4,0);
+            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[C,l=$C$] (4,2.5) to[L,l_=$L$] (4,0) node[ground]{};
+            \draw (5,2.5) to[open,v^=$v_o$] (5, 0);
         \end{circuitikz}
         \caption{Circuito 3.}
     \end{subfigure}
@@ -60,8 +62,8 @@ Con $R=\SI{50}{\ohm}$, $L=\SI{1}{mH}$ y $C=\SI{82}{nF}$:
     \begin{subfigure}{0.48\textwidth}
         \centering
         \begin{circuitikz}[american, scale=0.82, transform shape]
-            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[L,l=$L$] (2,2.5) to[C,l=$C$] (4,2.5) to[R,l=$R$] (4,0) node[ground]{};
-            \draw (4,2.5) to[open,v^=$v_o$] (4,0);
+            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[L,l=$L$] (2,2.5) to[C,l=$C$] (4,2.5) to[R,l_=$R$] (4,0) node[ground]{};
+            \draw (5,2.5) to[open,v^=$v_o$] (5, 0);
         \end{circuitikz}
         \caption{Circuito 4.}
     \end{subfigure}
@@ -69,8 +71,8 @@ Con $R=\SI{50}{\ohm}$, $L=\SI{1}{mH}$ y $C=\SI{82}{nF}$:
     \begin{subfigure}{0.48\textwidth}
         \centering
         \begin{circuitikz}[american, scale=0.82, transform shape]
-            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[L,l=$L$] (4,2.5) to[C,l=$C$] (4,0) node[ground]{};
-            \draw (2,2.5) to[open,v^=$v_o$] (2,0);
+            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[L,l=$L$] (4,2.5) to[C,l_=$C$] (4,0) node[ground]{};
+            \draw (5,2.5) to[open,v^=$v_o$] (5, 0);
         \end{circuitikz}
         \caption{Circuito 5.}
     \end{subfigure}
