@@ -1,14 +1,14 @@
 \appendix
 \section{Archivos incluidos}
 
-El proyecto entregado incluye los siguientes directorios:
+El proyecto se organiza en los siguientes directorios:
 
-\begin{itemize}
+\begin{itemize}[itemsep=0.2em]
     \item \texttt{tex/}: secciones del informe en \LaTeX.
-    \item \texttt{figuras/}: gráficos generados y capturas utilizadas en el informe.
-    \item \texttt{data/}: archivos CSV medidos y simulados.
+    \item \texttt{figuras/}: gráficos generados, capturas y circuitos utilizados en el informe.
+    \item \texttt{data/}: archivos CSV experimentales y simulados.
     \item \texttt{ltspice/}: archivos \texttt{.asc} de LTspice.
-    \item \texttt{codigo/}: código de la interfaz gráfica en Python.
+    \item \texttt{codigo/}: código fuente de la GUI.
 \end{itemize}
 
 \section{Archivos de LTspice relevantes}
@@ -19,30 +19,38 @@ El proyecto entregado incluye los siguientes directorios:
         \toprule
         Archivo & Descripción \\
         \midrule
-        \texttt{opcionA.asc} & Alternativa mixta RLC y RC con buffer. \\
+        \texttt{2\_1.asc} & Simulación del transitorio RLC. \\
+        \texttt{2\_2.asc} & Simulación de filtros de segundo orden. \\
+        \texttt{opcionA.asc} & Alternativa RLC + RC-RC con buffer. \\
         \texttt{opcionB.asc} & Alternativa con dos etapas RLC y buffer. \\
-        \texttt{filtroFINAL.asc} & Filtro RC final implementado para PCB. \\
-        \texttt{2\_1.asc} & Simulación transitoria. \\
-        \texttt{2\_2.asc} & Simulación de respuesta en frecuencia. \\
+        \texttt{filtroFINAL.asc} & Filtro final RC-RC con buffers. \\
         \bottomrule
     \end{tabular}
-    \caption{Archivos de simulación incluidos en el proyecto.}
+    \caption{Archivos de simulación incluidos.}
 \end{table}
 
-\section{Código de la interfaz}
+\section{Archivos de datos}
 
-El código completo de la interfaz se encuentra en:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        Archivo & Uso en el informe \\
+        \midrule
+        \texttt{2\_1\_osciloscopio.csv} & Transitorio medido. \\
+        \texttt{2\_1\_simulado.csv} & Transitorio simulado. \\
+        \texttt{2\_2\_2\_osciloscopio.csv} & Bode medido del Circuito 2. \\
+        \texttt{2\_2\_2\_simulado.csv} & Bode simulado del Circuito 2. \\
+        \texttt{2\_2\_5\_osciloscopio.csv} & Bode medido del Circuito 5. \\
+        \texttt{2\_2\_5\_simuladoCONrl.csv} & Bode simulado del Circuito 5 con resistencia serie. \\
+        \texttt{bodeFiltroFinalsimulado.csv} & Bode simulado del filtro final. \\
+        \texttt{bodeFiltroRealProtoboard.csv} & Bode medido en protoboard. \\
+        \texttt{bodeFiltroRealPlaca.csv} & Bode medido en placa. \\
+        \bottomrule
+    \end{tabular}
+    \caption{Datos experimentales y simulados incluidos.}
+\end{table}
 
-\begin{center}
-    \texttt{codigo/gui\_tc1\_user\_friendly\_pdf.py}
-\end{center}
+\section{GUI}
 
-La interfaz puede ejecutarse con:
-
-\begin{lstlisting}[style=pythonstyle]
-py codigo/gui_tc1_user_friendly_pdf.py
-\end{lstlisting}
-
-\section{Datos experimentales y simulados}
-
-Los archivos CSV utilizados para generar los gráficos del informe se encuentran en la carpeta \texttt{data/}. En particular, se incluyeron datos de transitorios, respuesta en frecuencia de circuitos de segundo orden y respuesta en frecuencia del filtro final medido en protoboard y en placa.
+El código fuente de la interfaz se entrega dentro de \texttt{codigo/}. En la entrega final se utilizará un ejecutable generado a partir de dicho código, por lo que no se incluyen instrucciones de compilación o instalación en este informe.

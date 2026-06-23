@@ -1,22 +1,82 @@
 \section{Análisis transitorio}
 
-En esta sección se comparó la respuesta temporal obtenida mediante simulación en LTspice con la respuesta medida en el osciloscopio. Para poder superponer ambas curvas fue necesario alinear los ejes temporales, debido a que el archivo del osciloscopio no comenzaba en $t=0$ sino en el instante absoluto registrado por el instrumento. Por este motivo se utilizó:
+La primera simulación corresponde al circuito RLC de la consigna. La fuente conmuta entre \SI{0}{V} y \SI{10}{V}, y se observa la tensión $v_o(t)$ sobre la rama del inductor.
+
+\subsection{Circuito analizado}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[american]
+        \draw
+        (0,0) node[ground]{} to[V,l=$V_i$] (0,3)
+        to[R,l=$R_1$] (2.2,3)
+        to[spst,l={llave}] (4,3)
+        -- (5.4,3) coordinate(top);
+        \draw (top) to[C,l=$C$] ++(0,-1.5) to[R,l=$R_2$] ++(0,-1.5) node[ground]{};
+        \draw (top) -- ++(2,0) coordinate(topL) to[L,l=$L$] ++(0,-1.5) to[R,l=$R_3$] ++(0,-1.5) node[ground]{};
+        \draw (topL) to[open,v^=$v_o$] ++(0,-3);
+    \end{circuitikz}
+    \caption{Circuito utilizado para el análisis transitorio.}
+    \label{fig:circuito_transitorio}
+\end{figure}
+
+Los valores utilizados fueron:
 
 \begin{equation}
-    t_{\text{alineado}}=t-t_0
+    V_i=\SI{10}{V}, \qquad L=\SI{1}{mH}, \qquad R_1=\SI{50}{\ohm},
 \end{equation}
 
-De esta manera, la primera muestra de cada archivo queda ubicada en $t=0$ y se pueden comparar directamente las formas de onda.
+\begin{equation}
+    R_2=\SI{8.2}{\ohm}, \qquad R_3=\SI{6.8}{\ohm}, \qquad C=\SI{47}{nF}.
+\end{equation}
+
+En la simulación se agregó además la resistencia interna del generador y resistencias parásitas de los componentes cuando fue necesario, ya que influyen directamente en el amortiguamiento.
+
+\subsection{Modelo teórico}
+
+Durante cada intervalo en el que la llave permanece fija, el circuito se puede describir como un sistema lineal de segundo orden. La respuesta natural de una variable del circuito tiene la forma:
+
+\begin{equation}
+    x(t)=x_{\infty}+e^{-\alpha t}\left(A\cos(\omega_d t)+B\sin(\omega_d t)\right),
+\end{equation}
+
+si el caso es subamortiguado. La frecuencia amortiguada es:
+
+\begin{equation}
+    \omega_d=\sqrt{\omega_0^2-\alpha^2}.
+\end{equation}
+
+La pseudofrecuencia observada en el osciloscopio se obtiene a partir del período entre máximos sucesivos:
+
+\begin{equation}
+    f_d=\frac{1}{T_d}.
+\end{equation}
+
+El sobrepico se calcula comparando el máximo de la señal con el valor final:
+
+\begin{equation}
+    M_p=\frac{V_{\max}-V_f}{|V_f|}\cdot 100\%.
+\end{equation}
+
+\subsection{Comparación entre simulación y medición}
+
+Los archivos medidos y simulados no poseen el mismo origen temporal. Por lo tanto, antes de compararlos se alineó cada señal con:
+
+\begin{equation}
+    t_{\mathrm{alineado}}=t-t_0.
+\end{equation}
+
+Luego se aplicó un desplazamiento horizontal adicional para que los primeros máximos positivos coincidieran. Este procedimiento no modifica la forma ni la amplitud de las señales, solo permite comparar ambas respuestas en fase.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.92\textwidth]{\figpath transitorio_2_1.pdf}
-    \caption{Comparación entre transitorio medido con osciloscopio y transitorio simulado en LTspice.}
+    \caption{Comparación entre transitorio medido y transitorio simulado, alineados temporalmente.}
     \label{fig:transitorio_21}
 \end{figure}
 
-Se observa que la simulación reproduce la forma general del transitorio medido. Las diferencias entre ambas curvas pueden atribuirse a las tolerancias de los componentes, a resistencias parásitas no modeladas, a la resistencia interna del generador y a la carga introducida por las puntas del osciloscopio. Además, en el archivo experimental se observa ruido de medición que no aparece en la simulación ideal.
+Se observa que la simulación reproduce correctamente la forma general del transitorio. Las diferencias se atribuyen a tolerancias de los componentes, resistencia interna del generador, resistencia serie de la bobina, contactos de protoboard y ruido de medición. La medición presenta ruido superpuesto, mientras que la simulación ideal es suave.
 
-\subsection{Comentarios sobre el modelo}
+\subsection{Caso ideal con resistencias nulas}
 
-Para lograr una comparación más realista, en LTspice se incluyeron resistencias asociadas a los componentes cuando fue necesario. En particular, el inductor real presenta una resistencia serie que modifica el amortiguamiento del circuito, por lo que su inclusión mejora la correspondencia entre simulación y medición.
+Si las resistencias fueran nulas, el circuito no tendría disipación de energía. En un modelo ideal, la energía intercambiaría indefinidamente entre el capacitor y el inductor, obteniéndose una oscilación sin amortiguamiento. En la realidad esto no ocurre porque siempre existen resistencias parásitas: resistencia de cables, resistencia serie de inductores, resistencia interna de la fuente, pérdidas dieléctricas y pérdidas por contacto. Por lo tanto, aunque no se agreguen resistencias externas, el circuito real siempre presenta amortiguamiento.

@@ -7,15 +7,16 @@ Opcional para drag & drop:
     py -m pip install tkinterdnd2
 
 Ejecución:
-    py gui_tc1_user_friendly.py
+    py gui_tc1_modo_bode_mejorado.py
 
-Características principales:
-- Modo TIEMPO: superpone varios CSV temporales, cada canal con escala Y, offset Y y offset X.
-- Modo BODE: grafica magnitud [dB] y fase [°] vs frecuencia [Hz] en escala logarítmica.
-- No permite mezclar Bode con tiempo sin avisar: pregunta si querés limpiar y cambiar de modo.
-- Cursores por canal con Y automática, comparación ΔX/ΔY y movimiento con mouse/flechas.
-- Desplazamiento temporal de canales con mouse, flechas o entrada por teclado.
-- Modo XY para señales temporales.
+Características:
+- Modo exclusivo: TIEMPO o BODE. No mezcla ambos sin preguntar.
+- Modo TIEMPO: superposición de varios CSV, escala Y, offset Y, offset X, alineación a t=0.
+- Modo BODE: magnitud [dB] y fase [°] vs frecuencia [Hz] con eje logarítmico.
+- Menú izquierdo en pestañas para que no quede todo apretado.
+- Cursores en modo TIEMPO y BODE con Y automática, tabla y comparación ΔX/ΔY.
+- Cambio de color por canal desde una tabla clara.
+- Exportación del gráfico actual a PDF.
 """
 
 from __future__ import annotations
@@ -25,10 +26,10 @@ import os
 import re
 import tkinter as tk
 from dataclasses import dataclass
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 from tkinter import colorchooser, filedialog, messagebox, ttk
-from typing import Optional, Literal
+from typing import Literal, Optional
 
 import matplotlib
 matplotlib.use("TkAgg")
@@ -47,17 +48,19 @@ except Exception:
     TkinterDnD = None
     DND_FILES = None
 
+
 AppMode = Literal["empty", "time", "bode"]
 ChannelKind = Literal["time", "bode_mag", "bode_phase"]
 
 X_UNITS = {"s": 1.0, "ms": 1e3, "us": 1e6, "µs": 1e6, "ns": 1e9}
 Y_UNITS = {"V": 1.0, "mV": 1e3}
+# Colores en formato HEX.
+# Tkinter no entiende nombres de Matplotlib como "tab:blue" en el selector de color,
+# por eso usamos HEX: sirven tanto para Tkinter como para Matplotlib.
 DEFAULT_COLORS = [
-    "tab:blue", "tab:orange", "tab:green", "tab:red",
-    "tab:purple", "tab:brown", "tab:pink", "tab:gray",
-    "tab:olive", "tab:cyan",
+    "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+    "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
 ]
-
 
 @dataclass
 class ChannelData:
@@ -90,8 +93,8 @@ class TC1CSVGUI:
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("TC1 - Graficador CSV")
-        self.root.geometry("1450x880")
-        self.root.minsize(1180, 720)
+        self.root.geometry("1500x900")
+        self.root.minsize(1220, 760)
 
         self.mode: AppMode = "empty"
         self.channels: dict[str, ChannelData] = {}
@@ -105,13 +108,15 @@ class TC1CSVGUI:
         self.dragging_channel_shift = False
         self.last_shift_x: Optional[float] = None
 
+        self.bode_axes: dict[str, object] = {}
+
         self._build_vars()
         self._build_layout()
         self._connect_events()
         self._plot_empty()
 
     # ------------------------------------------------------------------
-    # UI
+    # Construcción de interfaz
     # ------------------------------------------------------------------
     def _build_vars(self) -> None:
         self.title_var = tk.StringVar(value="Datos del osciloscopio")
@@ -119,6 +124,7 @@ class TC1CSVGUI:
         self.ylabel_var = tk.StringVar(value="Tensión")
         self.x_unit_var = tk.StringVar(value="µs")
         self.y_unit_var = tk.StringVar(value="V")
+
         self.grid_var = tk.BooleanVar(value=True)
         self.align_time_var = tk.BooleanVar(value=True)
         self.log_x_var = tk.BooleanVar(value=False)
@@ -127,9 +133,14 @@ class TC1CSVGUI:
         self.grid_y_step_var = tk.StringVar(value="")
         self.mark_max_var = tk.BooleanVar(value=False)
         self.mark_min_var = tk.BooleanVar(value=False)
+
         self.xy_mode_var = tk.BooleanVar(value=False)
         self.xy_x_var = tk.StringVar(value="")
         self.xy_y_var = tk.StringVar(value="")
+
+        self.shift_mode_var = tk.BooleanVar(value=False)
+        self.shift_channel_var = tk.StringVar(value="")
+        self.shift_x_var = tk.StringVar(value="0")
 
         self.cursor_add_mode = tk.BooleanVar(value=False)
         self.cursor_move_mode = tk.BooleanVar(value=False)
@@ -138,189 +149,44 @@ class TC1CSVGUI:
         self.cursor_y_var = tk.StringVar(value="")
         self.cursor_ref_var = tk.StringVar(value="Ninguno")
 
-        self.shift_mode_var = tk.BooleanVar(value=False)
-        self.shift_channel_var = tk.StringVar(value="")
-        self.shift_x_var = tk.StringVar(value="0")
+        self.channel_enabled_var = tk.BooleanVar(value=True)
+        self.channel_scale_var = tk.StringVar(value="1")
+        self.channel_oy_var = tk.StringVar(value="0")
+        self.channel_ox_var = tk.StringVar(value="0")
 
         self.status_var = tk.StringVar(value="Cargá o arrastrá uno o más CSV")
         self.mode_var = tk.StringVar(value="Modo: vacío")
 
     def _build_layout(self) -> None:
-        main = ttk.Frame(self.root, padding=8)
-        main.pack(fill=tk.BOTH, expand=True)
+        main = ttk.PanedWindow(self.root, orient=tk.HORIZONTAL)
+        main.pack(fill=tk.BOTH, expand=True, padx=8, pady=8)
 
-        left_container = ttk.Frame(main)
-        left_container.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 8))
-
+        left = ttk.Frame(main, width=500)
         right = ttk.Frame(main)
-        right.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        main.add(left, weight=0)
+        main.add(right, weight=1)
 
-        self.left_canvas = tk.Canvas(left_container, width=390, highlightthickness=0)
-        self.left_scroll = ttk.Scrollbar(left_container, orient="vertical", command=self.left_canvas.yview)
-        self.left = ttk.Frame(self.left_canvas)
-        self.left.bind("<Configure>", lambda _e: self.left_canvas.configure(scrollregion=self.left_canvas.bbox("all")))
-        self.left_canvas.create_window((0, 0), window=self.left, anchor="nw")
-        self.left_canvas.configure(yscrollcommand=self.left_scroll.set)
-        self.left_canvas.pack(side=tk.LEFT, fill=tk.Y, expand=False)
-        self.left_scroll.pack(side=tk.RIGHT, fill=tk.Y)
-        self.left_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+        # Notebook lateral: evita una columna interminable.
+        self.tabs = ttk.Notebook(left)
+        self.tabs.pack(fill=tk.BOTH, expand=True)
 
-        # Archivo
-        file_box = ttk.LabelFrame(self.left, text="1. Archivos")
-        file_box.pack(fill=tk.X, pady=(0, 8))
-        ttk.Button(file_box, text="Agregar CSV", command=self.open_files).pack(fill=tk.X, padx=8, pady=(8, 4))
-        ttk.Button(file_box, text="Limpiar todo", command=self.clear_all).pack(fill=tk.X, padx=8, pady=4)
-        ttk.Button(file_box, text="Guardar gráfico como PDF", command=self.export_pdf).pack(fill=tk.X, padx=8, pady=(0, 6))
-        ttk.Label(file_box, textvariable=self.mode_var, font=("Segoe UI", 9, "bold")).pack(anchor="w", padx=8, pady=(4, 2))
-        self.file_label = ttk.Label(file_box, text="Sin archivos cargados", wraplength=340)
-        self.file_label.pack(fill=tk.X, padx=8, pady=(0, 8))
-        if DND_AVAILABLE:
-            self.root.drop_target_register(DND_FILES)
-            self.root.dnd_bind("<<Drop>>", self._on_drop)
-            ttk.Label(file_box, text="También podés arrastrar CSV a cualquier parte de la ventana.", wraplength=340).pack(fill=tk.X, padx=8, pady=(0, 8))
-        else:
-            ttk.Label(file_box, text="Drag & drop desactivado. Instalá: py -m pip install tkinterdnd2", wraplength=340).pack(fill=tk.X, padx=8, pady=(0, 8))
+        self.tab_files = ttk.Frame(self.tabs, padding=8)
+        self.tab_plot = ttk.Frame(self.tabs, padding=8)
+        self.tab_channels = ttk.Frame(self.tabs, padding=8)
+        self.tab_cursors = ttk.Frame(self.tabs, padding=8)
 
-        # Título/ejes
-        labels_box = ttk.LabelFrame(self.left, text="2. Título, ejes y modo de gráfico")
-        labels_box.pack(fill=tk.X, pady=(0, 8))
-        self._entry(labels_box, "Título", self.title_var)
-        self._entry(labels_box, "Eje X", self.xlabel_var)
-        self._entry(labels_box, "Eje Y", self.ylabel_var)
-        units_frame = ttk.Frame(labels_box)
-        units_frame.pack(fill=tk.X, padx=8, pady=4)
-        ttk.Label(units_frame, text="Unidad X").grid(row=0, column=0, sticky="w")
-        ttk.OptionMenu(units_frame, self.x_unit_var, self.x_unit_var.get(), *X_UNITS.keys(), command=lambda _=None: self._unit_changed()).grid(row=0, column=1, sticky="ew", padx=4)
-        ttk.Label(units_frame, text="Unidad Y").grid(row=1, column=0, sticky="w")
-        ttk.OptionMenu(units_frame, self.y_unit_var, self.y_unit_var.get(), *Y_UNITS.keys(), command=lambda _=None: self.update_plot()).grid(row=1, column=1, sticky="ew", padx=4)
-        units_frame.columnconfigure(1, weight=1)
-        ttk.Checkbutton(labels_box, text="Modo XY / Lissajous", variable=self.xy_mode_var, command=self._toggle_xy).pack(anchor="w", padx=8, pady=(4, 2))
-        xy_frame = ttk.Frame(labels_box)
-        xy_frame.pack(fill=tk.X, padx=8, pady=(0, 8))
-        ttk.Label(xy_frame, text="X").grid(row=0, column=0, sticky="w")
-        self.xy_x_menu = ttk.OptionMenu(xy_frame, self.xy_x_var, "")
-        self.xy_x_menu.grid(row=0, column=1, sticky="ew", padx=4)
-        ttk.Label(xy_frame, text="Y").grid(row=1, column=0, sticky="w")
-        self.xy_y_menu = ttk.OptionMenu(xy_frame, self.xy_y_var, "")
-        self.xy_y_menu.grid(row=1, column=1, sticky="ew", padx=4)
-        xy_frame.columnconfigure(1, weight=1)
+        self.tabs.add(self.tab_files, text="Archivos")
+        self.tabs.add(self.tab_plot, text="Gráfico")
+        self.tabs.add(self.tab_channels, text="Canales")
+        self.tabs.add(self.tab_cursors, text="Cursores")
 
-        # Visualización
-        view_box = ttk.LabelFrame(self.left, text="3. Visualización")
-        view_box.pack(fill=tk.X, pady=(0, 8))
-        ttk.Checkbutton(view_box, text="Mostrar grilla", variable=self.grid_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
-        ttk.Checkbutton(view_box, text="Alinear cada CSV temporal a t = 0", variable=self.align_time_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
-        self._entry(view_box, "Paso grilla X", self.grid_x_step_var)
-        self._entry(view_box, "Paso grilla Y", self.grid_y_step_var)
-        ttk.Checkbutton(view_box, text="Escala logarítmica X", variable=self.log_x_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
-        ttk.Checkbutton(view_box, text="Escala logarítmica Y", variable=self.log_y_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
-        ttk.Checkbutton(view_box, text="Marcar máximos", variable=self.mark_max_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
-        ttk.Checkbutton(view_box, text="Marcar mínimos", variable=self.mark_min_var, command=self.update_plot).pack(anchor="w", padx=8, pady=(2, 8))
+        self._build_files_tab()
+        self._build_plot_tab()
+        self._build_channels_tab()
+        self._build_cursors_tab()
 
-        # Ajuste X
-        shift_box = ttk.LabelFrame(self.left, text="4. Ajuste temporal / fase")
-        shift_box.pack(fill=tk.X, pady=(0, 8))
-        ttk.Checkbutton(shift_box, text="Mover canal seleccionado", variable=self.shift_mode_var, command=self._toggle_shift_mode).pack(anchor="w", padx=8, pady=(6, 2))
-        row = ttk.Frame(shift_box)
-        row.pack(fill=tk.X, padx=8, pady=2)
-        ttk.Label(row, text="Canal").grid(row=0, column=0, sticky="w")
-        self.shift_channel_menu = ttk.OptionMenu(row, self.shift_channel_var, "")
-        self.shift_channel_menu.grid(row=0, column=1, sticky="ew", padx=4)
-        row.columnconfigure(1, weight=1)
-        row2 = ttk.Frame(shift_box)
-        row2.pack(fill=tk.X, padx=8, pady=2)
-        ttk.Label(row2, text="Offset X").grid(row=0, column=0, sticky="w")
-        self.shift_x_entry = ttk.Entry(row2, textvariable=self.shift_x_var, width=12)
-        self.shift_x_entry.grid(row=0, column=1, sticky="ew", padx=4)
-        self.shift_x_unit_label = ttk.Label(row2, text="µs")
-        self.shift_x_unit_label.grid(row=0, column=2, sticky="w")
-        ttk.Button(row2, text="Aplicar", command=self._apply_shift_entry).grid(row=0, column=3, padx=(6, 0))
-        row2.columnconfigure(1, weight=1)
-        ttk.Label(
-            shift_box,
-            text="Mouse: arrastrá horizontalmente. Flechas: una muestra. Shift+flecha: 10 muestras. Ctrl+flecha: 0,1 muestra.",
-            wraplength=340,
-        ).pack(fill=tk.X, padx=8, pady=(2, 8))
-
-        # Cursores
-        cursor_box = ttk.LabelFrame(self.left, text="5. Cursores")
-        cursor_box.pack(fill=tk.X, pady=(0, 8))
-        ttk.Checkbutton(cursor_box, text="Agregar cursor con clic", variable=self.cursor_add_mode, command=self._toggle_cursor_add).pack(anchor="w", padx=8, pady=2)
-        ttk.Checkbutton(cursor_box, text="Mover cursor seleccionado", variable=self.cursor_move_mode, command=self._toggle_cursor_move).pack(anchor="w", padx=8, pady=2)
-        row = ttk.Frame(cursor_box)
-        row.pack(fill=tk.X, padx=8, pady=2)
-        ttk.Label(row, text="Canal").grid(row=0, column=0, sticky="w")
-        self.cursor_channel_menu = ttk.OptionMenu(row, self.cursor_channel_var, "")
-        self.cursor_channel_menu.grid(row=0, column=1, sticky="ew", padx=4)
-        row.columnconfigure(1, weight=1)
-        coords = ttk.Frame(cursor_box)
-        coords.pack(fill=tk.X, padx=8, pady=2)
-        ttk.Label(coords, text="X").grid(row=0, column=0, sticky="w")
-        ttk.Entry(coords, textvariable=self.cursor_x_var, width=12).grid(row=0, column=1, sticky="ew", padx=4)
-        ttk.Label(coords, text="Y auto").grid(row=0, column=2, sticky="w")
-        ttk.Label(coords, textvariable=self.cursor_y_var, relief=tk.SUNKEN, anchor="e", width=12).grid(row=0, column=3, sticky="ew", padx=4)
-        coords.columnconfigure(1, weight=1)
-        coords.columnconfigure(3, weight=1)
-        row = ttk.Frame(cursor_box)
-        row.pack(fill=tk.X, padx=8, pady=2)
-        ttk.Label(row, text="Comparar").grid(row=0, column=0, sticky="w")
-        self.cursor_ref_menu = ttk.OptionMenu(row, self.cursor_ref_var, "Ninguno")
-        self.cursor_ref_menu.grid(row=0, column=1, sticky="ew", padx=4)
-        row.columnconfigure(1, weight=1)
-        btns = ttk.Frame(cursor_box)
-        btns.pack(fill=tk.X, padx=8, pady=4)
-        ttk.Button(btns, text="Agregar", command=self._add_cursor_from_entry).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 2))
-        ttk.Button(btns, text="Actualizar", command=self._update_selected_cursor_from_entry).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
-        ttk.Button(btns, text="Borrar", command=self._delete_selected_cursor).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(2, 0))
-        self.cursor_tree = ttk.Treeview(cursor_box, columns=("canal", "x", "y", "dx", "dy"), show="headings", height=6)
-        for col, title, width in [("canal", "Canal", 120), ("x", "X", 64), ("y", "Y", 64), ("dx", "ΔX", 64), ("dy", "ΔY", 64)]:
-            self.cursor_tree.heading(col, text=title)
-            self.cursor_tree.column(col, width=width, stretch=(col == "canal"))
-        self.cursor_tree.pack(fill=tk.X, padx=8, pady=(0, 8))
-        self.cursor_tree.bind("<<TreeviewSelect>>", self._on_cursor_select)
-
-        # Canales
-        channel_box = ttk.LabelFrame(self.left, text="6. Canales")
-        channel_box.pack(fill=tk.BOTH, expand=True, pady=(0, 8))
-        self.channel_tree = ttk.Treeview(channel_box, columns=("on", "tipo", "scale", "oy", "ox"), show="tree headings", height=10)
-        self.channel_tree.heading("#0", text="Canal")
-        self.channel_tree.heading("on", text="On")
-        self.channel_tree.heading("tipo", text="Tipo")
-        self.channel_tree.heading("scale", text="Esc Y")
-        self.channel_tree.heading("oy", text="Off Y")
-        self.channel_tree.heading("ox", text="Off X")
-        self.channel_tree.column("#0", width=150, stretch=True)
-        for c in ("on", "tipo", "scale", "oy", "ox"):
-            self.channel_tree.column(c, width=52, stretch=False)
-        self.channel_tree.pack(fill=tk.BOTH, expand=True, padx=8, pady=(8, 4))
-        self.channel_tree.bind("<<TreeviewSelect>>", self._on_channel_select)
-        self.channel_tree.bind("<Double-1>", self._toggle_selected_channel_enabled)
-
-        edit = ttk.Frame(channel_box)
-        edit.pack(fill=tk.X, padx=8, pady=(0, 8))
-        ttk.Label(edit, text="Editar canal seleccionado", font=("Segoe UI", 9, "bold")).grid(row=0, column=0, columnspan=4, sticky="w", pady=(0, 2))
-        self.channel_enabled_var = tk.BooleanVar(value=True)
-        self.channel_scale_var = tk.StringVar(value="1")
-        self.channel_oy_var = tk.StringVar(value="0")
-        self.channel_ox_var = tk.StringVar(value="0")
-        ttk.Checkbutton(edit, text="Visible", variable=self.channel_enabled_var, command=self._apply_channel_editor).grid(row=1, column=0, sticky="w")
-        ttk.Button(edit, text="Color", command=self._choose_selected_color).grid(row=1, column=1, sticky="ew", padx=3)
-        ttk.Button(edit, text="Aplicar", command=self._apply_channel_editor).grid(row=1, column=2, columnspan=2, sticky="ew", padx=3)
-        ttk.Label(edit, text="Escala Y").grid(row=2, column=0, sticky="w")
-        ttk.Entry(edit, textvariable=self.channel_scale_var, width=8).grid(row=2, column=1, sticky="ew", padx=3)
-        ttk.Label(edit, text="Offset Y").grid(row=2, column=2, sticky="w")
-        ttk.Entry(edit, textvariable=self.channel_oy_var, width=8).grid(row=2, column=3, sticky="ew", padx=3)
-        ttk.Label(edit, text="Offset X").grid(row=3, column=0, sticky="w")
-        ttk.Entry(edit, textvariable=self.channel_ox_var, width=8).grid(row=3, column=1, sticky="ew", padx=3)
-        self.channel_ox_unit_label = ttk.Label(edit, text="µs")
-        self.channel_ox_unit_label.grid(row=3, column=2, sticky="w")
-        ttk.Button(edit, text="Reset canal", command=self._reset_selected_channel).grid(row=3, column=3, sticky="ew", padx=3)
-        for i in range(4):
-            edit.columnconfigure(i, weight=1)
-
-        ttk.Label(self.left, textvariable=self.status_var, wraplength=360, foreground="#333").pack(fill=tk.X, pady=(0, 8))
-
-        self.fig = Figure(figsize=(9, 6), dpi=100)
+        # Área de gráfico.
+        self.fig = Figure(figsize=(9.2, 6.2), dpi=100)
         self.ax = self.fig.add_subplot(111)
         self.canvas = FigureCanvasTkAgg(self.fig, master=right)
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
@@ -328,20 +194,199 @@ class TC1CSVGUI:
         toolbar_frame.pack(fill=tk.X)
         self.toolbar = NavigationToolbar2Tk(self.canvas, toolbar_frame)
         self.toolbar.update()
+        self._set_mode_widgets()
 
-    def _on_mousewheel(self, event) -> None:
-        try:
-            self.left_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
-        except Exception:
-            pass
+    def _build_files_tab(self) -> None:
+        ttk.Button(self.tab_files, text="Agregar CSV", command=self.open_files).pack(fill=tk.X, pady=(0, 6))
+        ttk.Button(self.tab_files, text="Limpiar todo", command=self.clear_all).pack(fill=tk.X, pady=6)
+        ttk.Button(self.tab_files, text="Guardar gráfico como PDF", command=self.export_pdf).pack(fill=tk.X, pady=6)
 
-    def _entry(self, parent: ttk.Frame, label: str, var: tk.StringVar) -> None:
-        frame = ttk.Frame(parent)
-        frame.pack(fill=tk.X, padx=8, pady=3)
-        ttk.Label(frame, text=label, width=13).pack(side=tk.LEFT)
-        ent = ttk.Entry(frame, textvariable=var)
+        ttk.Separator(self.tab_files).pack(fill=tk.X, pady=10)
+        ttk.Label(self.tab_files, textvariable=self.mode_var, font=("Segoe UI", 10, "bold")).pack(anchor="w")
+        self.file_label = ttk.Label(self.tab_files, text="Sin archivos cargados", wraplength=450)
+        self.file_label.pack(fill=tk.X, pady=(4, 10))
+
+        msg = "También podés arrastrar CSV a cualquier parte de la ventana."
+        if not DND_AVAILABLE:
+            msg = "Drag & drop desactivado. Instalá: py -m pip install tkinterdnd2"
+        ttk.Label(self.tab_files, text=msg, wraplength=450).pack(fill=tk.X)
+
+        ttk.Separator(self.tab_files).pack(fill=tk.X, pady=10)
+        ttk.Label(
+            self.tab_files,
+            text=(
+                "La aplicación trabaja en modo exclusivo: si cargás un Bode, solo se superponen Bodes; "
+                "si cargás señales temporales, solo se superponen señales temporales."
+            ),
+            wraplength=450,
+        ).pack(fill=tk.X)
+        ttk.Label(self.tab_files, textvariable=self.status_var, wraplength=450, foreground="#333").pack(fill=tk.X, pady=(12, 0))
+
+        if DND_AVAILABLE:
+            self.root.drop_target_register(DND_FILES)
+            self.root.dnd_bind("<<Drop>>", self._on_drop)
+
+    def _build_plot_tab(self) -> None:
+        # Título común.
+        common = ttk.LabelFrame(self.tab_plot, text="Título")
+        common.pack(fill=tk.X, pady=(0, 8))
+        self._entry(common, "Título", self.title_var)
+
+        # Opciones específicas para señales temporales.
+        self.time_options = ttk.LabelFrame(self.tab_plot, text="Modo tiempo")
+        self.time_options.pack(fill=tk.X, pady=(0, 8))
+        self._entry(self.time_options, "Eje X", self.xlabel_var)
+        self._entry(self.time_options, "Eje Y", self.ylabel_var)
+        units = ttk.Frame(self.time_options)
+        units.pack(fill=tk.X, padx=8, pady=4)
+        ttk.Label(units, text="Unidad X", width=12).grid(row=0, column=0, sticky="w")
+        ttk.OptionMenu(units, self.x_unit_var, self.x_unit_var.get(), *X_UNITS.keys(), command=lambda _=None: self._unit_changed()).grid(row=0, column=1, sticky="ew", padx=4)
+        ttk.Label(units, text="Unidad Y", width=12).grid(row=1, column=0, sticky="w")
+        ttk.OptionMenu(units, self.y_unit_var, self.y_unit_var.get(), *Y_UNITS.keys(), command=lambda _=None: self.update_plot()).grid(row=1, column=1, sticky="ew", padx=4)
+        units.columnconfigure(1, weight=1)
+        ttk.Checkbutton(self.time_options, text="Alinear cada CSV temporal a t = 0", variable=self.align_time_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
+        ttk.Checkbutton(self.time_options, text="Marcar máximos", variable=self.mark_max_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
+        ttk.Checkbutton(self.time_options, text="Marcar mínimos", variable=self.mark_min_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
+
+        xy_box = ttk.LabelFrame(self.time_options, text="Modo XY / Lissajous")
+        xy_box.pack(fill=tk.X, padx=8, pady=(8, 8))
+        ttk.Checkbutton(xy_box, text="Activar modo XY", variable=self.xy_mode_var, command=self._toggle_xy).pack(anchor="w", padx=8, pady=2)
+        row = ttk.Frame(xy_box)
+        row.pack(fill=tk.X, padx=8, pady=4)
+        ttk.Label(row, text="X").grid(row=0, column=0, sticky="w")
+        self.xy_x_menu = ttk.OptionMenu(row, self.xy_x_var, "")
+        self.xy_x_menu.grid(row=0, column=1, sticky="ew", padx=4)
+        ttk.Label(row, text="Y").grid(row=1, column=0, sticky="w")
+        self.xy_y_menu = ttk.OptionMenu(row, self.xy_y_var, "")
+        self.xy_y_menu.grid(row=1, column=1, sticky="ew", padx=4)
+        row.columnconfigure(1, weight=1)
+
+        # Ajuste temporal, solo para modo tiempo.
+        self.shift_box = ttk.LabelFrame(self.tab_plot, text="Ajuste temporal / fase")
+        self.shift_box.pack(fill=tk.X, pady=(0, 8))
+        ttk.Checkbutton(self.shift_box, text="Mover canal seleccionado", variable=self.shift_mode_var, command=self._toggle_shift_mode).pack(anchor="w", padx=8, pady=(6, 2))
+        row = ttk.Frame(self.shift_box)
+        row.pack(fill=tk.X, padx=8, pady=2)
+        ttk.Label(row, text="Canal", width=12).grid(row=0, column=0, sticky="w")
+        self.shift_channel_menu = ttk.OptionMenu(row, self.shift_channel_var, "")
+        self.shift_channel_menu.grid(row=0, column=1, sticky="ew", padx=4)
+        row.columnconfigure(1, weight=1)
+        row2 = ttk.Frame(self.shift_box)
+        row2.pack(fill=tk.X, padx=8, pady=2)
+        ttk.Label(row2, text="Offset X", width=12).grid(row=0, column=0, sticky="w")
+        ttk.Entry(row2, textvariable=self.shift_x_var, width=12).grid(row=0, column=1, sticky="ew", padx=4)
+        self.shift_x_unit_label = ttk.Label(row2, text="µs")
+        self.shift_x_unit_label.grid(row=0, column=2, sticky="w")
+        ttk.Button(row2, text="Aplicar", command=self._apply_shift_entry).grid(row=0, column=3, padx=(6, 0))
+        row2.columnconfigure(1, weight=1)
+        ttk.Label(self.shift_box, text="Mouse: arrastrar horizontalmente. Flechas: una muestra. Shift+flecha: 10 muestras. Ctrl+flecha: 0,1 muestra.", wraplength=450).pack(fill=tk.X, padx=8, pady=(2, 8))
+
+        # Opciones específicas de Bode.
+        self.bode_options = ttk.LabelFrame(self.tab_plot, text="Modo Bode")
+        self.bode_options.pack(fill=tk.X, pady=(0, 8))
+        ttk.Label(
+            self.bode_options,
+            text="En Bode se grafica automáticamente magnitud [dB] y fase [°] contra frecuencia [Hz] con eje X logarítmico.",
+            wraplength=450,
+        ).pack(fill=tk.X, padx=8, pady=(8, 6))
+        ttk.Checkbutton(self.bode_options, text="Mostrar grilla", variable=self.grid_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
+        ttk.Label(self.bode_options, text="Los cursores de Bode están en la pestaña Cursores.", wraplength=450).pack(fill=tk.X, padx=8, pady=(4, 8))
+
+        # Opciones comunes de visualización.
+        visual = ttk.LabelFrame(self.tab_plot, text="Visualización común")
+        visual.pack(fill=tk.X, pady=(0, 8))
+        ttk.Checkbutton(visual, text="Mostrar grilla", variable=self.grid_var, command=self.update_plot).pack(anchor="w", padx=8, pady=2)
+        self._entry(visual, "Paso grilla X", self.grid_x_step_var)
+        self._entry(visual, "Paso grilla Y", self.grid_y_step_var)
+        self.time_logx_check = ttk.Checkbutton(visual, text="Escala logarítmica X", variable=self.log_x_var, command=self.update_plot)
+        self.time_logx_check.pack(anchor="w", padx=8, pady=2)
+        self.time_logy_check = ttk.Checkbutton(visual, text="Escala logarítmica Y", variable=self.log_y_var, command=self.update_plot)
+        self.time_logy_check.pack(anchor="w", padx=8, pady=2)
+
+    def _build_channels_tab(self) -> None:
+        ttk.Label(self.tab_channels, text="Doble clic en un canal para activar/desactivar.").pack(anchor="w", pady=(0, 4))
+        self.channel_tree = ttk.Treeview(self.tab_channels, columns=("on", "tipo", "scale", "oy", "ox"), show="tree headings", height=13)
+        self.channel_tree.heading("#0", text="Canal")
+        self.channel_tree.heading("on", text="On")
+        self.channel_tree.heading("tipo", text="Tipo")
+        self.channel_tree.heading("scale", text="Esc Y")
+        self.channel_tree.heading("oy", text="Off Y")
+        self.channel_tree.heading("ox", text="Off X")
+        self.channel_tree.column("#0", width=220, stretch=True)
+        for col in ("on", "tipo", "scale", "oy", "ox"):
+            self.channel_tree.column(col, width=55, stretch=False)
+        self.channel_tree.pack(fill=tk.BOTH, expand=True, pady=(0, 8))
+        self.channel_tree.bind("<<TreeviewSelect>>", self._on_channel_select)
+        self.channel_tree.bind("<Double-1>", self._toggle_selected_channel_enabled)
+
+        edit = ttk.LabelFrame(self.tab_channels, text="Editar canal seleccionado")
+        edit.pack(fill=tk.X, pady=(0, 8))
+        ttk.Checkbutton(edit, text="Visible", variable=self.channel_enabled_var, command=self._apply_channel_editor).grid(row=0, column=0, sticky="w", padx=8, pady=5)
+        ttk.Button(edit, text="Cambiar color", command=self._choose_selected_color).grid(row=0, column=1, sticky="ew", padx=4, pady=5)
+        ttk.Button(edit, text="Aplicar", command=self._apply_channel_editor).grid(row=0, column=2, sticky="ew", padx=4, pady=5)
+        ttk.Label(edit, text="Escala Y").grid(row=1, column=0, sticky="w", padx=8)
+        ttk.Entry(edit, textvariable=self.channel_scale_var).grid(row=1, column=1, sticky="ew", padx=4)
+        ttk.Label(edit, text="Offset Y").grid(row=2, column=0, sticky="w", padx=8)
+        ttk.Entry(edit, textvariable=self.channel_oy_var).grid(row=2, column=1, sticky="ew", padx=4)
+        self.channel_offset_x_label = ttk.Label(edit, text="Offset X")
+        self.channel_offset_x_label.grid(row=3, column=0, sticky="w", padx=8)
+        self.channel_ox_entry = ttk.Entry(edit, textvariable=self.channel_ox_var)
+        self.channel_ox_entry.grid(row=3, column=1, sticky="ew", padx=4)
+        self.channel_ox_unit_label = ttk.Label(edit, text="µs")
+        self.channel_ox_unit_label.grid(row=3, column=2, sticky="w", padx=4)
+        ttk.Button(edit, text="Reset canal", command=self._reset_selected_channel).grid(row=4, column=0, columnspan=3, sticky="ew", padx=8, pady=(7, 8))
+        edit.columnconfigure(1, weight=1)
+        edit.columnconfigure(2, weight=1)
+
+    def _build_cursors_tab(self) -> None:
+        ttk.Label(self.tab_cursors, text="Los cursores funcionan sobre el canal elegido. Escribís X y la Y se calcula sola.", wraplength=450).pack(fill=tk.X, pady=(0, 8))
+        ttk.Checkbutton(self.tab_cursors, text="Agregar cursor con clic", variable=self.cursor_add_mode, command=self._toggle_cursor_add).pack(anchor="w", pady=2)
+        ttk.Checkbutton(self.tab_cursors, text="Mover cursor seleccionado", variable=self.cursor_move_mode, command=self._toggle_cursor_move).pack(anchor="w", pady=2)
+
+        row = ttk.Frame(self.tab_cursors)
+        row.pack(fill=tk.X, pady=(8, 2))
+        ttk.Label(row, text="Canal", width=10).grid(row=0, column=0, sticky="w")
+        self.cursor_channel_menu = ttk.OptionMenu(row, self.cursor_channel_var, "")
+        self.cursor_channel_menu.grid(row=0, column=1, sticky="ew", padx=4)
+        row.columnconfigure(1, weight=1)
+
+        row2 = ttk.Frame(self.tab_cursors)
+        row2.pack(fill=tk.X, pady=2)
+        ttk.Label(row2, text="X", width=10).grid(row=0, column=0, sticky="w")
+        ttk.Entry(row2, textvariable=self.cursor_x_var).grid(row=0, column=1, sticky="ew", padx=4)
+        ttk.Label(row2, text="Y auto", width=8).grid(row=0, column=2, sticky="w")
+        ttk.Label(row2, textvariable=self.cursor_y_var, relief=tk.SUNKEN, anchor="e", width=12).grid(row=0, column=3, sticky="ew", padx=4)
+        row2.columnconfigure(1, weight=1)
+        row2.columnconfigure(3, weight=1)
+
+        row3 = ttk.Frame(self.tab_cursors)
+        row3.pack(fill=tk.X, pady=2)
+        ttk.Label(row3, text="Comparar", width=10).grid(row=0, column=0, sticky="w")
+        self.cursor_ref_menu = ttk.OptionMenu(row3, self.cursor_ref_var, "Ninguno")
+        self.cursor_ref_menu.grid(row=0, column=1, sticky="ew", padx=4)
+        row3.columnconfigure(1, weight=1)
+
+        btns = ttk.Frame(self.tab_cursors)
+        btns.pack(fill=tk.X, pady=6)
+        ttk.Button(btns, text="Agregar", command=self._add_cursor_from_entry).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 3))
+        ttk.Button(btns, text="Actualizar", command=self._update_selected_cursor_from_entry).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=3)
+        ttk.Button(btns, text="Borrar", command=self._delete_selected_cursor).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(3, 0))
+
+        self.cursor_tree = ttk.Treeview(self.tab_cursors, columns=("canal", "x", "y", "dx", "dy"), show="headings", height=13)
+        for col, title, width in [("canal", "Canal", 190), ("x", "X", 70), ("y", "Y", 70), ("dx", "ΔX", 70), ("dy", "ΔY", 70)]:
+            self.cursor_tree.heading(col, text=title)
+            self.cursor_tree.column(col, width=width, stretch=(col == "canal"))
+        self.cursor_tree.pack(fill=tk.BOTH, expand=True)
+        self.cursor_tree.bind("<<TreeviewSelect>>", self._on_cursor_select)
+
+    def _entry(self, parent: ttk.Frame, label: str, var: tk.StringVar) -> ttk.Entry:
+        row = ttk.Frame(parent)
+        row.pack(fill=tk.X, padx=8, pady=3)
+        ttk.Label(row, text=label, width=13).pack(side=tk.LEFT)
+        ent = ttk.Entry(row, textvariable=var)
         ent.pack(side=tk.LEFT, fill=tk.X, expand=True)
         ent.bind("<Return>", lambda _e: self.update_plot())
+        return ent
 
     def _connect_events(self) -> None:
         self.fig.canvas.mpl_connect("button_press_event", self._on_plot_click)
@@ -351,87 +396,7 @@ class TC1CSVGUI:
         self.root.bind("<Right>", lambda e: self._handle_left_right(1, e))
 
     # ------------------------------------------------------------------
-    # Exportación
-    # ------------------------------------------------------------------
-    def export_pdf(self) -> None:
-        """Guarda el gráfico actual en un PDF prolijo.
-
-        Exporta exactamente el modo activo:
-        - TIEMPO: un gráfico con los canales temporales visibles.
-        - BODE: dos gráficos, magnitud y fase, en la misma página.
-        - XY: gráfico XY actual.
-        """
-        if not self.channels:
-            messagebox.showinfo("Guardar PDF", "Primero cargá algún CSV para poder exportar el gráfico.")
-            return
-
-        default_name = "grafico_tc1.pdf"
-        if self.mode == "bode":
-            default_name = "bode_tc1.pdf"
-        elif self.xy_mode_var.get():
-            default_name = "xy_tc1.pdf"
-        elif self.loaded_files:
-            default_name = f"{Path(self.loaded_files[0]).stem}_grafico.pdf"
-
-        out_path = filedialog.asksaveasfilename(
-            title="Guardar gráfico como PDF",
-            defaultextension=".pdf",
-            initialfile=default_name,
-            filetypes=[("PDF", "*.pdf"), ("Todos los archivos", "*.*")],
-        )
-        if not out_path:
-            return
-
-        old_size = tuple(self.fig.get_size_inches())
-        try:
-            # Generamos una versión más limpia para el PDF, sin depender del tamaño de la ventana.
-            if self.mode == "bode":
-                self.fig.set_size_inches(11.0, 8.0)
-            else:
-                self.fig.set_size_inches(11.0, 6.8)
-
-            self.update_plot()
-
-            # Pie informativo discreto.
-            mode_text = {"empty": "Vacío", "time": "Tiempo", "bode": "Bode"}.get(self.mode, self.mode)
-            visible = [name for name, ctrl in self.controls.items() if ctrl.enabled.get()]
-            footer_parts = [f"Modo: {mode_text}"]
-            if self.loaded_files:
-                footer_parts.append("Archivos: " + ", ".join(Path(p).name for p in self.loaded_files[:3]))
-                if len(self.loaded_files) > 3:
-                    footer_parts.append(f"+{len(self.loaded_files)-3} más")
-            footer_parts.append(f"Canales visibles: {len(visible)}")
-            footer_parts.append(datetime.now().strftime("Exportado: %d/%m/%Y %H:%M"))
-            footer = "   |   ".join(footer_parts)
-
-            self.fig.text(
-                0.5, 0.012, footer,
-                ha="center", va="bottom", fontsize=8, color="#555555",
-            )
-            self.fig.subplots_adjust(bottom=0.10)
-
-            self.fig.savefig(
-                out_path,
-                format="pdf",
-                bbox_inches="tight",
-                facecolor="white",
-                edgecolor="none",
-                metadata={
-                    "Title": self.title_var.get() or "Gráfico TC1",
-                    "Author": "GUI TC1",
-                    "Subject": "Exportación de gráfico desde la GUI TC1",
-                },
-            )
-            self.status_var.set(f"PDF guardado: {out_path}")
-            messagebox.showinfo("PDF guardado", f"Se guardó el gráfico en:\n{out_path}")
-        except Exception as exc:
-            messagebox.showerror("Error al guardar PDF", f"No se pudo guardar el PDF.\n\nDetalle: {exc}")
-        finally:
-            self.fig.set_size_inches(*old_size)
-            self.update_plot()
-
-    # ------------------------------------------------------------------
-    # Carga y detección
+    # Carga de archivos
     # ------------------------------------------------------------------
     def open_files(self) -> None:
         paths = filedialog.askopenfilenames(
@@ -457,10 +422,10 @@ class TC1CSVGUI:
         errors: list[str] = []
         for path in csv_paths:
             try:
-                x, ch, units, mode = self._read_any_csv(path)
-                if x.size == 0 or not ch:
+                x, channels, units, mode = self._read_any_csv(path)
+                if x.size == 0 or not channels:
                     raise ValueError("sin datos numéricos")
-                parsed.append((path, mode, x, ch, units))
+                parsed.append((path, mode, x, channels, units))
             except Exception as exc:
                 errors.append(f"{os.path.basename(path)}: {exc}")
 
@@ -468,7 +433,7 @@ class TC1CSVGUI:
             messagebox.showerror("No se pudo leer", "No se pudo cargar ningún CSV:\n\n" + "\n".join(errors))
             return
 
-        incoming_modes = {m for _, m, _, _, _ in parsed}
+        incoming_modes = {mode for _, mode, _, _, _ in parsed}
         if len(incoming_modes) > 1:
             messagebox.showwarning(
                 "Archivos mezclados",
@@ -658,11 +623,14 @@ class TC1CSVGUI:
         if numeric.shape[1] < 2:
             raise ValueError("menos de dos columnas numéricas")
         x = numeric.iloc[:, 0].to_numpy(float)
-        channels = {str(labels[i]) if i < len(labels) else f"Canal {i}": numeric.iloc[:, i].to_numpy(float) for i in range(1, numeric.shape[1])}
+        channels = {
+            str(labels[i]) if i < len(labels) else f"Canal {i}": numeric.iloc[:, i].to_numpy(float)
+            for i in range(1, numeric.shape[1])
+        }
         return x, channels, []
 
     # ------------------------------------------------------------------
-    # Sincronización de UI
+    # Sincronización UI
     # ------------------------------------------------------------------
     def _sync_after_data_change(self) -> None:
         self._update_mode_labels()
@@ -680,8 +648,50 @@ class TC1CSVGUI:
             self.file_label.config(text=os.path.basename(self.loaded_files[0]))
         else:
             self.file_label.config(text=f"{len(self.loaded_files)} CSV cargados")
-        self.shift_x_unit_label.config(text="Hz" if self.mode == "bode" else self.x_unit_var.get())
-        self.channel_ox_unit_label.config(text="Hz" if self.mode == "bode" else self.x_unit_var.get())
+
+        self.shift_x_unit_label.config(text=self.x_unit_var.get())
+        self.channel_ox_unit_label.config(text=self.x_unit_var.get())
+        self._set_mode_widgets()
+
+    def _set_mode_widgets(self) -> None:
+        # Evita mostrar herramientas de tiempo cuando se trabaja con Bode.
+        if self.mode == "bode":
+            self.time_options.pack_forget()
+            self.shift_box.pack_forget()
+            if not self.bode_options.winfo_ismapped():
+                self.bode_options.pack(fill=tk.X, pady=(0, 8), before=self.tab_plot.winfo_children()[-1])
+            self.time_logx_check.state(["disabled"])
+            self.time_logy_check.state(["disabled"])
+            self.log_x_var.set(False)
+            self.log_y_var.set(False)
+            self.xy_mode_var.set(False)
+            self.shift_mode_var.set(False)
+            self.channel_offset_x_label.grid_remove()
+            self.channel_ox_entry.grid_remove()
+            self.channel_ox_unit_label.grid_remove()
+        elif self.mode == "time":
+            self.bode_options.pack_forget()
+            if not self.time_options.winfo_ismapped():
+                self.time_options.pack(fill=tk.X, pady=(0, 8), after=self.tab_plot.winfo_children()[0])
+            if not self.shift_box.winfo_ismapped():
+                self.shift_box.pack(fill=tk.X, pady=(0, 8), after=self.time_options)
+            self.time_logx_check.state(["!disabled"])
+            self.time_logy_check.state(["!disabled"])
+            self.channel_offset_x_label.grid()
+            self.channel_ox_entry.grid()
+            self.channel_ox_unit_label.grid()
+        else:
+            # Pantalla vacía: muestra lo general y modo tiempo por defecto.
+            self.bode_options.pack_forget()
+            if not self.time_options.winfo_ismapped():
+                self.time_options.pack(fill=tk.X, pady=(0, 8), after=self.tab_plot.winfo_children()[0])
+            if not self.shift_box.winfo_ismapped():
+                self.shift_box.pack(fill=tk.X, pady=(0, 8), after=self.time_options)
+            self.time_logx_check.state(["!disabled"])
+            self.time_logy_check.state(["!disabled"])
+            self.channel_offset_x_label.grid()
+            self.channel_ox_entry.grid()
+            self.channel_ox_unit_label.grid()
 
     def _refresh_channel_tree(self) -> None:
         for item in self.channel_tree.get_children():
@@ -690,26 +700,27 @@ class TC1CSVGUI:
             ctrl = self.controls[name]
             tipo = {"time": "Tiempo", "bode_mag": "Bode dB", "bode_phase": "Bode °"}[data.kind]
             on = "✓" if ctrl.enabled.get() else "—"
-            self.channel_tree.insert("", "end", iid=name, text=name, values=(on, tipo, ctrl.scale_y.get(), ctrl.offset_y.get(), ctrl.offset_x.get()))
+            ox = ctrl.offset_x.get() if data.kind == "time" else ""
+            self.channel_tree.insert("", "end", iid=name, text=name, values=(on, tipo, ctrl.scale_y.get(), ctrl.offset_y.get(), ox))
 
     def _rebuild_channel_menus(self) -> None:
         names = list(self.channels.keys())
         time_names = [n for n in names if self.channels[n].kind == "time"]
-        selectable_for_time = time_names if self.mode == "time" else []
+        cursor_names = time_names if self.mode == "time" else names if self.mode == "bode" else []
 
-        self._rebuild_menu(self.shift_channel_menu, self.shift_channel_var, names, self._on_shift_channel_changed)
-        self._rebuild_menu(self.cursor_channel_menu, self.cursor_channel_var, selectable_for_time, None)
-        self._rebuild_menu(self.xy_x_menu, self.xy_x_var, selectable_for_time, lambda: self.update_plot())
-        self._rebuild_menu(self.xy_y_menu, self.xy_y_var, selectable_for_time, lambda: self.update_plot())
+        self._rebuild_menu(self.shift_channel_menu, self.shift_channel_var, time_names, self._on_shift_channel_changed)
+        self._rebuild_menu(self.cursor_channel_menu, self.cursor_channel_var, cursor_names, None)
+        self._rebuild_menu(self.xy_x_menu, self.xy_x_var, time_names, lambda: self.update_plot())
+        self._rebuild_menu(self.xy_y_menu, self.xy_y_var, time_names, lambda: self.update_plot())
 
-        if len(selectable_for_time) >= 2:
-            if self.xy_x_var.get() not in selectable_for_time:
-                self.xy_x_var.set(selectable_for_time[0])
-            if self.xy_y_var.get() not in selectable_for_time:
-                self.xy_y_var.set(selectable_for_time[1])
-        elif len(selectable_for_time) == 1:
-            self.xy_x_var.set(selectable_for_time[0])
-            self.xy_y_var.set(selectable_for_time[0])
+        if len(time_names) >= 2:
+            if self.xy_x_var.get() not in time_names:
+                self.xy_x_var.set(time_names[0])
+            if self.xy_y_var.get() not in time_names:
+                self.xy_y_var.set(time_names[1])
+        elif len(time_names) == 1:
+            self.xy_x_var.set(time_names[0])
+            self.xy_y_var.set(time_names[0])
         else:
             self.xy_x_var.set("")
             self.xy_y_var.set("")
@@ -736,8 +747,9 @@ class TC1CSVGUI:
         self.channel_scale_var.set(ctrl.scale_y.get())
         self.channel_oy_var.set(ctrl.offset_y.get())
         self.channel_ox_var.set(ctrl.offset_x.get())
-        self.shift_channel_var.set(name)
-        self.shift_x_var.set(ctrl.offset_x.get())
+        if self.channels[name].kind == "time":
+            self.shift_channel_var.set(name)
+            self.shift_x_var.set(ctrl.offset_x.get())
 
     def _apply_channel_editor(self) -> None:
         selected = self.channel_tree.selection()
@@ -751,7 +763,8 @@ class TC1CSVGUI:
         ctrl.enabled.set(self.channel_enabled_var.get())
         ctrl.scale_y.set(self.channel_scale_var.get())
         ctrl.offset_y.set(self.channel_oy_var.get())
-        ctrl.offset_x.set(self.channel_ox_var.get())
+        if self.channels[name].kind == "time":
+            ctrl.offset_x.set(self.channel_ox_var.get())
         self._refresh_channel_tree()
         self.update_plot()
 
@@ -776,6 +789,7 @@ class TC1CSVGUI:
         ctrl = self.controls.get(name)
         if ctrl:
             ctrl.enabled.set(not ctrl.enabled.get())
+            self.channel_enabled_var.set(ctrl.enabled.get())
             self._refresh_channel_tree()
             self.update_plot()
 
@@ -786,10 +800,22 @@ class TC1CSVGUI:
             return
         name = selected[0]
         ctrl = self.controls[name]
-        chosen = colorchooser.askcolor(color=ctrl.color.get(), title=f"Color para {name}")
+        # colorchooser de Tkinter no acepta colores de Matplotlib como "tab:blue".
+        # Usamos un color inicial seguro si quedó algún color viejo guardado.
+        initial_color = ctrl.color.get()
+        if not str(initial_color).startswith("#"):
+            initial_color = "#1f77b4"
+        chosen = colorchooser.askcolor(color=initial_color, title=f"Color para {name}")
         if chosen and chosen[1]:
             ctrl.color.set(chosen[1])
+            # También actualiza cursores que pertenecen a ese canal.
+            for cursor in self.cursors:
+                if cursor.channel == name:
+                    cursor.color = chosen[1]
+            self._refresh_channel_tree()
+            self._refresh_cursor_tree()
             self.update_plot()
+            self.status_var.set(f"Color actualizado para {name}")
 
     def _on_shift_channel_changed(self) -> None:
         name = self.shift_channel_var.get()
@@ -797,7 +823,7 @@ class TC1CSVGUI:
             self.shift_x_var.set(self.controls[name].offset_x.get())
 
     # ------------------------------------------------------------------
-    # Transformaciones y plot
+    # Transformaciones y gráficos
     # ------------------------------------------------------------------
     def _safe_float(self, text: str, default: float = 0.0) -> float:
         try:
@@ -815,8 +841,8 @@ class TC1CSVGUI:
             if self.align_time_var.get() and finite.any():
                 x = x - x[finite][0]
             x = x * X_UNITS.get(self.x_unit_var.get(), 1.0)
-        # En Bode el X queda en Hz. Offset X en Bode normalmente se deja en 0, pero lo dejamos editar.
-        return x + self._safe_float(ctrl.offset_x.get(), 0.0)
+            x = x + self._safe_float(ctrl.offset_x.get(), 0.0)
+        return x
 
     def _y_display(self, name: str) -> np.ndarray:
         data = self.channels[name]
@@ -829,6 +855,7 @@ class TC1CSVGUI:
 
     def update_plot(self) -> None:
         self.fig.clear()
+        self.bode_axes = {}
         if not self.channels:
             self._plot_empty(draw=False)
             self.canvas.draw_idle()
@@ -874,6 +901,7 @@ class TC1CSVGUI:
         ax_mag = self.fig.add_subplot(211)
         ax_phase = self.fig.add_subplot(212, sharex=ax_mag)
         self.ax = ax_mag
+        self.bode_axes = {"bode_mag": ax_mag, "bode_phase": ax_phase}
         mag_count = 0
         phase_count = 0
         for name, data in self.channels.items():
@@ -906,6 +934,7 @@ class TC1CSVGUI:
             ax_phase.legend(loc="best")
         else:
             ax_phase.text(0.5, 0.5, "No hay fase activa", ha="center", va="center", transform=ax_phase.transAxes)
+        self._redraw_cursors()
 
     def _plot_xy(self) -> None:
         self.ax = self.fig.add_subplot(111)
@@ -968,99 +997,31 @@ class TC1CSVGUI:
             ax.annotate(f"min {name}\n({xf[idx]:.4g}, {yf[idx]:.4g})", (xf[idx], yf[idx]), textcoords="offset points", xytext=(8, -16), fontsize=8)
 
     # ------------------------------------------------------------------
-    # Ajuste temporal / fase
-    # ------------------------------------------------------------------
-    def _toggle_shift_mode(self) -> None:
-        if self.mode == "bode" and self.shift_mode_var.get():
-            messagebox.showinfo("Ajuste X", "El ajuste X está pensado para alinear señales temporales. En Bode normalmente no hace falta.")
-        if self.shift_mode_var.get():
-            self.cursor_add_mode.set(False)
-            self.cursor_move_mode.set(False)
-            self.status_var.set("Ajuste X activo: arrastrá el canal seleccionado o usá flechas.")
-        else:
-            self.dragging_channel_shift = False
-            self.last_shift_x = None
-            self.status_var.set("Ajuste X desactivado.")
-
-    def _apply_shift_entry(self) -> None:
-        name = self.shift_channel_var.get()
-        if name not in self.controls:
-            messagebox.showinfo("Ajuste X", "Seleccioná un canal.")
-            return
-        self.controls[name].offset_x.set(self.shift_x_var.get())
-        self._refresh_channel_tree()
-        self.update_plot()
-
-    def _shift_channel_by(self, name: str, dx: float) -> None:
-        if name not in self.controls:
-            return
-        ctrl = self.controls[name]
-        new_val = self._safe_float(ctrl.offset_x.get(), 0.0) + dx
-        ctrl.offset_x.set(f"{new_val:.8g}")
-        self.shift_x_var.set(ctrl.offset_x.get())
-        self._refresh_channel_tree()
-        self.update_plot()
-        unit = "Hz" if self.mode == "bode" else self.x_unit_var.get()
-        self.status_var.set(f"{name}: Offset X = {new_val:.8g} {unit}")
-
-    def _x_step_for_channel(self, name: str) -> float:
-        if name not in self.channels:
-            return 1.0
-        x = self._x_display(name)
-        finite = np.isfinite(x)
-        if finite.sum() < 2:
-            return 1.0
-        xs = np.sort(np.unique(x[finite]))
-        diffs = np.diff(xs)
-        diffs = diffs[diffs > 0]
-        return float(np.median(diffs)) if diffs.size else 1.0
-
-    def _handle_left_right(self, direction: int, event=None):
-        if self.shift_mode_var.get():
-            name = self.shift_channel_var.get()
-            if name in self.channels:
-                step = self._x_step_for_channel(name)
-                state = getattr(event, "state", 0) if event is not None else 0
-                if state & 0x0001:  # shift
-                    step *= 10
-                if state & 0x0004:  # ctrl
-                    step *= 0.1
-                self._shift_channel_by(name, direction * step)
-            return "break"
-        self._move_selected_cursor_by_key(direction)
-        return "break"
-
-    # ------------------------------------------------------------------
     # Cursores
     # ------------------------------------------------------------------
     def _toggle_cursor_add(self) -> None:
-        if self.mode != "time" and self.cursor_add_mode.get():
-            messagebox.showinfo("Cursores", "Los cursores por canal están disponibles en modo tiempo.")
-            self.cursor_add_mode.set(False)
-            return
         if self.cursor_add_mode.get():
             self.cursor_move_mode.set(False)
             self.shift_mode_var.set(False)
-            self.status_var.set("Cursores: elegí un canal y hacé clic para agregar. La Y se calcula sola.")
+            if self.mode == "bode":
+                self.status_var.set("Cursores Bode: elegí magnitud o fase y hacé clic. La Y se calcula sola.")
+            else:
+                self.status_var.set("Cursores: elegí un canal y hacé clic para agregar. La Y se calcula sola.")
 
     def _toggle_cursor_move(self) -> None:
-        if self.mode != "time" and self.cursor_move_mode.get():
-            messagebox.showinfo("Cursores", "Los cursores por canal están disponibles en modo tiempo.")
-            self.cursor_move_mode.set(False)
-            return
         if self.cursor_move_mode.get():
             self.cursor_add_mode.set(False)
             self.shift_mode_var.set(False)
             self.status_var.set("Mover cursor: seleccioná uno y movelo con mouse o flechas.")
 
     def _on_plot_click(self, event) -> None:
-        if event.inaxes != getattr(self, "ax", None) or event.xdata is None:
+        if event.xdata is None:
             return
-        if self.mode == "bode":
+        if self.xy_mode_var.get() and self.mode == "time":
             return
-        if self.xy_mode_var.get():
-            return
-        if self.shift_mode_var.get():
+        if self.shift_mode_var.get() and self.mode == "time":
+            if event.inaxes != getattr(self, "ax", None):
+                return
             self.dragging_channel_shift = True
             self.last_shift_x = float(event.xdata)
             return
@@ -1069,19 +1030,33 @@ class TC1CSVGUI:
             if cur is None:
                 messagebox.showwarning("Sin cursor", "Seleccioná un cursor de la tabla.")
                 return
-            self.dragging_cursor = True
-            self._move_cursor_to_x(cur, float(event.xdata))
+            if self._event_matches_cursor_axis(event, cur.channel):
+                self.dragging_cursor = True
+                self._move_cursor_to_x(cur, float(event.xdata))
             return
         if self.cursor_add_mode.get():
             ch = self.cursor_channel_var.get()
             if ch not in self.channels:
                 return
-            self._add_cursor(ch, float(event.xdata))
+            if self._event_matches_cursor_axis(event, ch):
+                self._add_cursor(ch, float(event.xdata))
+
+    def _event_matches_cursor_axis(self, event, channel: str) -> bool:
+        if channel not in self.channels:
+            return False
+        if self.mode == "time":
+            return event.inaxes == getattr(self, "ax", None)
+        if self.mode == "bode":
+            kind = self.channels[channel].kind
+            return event.inaxes == self.bode_axes.get(kind)
+        return False
 
     def _on_plot_motion(self, event) -> None:
-        if event.inaxes != getattr(self, "ax", None) or event.xdata is None:
+        if event.xdata is None:
             return
-        if self.dragging_channel_shift and self.shift_mode_var.get() and self.last_shift_x is not None:
+        if self.dragging_channel_shift and self.shift_mode_var.get() and self.last_shift_x is not None and self.mode == "time":
+            if event.inaxes != getattr(self, "ax", None):
+                return
             name = self.shift_channel_var.get()
             dx = float(event.xdata) - self.last_shift_x
             self.last_shift_x = float(event.xdata)
@@ -1089,7 +1064,7 @@ class TC1CSVGUI:
             return
         if self.dragging_cursor and self.cursor_move_mode.get():
             cur = self._selected_cursor()
-            if cur:
+            if cur and self._event_matches_cursor_axis(event, cur.channel):
                 self._move_cursor_to_x(cur, float(event.xdata))
 
     def _on_plot_release(self, _event) -> None:
@@ -1170,7 +1145,7 @@ class TC1CSVGUI:
         self.update_plot()
 
     def _move_selected_cursor_by_key(self, direction: int) -> None:
-        if not self.cursor_move_mode.get() or self.mode != "time":
+        if not self.cursor_move_mode.get():
             return
         cur = self._selected_cursor()
         if not cur:
@@ -1247,16 +1222,144 @@ class TC1CSVGUI:
         return None
 
     def _redraw_cursors(self) -> None:
-        if self.mode != "time" or self.xy_mode_var.get():
+        if self.mode == "time":
+            if self.xy_mode_var.get():
+                return
+            for c in self.cursors:
+                if c.channel not in self.channels or self.channels[c.channel].kind != "time":
+                    continue
+                self._draw_cursor_on_axis(self.ax, c)
+        elif self.mode == "bode":
+            for c in self.cursors:
+                if c.channel not in self.channels:
+                    continue
+                kind = self.channels[c.channel].kind
+                ax = self.bode_axes.get(kind)
+                if ax is not None:
+                    self._draw_cursor_on_axis(ax, c)
+
+    def _draw_cursor_on_axis(self, ax, cursor: CursorItem) -> None:
+        selected = cursor.cursor_id == self.selected_cursor_id
+        lw = 2.0 if selected else 1.2
+        size = 65 if selected else 35
+        ax.axvline(cursor.x, linestyle="--", linewidth=lw, color=cursor.color, alpha=0.85)
+        ax.axhline(cursor.y, linestyle=":", linewidth=lw, color=cursor.color, alpha=0.85)
+        ax.scatter([cursor.x], [cursor.y], color=cursor.color, s=size, zorder=5)
+        ax.annotate(f"C{cursor.cursor_id}\n{cursor.channel}", (cursor.x, cursor.y), textcoords="offset points", xytext=(7, 7), fontsize=8, color=cursor.color)
+
+    # ------------------------------------------------------------------
+    # Ajuste temporal / fase
+    # ------------------------------------------------------------------
+    def _toggle_shift_mode(self) -> None:
+        if self.mode != "time" and self.shift_mode_var.get():
+            self.shift_mode_var.set(False)
             return
-        for c in self.cursors:
-            selected = c.cursor_id == self.selected_cursor_id
-            lw = 2.0 if selected else 1.2
-            size = 65 if selected else 35
-            self.ax.axvline(c.x, linestyle="--", linewidth=lw, color=c.color, alpha=0.85)
-            self.ax.axhline(c.y, linestyle=":", linewidth=lw, color=c.color, alpha=0.85)
-            self.ax.scatter([c.x], [c.y], color=c.color, s=size, zorder=5)
-            self.ax.annotate(f"C{c.cursor_id}\n{c.channel}", (c.x, c.y), textcoords="offset points", xytext=(7, 7), fontsize=8, color=c.color)
+        if self.shift_mode_var.get():
+            self.cursor_add_mode.set(False)
+            self.cursor_move_mode.set(False)
+            self.status_var.set("Ajuste X activo: arrastrá el canal seleccionado o usá flechas.")
+        else:
+            self.dragging_channel_shift = False
+            self.last_shift_x = None
+            self.status_var.set("Ajuste X desactivado.")
+
+    def _apply_shift_entry(self) -> None:
+        name = self.shift_channel_var.get()
+        if name not in self.controls or self.channels[name].kind != "time":
+            messagebox.showinfo("Ajuste X", "Seleccioná un canal temporal.")
+            return
+        self.controls[name].offset_x.set(self.shift_x_var.get())
+        self._refresh_channel_tree()
+        self.update_plot()
+
+    def _shift_channel_by(self, name: str, dx: float) -> None:
+        if name not in self.controls or self.channels[name].kind != "time":
+            return
+        ctrl = self.controls[name]
+        new_val = self._safe_float(ctrl.offset_x.get(), 0.0) + dx
+        ctrl.offset_x.set(f"{new_val:.8g}")
+        self.shift_x_var.set(ctrl.offset_x.get())
+        self._refresh_channel_tree()
+        self.update_plot()
+        self.status_var.set(f"{name}: Offset X = {new_val:.8g} {self.x_unit_var.get()}")
+
+    def _x_step_for_channel(self, name: str) -> float:
+        if name not in self.channels:
+            return 1.0
+        x = self._x_display(name)
+        finite = np.isfinite(x)
+        if finite.sum() < 2:
+            return 1.0
+        xs = np.sort(np.unique(x[finite]))
+        diffs = np.diff(xs)
+        diffs = diffs[diffs > 0]
+        return float(np.median(diffs)) if diffs.size else 1.0
+
+    def _handle_left_right(self, direction: int, event=None):
+        if self.shift_mode_var.get() and self.mode == "time":
+            name = self.shift_channel_var.get()
+            if name in self.channels:
+                step = self._x_step_for_channel(name)
+                state = getattr(event, "state", 0) if event is not None else 0
+                if state & 0x0001:
+                    step *= 10
+                if state & 0x0004:
+                    step *= 0.1
+                self._shift_channel_by(name, direction * step)
+            return "break"
+        self._move_selected_cursor_by_key(direction)
+        return "break"
+
+    # ------------------------------------------------------------------
+    # Exportación
+    # ------------------------------------------------------------------
+    def export_pdf(self) -> None:
+        if not self.channels:
+            messagebox.showinfo("Guardar PDF", "Primero cargá algún CSV para poder exportar el gráfico.")
+            return
+
+        if self.mode == "bode":
+            default_name = "bode_tc1.pdf"
+        elif self.xy_mode_var.get():
+            default_name = "xy_tc1.pdf"
+        elif self.loaded_files:
+            default_name = f"{Path(self.loaded_files[0]).stem}_grafico.pdf"
+        else:
+            default_name = "grafico_tc1.pdf"
+
+        out_path = filedialog.asksaveasfilename(
+            title="Guardar gráfico como PDF",
+            defaultextension=".pdf",
+            initialfile=default_name,
+            filetypes=[("PDF", "*.pdf"), ("Todos los archivos", "*.*")],
+        )
+        if not out_path:
+            return
+
+        old_size = tuple(self.fig.get_size_inches())
+        try:
+            self.fig.set_size_inches(11.0, 8.0 if self.mode == "bode" else 6.8)
+            self.update_plot()
+            mode_text = {"empty": "Vacío", "time": "Tiempo", "bode": "Bode"}.get(self.mode, self.mode)
+            visible = [name for name, ctrl in self.controls.items() if ctrl.enabled.get()]
+            footer_parts = [f"Modo: {mode_text}"]
+            if self.loaded_files:
+                footer_parts.append("Archivos: " + ", ".join(Path(p).name for p in self.loaded_files[:3]))
+                if len(self.loaded_files) > 3:
+                    footer_parts.append(f"+{len(self.loaded_files)-3} más")
+            footer_parts.append(f"Canales visibles: {len(visible)}")
+            footer_parts.append(datetime.now().strftime("Exportado: %d/%m/%Y %H:%M"))
+            footer = "   |   ".join(footer_parts)
+            self.fig.text(0.5, 0.012, footer, ha="center", va="bottom", fontsize=8, color="#555555")
+            self.fig.subplots_adjust(bottom=0.10)
+            self.fig.savefig(out_path, format="pdf", bbox_inches="tight", facecolor="white", edgecolor="none")
+            self.status_var.set(f"PDF guardado: {out_path}")
+            messagebox.showinfo("PDF guardado", f"Se guardó el gráfico en:\n{out_path}")
+        except Exception as exc:
+            messagebox.showerror("Error al guardar PDF", f"No se pudo guardar el PDF.\n\nDetalle: {exc}")
+        finally:
+            self.fig.set_size_inches(*old_size)
+            self.update_plot()
 
     # ------------------------------------------------------------------
     # Misc
@@ -1286,6 +1389,10 @@ class TC1CSVGUI:
         self.cursor_x_var.set("")
         self.cursor_y_var.set("")
         self.shift_x_var.set("0")
+        self.xy_mode_var.set(False)
+        self.shift_mode_var.set(False)
+        self.cursor_add_mode.set(False)
+        self.cursor_move_mode.set(False)
         self._sync_after_data_change()
         self.status_var.set("Cargá o arrastrá uno o más CSV")
 

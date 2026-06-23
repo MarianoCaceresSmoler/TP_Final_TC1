@@ -18,8 +18,10 @@
 \usepackage{listings}
 \usepackage{fancyhdr}
 \usepackage{lastpage}
+\usepackage{adjustbox}
+\usepackage{placeins}
 
-\geometry{margin=2.4cm}
+\geometry{margin=2.35cm}
 
 \sisetup{
     output-decimal-marker={,},
@@ -41,12 +43,8 @@
 \rhead{Trabajo Práctico Final}
 \cfoot{\thepage\ de \pageref{LastPage}}
 
-\lstdefinestyle{pythonstyle}{
-    language=Python,
+\lstdefinestyle{codestyle}{
     basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue!60!black},
-    commentstyle=\color{green!40!black},
-    stringstyle=\color{orange!60!black},
     breaklines=true,
     frame=single,
     numbers=left,
@@ -58,3 +56,6 @@
 \newcommand{\datapath}{data/}
 \newcommand{\ltpath}{ltspice/}
 \newcommand{\codpath}{codigo/}
+\newcommand{\Hpb}{H_{\mathrm{PB}}}
+\newcommand{\Hpa}{H_{\mathrm{PA}}}
+\newcommand{\Hbp}{H_{\mathrm{BP}}}

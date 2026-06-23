@@ -1,11 +1,43 @@
 \section{Introducción}
 
-El objetivo general del trabajo fue integrar herramientas de análisis, simulación, medición y diseño de placas. Para ello se trabajó con tres ejes principales: una interfaz gráfica en Python para visualizar archivos CSV, simulaciones en LTspice de circuitos transitorios y filtros, y el diseño de un filtro pasabanda para voz humana implementable en una placa de circuito impreso.
+El trabajo práctico final integra tres herramientas utilizadas durante la materia: Python para procesar datos experimentales, LTspice para simular circuitos y Altium Designer para implementar una placa. La consigna exige que los gráficos de respuesta en frecuencia se presenten en escala semilogarítmica, con frecuencia en hertz y magnitud en decibeles, y que las diferencias entre teoría, simulación y medición sean analizadas.
 
-Todos los gráficos de respuesta en frecuencia se presentan en escala semilogarítmica, con la frecuencia expresada en hertz y la ganancia en decibeles. Además, se comparan los resultados teóricos, simulados y medidos cuando corresponde, indicando las diferencias observadas y sus posibles causas.
+El informe se organiza en cuatro bloques principales. Primero se describe la interfaz gráfica desarrollada. Luego se estudia el circuito transitorio RLC de la consigna. A continuación se analizan los filtros de segundo orden propuestos. Finalmente se presenta el diseño de un filtro pasabanda de dos etapas para voz humana y su implementación en PCB.
 
-\subsection{Criterio general de trabajo}
+\subsection{Datos de trabajo}
 
-Para el análisis de señales temporales se utilizaron archivos CSV provenientes del osciloscopio y de LTspice. Para la respuesta en frecuencia se emplearon archivos de Bode exportados tanto desde el osciloscopio como desde LTspice. La herramienta desarrollada en Python permitió superponer mediciones y simulaciones, modificar escalas, alinear señales, utilizar cursores y exportar gráficos para el informe.
+Se utilizó el valor de capacitor correspondiente al grupo 8 en las tablas de la consigna:
 
-En la etapa de diseño se evaluaron distintas topologías de filtro pasabanda. Inicialmente se consideraron opciones basadas en redes RLC con inductores y buffers, pero finalmente se adoptó una solución RC con buffers debido a limitaciones prácticas de corriente, disponibilidad de inductores y facilidad de implementación en PCB.
+\begin{equation}
+    C_{\mathrm{transitorio}}=\SI{47}{nF},
+    \qquad
+    C_{\mathrm{filtros}}=\SI{82}{nF}.
+\end{equation}
+
+Para los filtros de segundo orden se tomó:
+
+\begin{equation}
+    R=\SI{50}{\ohm}, \qquad L=\SI{1}{mH}, \qquad C=\SI{82}{nF}.
+\end{equation}
+
+A partir de estos valores se obtiene la frecuencia natural común de los circuitos RLC:
+
+\begin{equation}
+    \omega_0=\frac{1}{\sqrt{LC}},
+    \qquad
+    f_0=\frac{1}{2\pi\sqrt{LC}}.
+\end{equation}
+
+Reemplazando:
+
+\begin{equation}
+    f_0=\frac{1}{2\pi\sqrt{\SI{1}{mH}\cdot \SI{82}{nF}}}
+    \approx \SI{17.6}{kHz}.
+\end{equation}
+
+El factor de calidad de las etapas serie es:
+
+\begin{equation}
+    Q=\frac{\omega_0 L}{R}=\frac{1}{R}\sqrt{\frac{L}{C}}
+    \approx 2.21.
+\end{equation}

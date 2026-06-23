@@ -1,9 +1,11 @@
 \section{Conclusiones}
 
-Se logró desarrollar una herramienta en Python capaz de graficar datos temporales y diagramas de Bode provenientes de distintos instrumentos y simulaciones. La separación entre modo temporal y modo Bode permitió evitar errores de interpretación al superponer señales con distintos ejes físicos.
+Se desarrolló una interfaz gráfica que permite trabajar con archivos CSV temporales y de Bode, manteniendo modos separados para evitar errores de interpretación. La herramienta permite superponer señales, ajustar escalas, usar cursores, mover señales en fase y exportar gráficos a PDF, lo que facilitó la comparación entre simulación y medición.
 
-En la etapa de simulación se verificó la importancia de incluir no idealidades, como la resistencia serie del inductor. Esta resistencia modifica el factor de calidad y puede explicar diferencias entre teoría, simulación y medición.
+En el análisis transitorio se verificó que la respuesta medida y la simulada coinciden en forma general cuando se alinean temporalmente. Las diferencias restantes se explican por no idealidades reales: resistencia serie de inductores, tolerancias, ruido y efectos del armado.
 
-En el diseño del filtro para voz se analizaron alternativas RLC y RC. Las alternativas RLC fueron descartadas para el diseño final debido a que, con inductores pequeños, las impedancias resultantes eran muy bajas y exigían corrientes elevadas al TL082. También se evaluó el uso de inductores de mayor valor, pero esta opción resultaba menos conveniente por disponibilidad y tamaño.
+En los filtros de segundo orden se identificaron las funciones de transferencia, los tipos de filtro, los parámetros característicos, los polos y ceros. La ubicación de los ceros permitió justificar el comportamiento de cada circuito: pasabajos, pasaaltos, pasabanda y rechazo de banda.
 
-Finalmente se adoptó un filtro pasabanda basado en redes RC y buffers con TL082. Esta solución presenta valores de componentes razonables, es más simple de implementar en PCB y cumple el objetivo de realizar un primer filtrado de la voz humana.
+Para el filtro de voz se evaluaron varias alternativas. Las opciones RLC fueron útiles para el análisis, pero no resultaron convenientes para la implementación final: con inductores de \SI{1}{mH} las resistencias necesarias eran muy bajas y exigían corrientes elevadas al TL082; con inductores mayores, la implementación se volvía menos práctica por disponibilidad y tamaño. La alternativa mixta RLC/RC-RC tampoco fue adoptada porque no quedaba simétrica ni tan predecible como diseño final.
+
+Finalmente se implementó un filtro pasabanda mediante redes RC-RC y buffers con TL082. Esta solución respeta las restricciones de la consigna, utiliza componentes comerciales, simplifica el diseño de PCB y cumple el objetivo de realizar un primer filtrado de voz humana.

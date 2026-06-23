@@ -1,35 +1,216 @@
 \section{Filtros de segundo orden}
 
-Se analizaron filtros de segundo orden a partir de su respuesta en frecuencia. Para cada circuito se determinó el tipo de filtro, se obtuvieron gráficos de magnitud y fase, y se compararon los resultados simulados con los medidos cuando se contaba con datos experimentales.
+En esta sección se analizan los cuatro circuitos de segundo orden de la consigna. Todos comparten la misma ecuación característica:
 
-\subsection{Circuito 2}
+\begin{equation}
+    s^2LC+sRC+1=0.
+\end{equation}
 
-El Circuito 2 corresponde a una red RLC cuya salida se toma sobre el capacitor. En bajas frecuencias el capacitor se comporta como circuito abierto y la tensión de salida tiende a la tensión de entrada. En altas frecuencias, el capacitor se aproxima a un cortocircuito y la salida tiende a cero. Por lo tanto, el circuito se comporta como un filtro pasabajos de segundo orden.
+Al dividir por $LC$:
+
+\begin{equation}
+    s^2+s\frac{R}{L}+\frac{1}{LC}=0.
+\end{equation}
+
+Comparando con la forma canónica:
+
+\begin{equation}
+    s^2+\frac{\omega_0}{Q}s+\omega_0^2=0,
+\end{equation}
+
+se obtiene:
+
+\begin{equation}
+    \omega_0=\frac{1}{\sqrt{LC}},
+    \qquad
+    Q=\frac{\omega_0 L}{R}=\frac{1}{R}\sqrt{\frac{L}{C}}.
+\end{equation}
+
+Con $R=\SI{50}{\ohm}$, $L=\SI{1}{mH}$ y $C=\SI{82}{nF}$:
+
+\begin{equation}
+    f_0\approx\SI{17.6}{kHz},
+    \qquad
+    Q\approx 2.21.
+\end{equation}
+
+\subsection{Circuitos analizados}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.92\textwidth]{\figpath bode_circuito2.pdf}
-    \caption{Respuesta en frecuencia del Circuito 2: comparación entre medición y simulación.}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \begin{circuitikz}[american, scale=0.82, transform shape]
+            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[L,l=$L$] (4,2.5) to[C,l=$C$] (4,0) node[ground]{};
+            \draw (4,2.5) to[open,v^=$v_o$] (4,0);
+        \end{circuitikz}
+        \caption{Circuito 2.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \begin{circuitikz}[american, scale=0.82, transform shape]
+            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[C,l=$C$] (4,2.5) to[L,l=$L$] (4,0) node[ground]{};
+            \draw (4,2.5) to[open,v^=$v_o$] (4,0);
+        \end{circuitikz}
+        \caption{Circuito 3.}
+    \end{subfigure}
+    
+    \vspace{0.6cm}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \begin{circuitikz}[american, scale=0.82, transform shape]
+            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[L,l=$L$] (2,2.5) to[C,l=$C$] (4,2.5) to[R,l=$R$] (4,0) node[ground]{};
+            \draw (4,2.5) to[open,v^=$v_o$] (4,0);
+        \end{circuitikz}
+        \caption{Circuito 4.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \begin{circuitikz}[american, scale=0.82, transform shape]
+            \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.5) to[R,l=$R$] (2,2.5) to[L,l=$L$] (4,2.5) to[C,l=$C$] (4,0) node[ground]{};
+            \draw (2,2.5) to[open,v^=$v_o$] (2,0);
+        \end{circuitikz}
+        \caption{Circuito 5.}
+    \end{subfigure}
+    \caption{Circuitos RLC de segundo orden estudiados.}
+    \label{fig:circuitos_orden2}
+\end{figure}
+
+\subsection{Transferencias y tipo de filtro}
+
+\subsubsection{Circuito 2: pasabajos}
+
+La salida se toma sobre el capacitor:
+
+\begin{equation}
+    H_2(s)=\frac{Z_C}{R+sL+Z_C}
+    =\frac{1}{s^2LC+sRC+1}.
+\end{equation}
+
+Como $H_2(0)=1$ y $H_2(s)\to 0$ para $s\to\infty$, se trata de un pasabajos de segundo orden.
+
+\subsubsection{Circuito 3: pasaaltos}
+
+La salida se toma sobre el inductor:
+
+\begin{equation}
+    H_3(s)=\frac{sL}{R+\frac{1}{sC}+sL}
+    =\frac{s^2LC}{s^2LC+sRC+1}.
+\end{equation}
+
+Como $H_3(0)=0$ y $H_3(s)\to 1$ para $s\to\infty$, se trata de un pasaaltos de segundo orden.
+
+\subsubsection{Circuito 4: pasabanda}
+
+La salida se toma sobre la resistencia:
+
+\begin{equation}
+    H_4(s)=\frac{R}{R+sL+\frac{1}{sC}}
+    =\frac{sRC}{s^2LC+sRC+1}.
+\end{equation}
+
+La ganancia tiende a cero para bajas y altas frecuencias, y alcanza su máximo en la resonancia. Por eso el circuito se comporta como un pasabanda.
+
+En resonancia se cumple:
+
+\begin{equation}
+    \omega_0 L=\frac{1}{\omega_0 C}.
+\end{equation}
+
+Por lo tanto, la impedancia reactiva neta se anula y queda solamente $R$. Entonces:
+
+\begin{equation}
+    |H_4(j\omega_0)|=\frac{R}{R}=1.
+\end{equation}
+
+La ganancia máxima ideal es:
+
+\begin{equation}
+    \boxed{|H_4|_{\max}=1=\SI{0}{dB}}.
+\end{equation}
+
+No puede superar \SI{0}{dB} porque el circuito es pasivo y la salida está tomada sobre la resistencia serie. Aunque las tensiones individuales sobre $L$ o $C$ pueden superar la tensión de entrada en un circuito de alto $Q$, la tensión sobre $R$ no supera a la fuente.
+
+\subsubsection{Circuito 5: rechazo de banda}
+
+En este caso la salida se toma sobre el conjunto $L+C$:
+
+\begin{equation}
+    H_5(s)=\frac{sL+\frac{1}{sC}}{R+sL+\frac{1}{sC}}
+    =\frac{s^2LC+1}{s^2LC+sRC+1}.
+\end{equation}
+
+El numerador se anula cuando:
+
+\begin{equation}
+    s^2LC+1=0 \quad \Rightarrow \quad s=\pm j\omega_0.
+\end{equation}
+
+Por lo tanto, el circuito presenta ceros sobre el eje imaginario en la frecuencia de resonancia y se comporta como un rechazo de banda.
+
+\subsection{Respuesta teórica y polos/ceros}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{\figpath bode_filtros_teoricos.pdf}
+    \caption{Respuesta en frecuencia teórica de los cuatro circuitos RLC.}
+    \label{fig:bode_teoricos_orden2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{\figpath polos_ceros_circuitos.pdf}
+    \caption{Diagramas de polos y ceros de los circuitos de segundo orden.}
+    \label{fig:polos_ceros_orden2}
+\end{figure}
+
+Los cuatro circuitos comparten los mismos polos porque poseen el mismo denominador. Lo que cambia es el numerador: el pasabajos no agrega ceros finitos, el pasaaltos tiene dos ceros en el origen, el pasabanda tiene un cero en el origen y el rechazo de banda posee ceros en $\pm j\omega_0$.
+
+\subsection{Comparación experimental: Circuitos 2 y 5}
+
+Para los circuitos 2 y 5 se comparó la respuesta simulada con la medición experimental. En el armado físico se utilizó un buffer para evitar que el instrumento o la etapa siguiente cargaran el circuito.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{\figpath bode_circuito2.pdf}
+    \caption{Circuito 2: comparación entre LTspice y osciloscopio.}
     \label{fig:bode_circuito2}
 \end{figure}
 
-La respuesta experimental sigue la tendencia del modelo simulado. Las diferencias se deben principalmente a tolerancias de componentes, resistencia serie del inductor y condiciones no ideales de medición.
-
-\subsection{Circuito 5 y efecto de la resistencia serie del inductor}
-
-En el Circuito 5 se evaluó el efecto de considerar o no la resistencia serie del inductor. Esta resistencia modifica el factor de calidad del circuito y, por lo tanto, el ancho de banda y el amortiguamiento de la respuesta.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.92\textwidth]{\figpath bode_circuito5_rl.pdf}
-    \caption{Respuesta del Circuito 5 comparando medición, simulación con resistencia serie del inductor y simulación sin resistencia serie.}
+    \includegraphics[width=0.9\textwidth]{\figpath bode_circuito5.pdf}
+    \caption{Circuito 5: comparación entre LTspice y osciloscopio.}
     \label{fig:bode_circuito5}
 \end{figure}
 
-Incluir la resistencia serie permite representar de manera más realista el comportamiento del circuito armado. Al no considerarla, la simulación supone un inductor ideal, lo que puede producir un factor de calidad mayor al observado experimentalmente.
+La medición sigue la tendencia de la simulación, aunque aparecen diferencias en magnitud y fase. Las causas principales son la resistencia serie real de la bobina, tolerancias de los capacitores, resistencia de cables, contactos de protoboard y limitaciones del instrumental.
 
-\subsection{Polos, ceros y tipo de filtro}
+\subsection{Montecarlo del Circuito 5}
 
-Los filtros pasabajos de segundo orden presentan dos polos y no poseen ceros finitos en la transferencia ideal normalizada. En cambio, los filtros pasaaltos de segundo orden presentan dos ceros en el origen, lo que explica la atenuación a bajas frecuencias. En los filtros pasabanda, la presencia de ceros en baja y alta frecuencia hace que la ganancia sea reducida fuera de una banda intermedia.
+Para el Circuito 5 se realizó un análisis de Montecarlo considerando tolerancias de $5\%$ en resistencias, $10\%$ en capacitores y $10\%$ en inductores. La frecuencia de rechazo ideal es:
 
-La ubicación de los polos determina el amortiguamiento y el factor de calidad. Polos más cercanos al eje imaginario generan una respuesta más resonante, mientras que polos con mayor parte real negativa producen una respuesta más amortiguada.
+\begin{equation}
+    f_0=\frac{1}{2\pi\sqrt{LC}}.
+\end{equation}
+
+Por eso, variar $L$ o $C$ desplaza directamente la frecuencia de rechazo. En cambio, variar solo $R$ no cambia $f_0$ idealmente, sino que modifica el factor de calidad:
+
+\begin{equation}
+    Q=\frac{1}{R}\sqrt{\frac{L}{C}}.
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{\figpath montecarlo_circuito5.pdf}
+    \caption{Montecarlo del Circuito 5: variación de $f_0$ y $Q$.}
+    \label{fig:montecarlo_circuito5}
+\end{figure}
+
+Se observa que al variar $C$ o $L$ se desplaza la frecuencia de rechazo, mientras que al variar solo $R$ se modifica principalmente el ancho de la zona rechazada. Este resultado coincide con la interpretación de $R$ como elemento disipativo que controla el amortiguamiento.
+
+\subsection{¿Se puede realizar un pasabanda de primer orden?}
+
+Un filtro pasabanda requiere atenuar simultáneamente bajas y altas frecuencias. Una transferencia estrictamente de primer orden solo posee un polo y no puede generar dos pendientes opuestas con una banda intermedia. Por lo tanto, no se puede obtener un pasabanda real de primer orden con una sola etapa de primer orden. Sí puede formarse un pasabanda conectando un pasaaltos de primer orden y un pasabajos de primer orden, pero el orden total del sistema resultante es dos.

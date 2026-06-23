@@ -1,99 +1,320 @@
 \section{Diseño del filtro pasabanda para PCB}
 
-El objetivo del diseño fue obtener un primer filtrado de la voz humana. Se tomó como referencia una banda pasante aproximada entre:
+La consigna del diseño propone un producto asociado al procesamiento de audio, cuyo objetivo es realizar un primer filtrado de la voz humana. Se pide una respuesta pasabanda de dos etapas, utilizando un TL082 o LM833 únicamente como buffer o como amplificador no inversor. Además, cada etapa puede ser de orden máximo dos.
+
+\subsection{Especificación adoptada}
+
+Para realizar un primer filtrado de voz se adoptó como banda útil aproximada:
 
 \begin{equation}
-    f_L \approx \SI{300}{Hz}
-    \qquad
-    f_H \approx \SI{3.4}{kHz}
+    \boxed{\SI{300}{Hz}\leq f \leq \SI{3.4}{kHz}}.
 \end{equation}
 
-Esta banda permite conservar una parte importante del contenido de la voz y atenuar componentes de muy baja y muy alta frecuencia.
-
-\subsection{Alternativas consideradas}
-
-Antes de adoptar el circuito final se analizaron distintas alternativas. Las simulaciones correspondientes se incluyen en la carpeta \texttt{ltspice/} como \texttt{opcionA.asc}, \texttt{opcionB.asc} y \texttt{filtroFINAL.asc}.
-
-\subsubsection{Opción A: etapa RLC y etapa RC con buffer}
-
-La primera alternativa consistía en utilizar una etapa RLC para uno de los cortes y una etapa RC-RC para el otro corte, separadas mediante un buffer. La ventaja de esta opción era que permitía aprovechar una bobina disponible en el laboratorio. Sin embargo, la respuesta obtenida no resultaba simétrica respecto de la banda de interés y el diseño combinaba dos criterios de filtrado distintos. Por este motivo se descartó como diseño final.
-
-\subsubsection{Opción B: dos etapas RLC con buffer}
-
-La segunda alternativa consistía en utilizar dos etapas RLC, una pasabajos y otra pasaaltos, separadas por un buffer. Para una respuesta de tipo Butterworth se eligió inicialmente:
+Esta banda corresponde a una zona de alta importancia para la inteligibilidad de la voz. Por lo tanto, el objetivo fue atenuar frecuencias menores a aproximadamente \SI{300}{Hz} y frecuencias mayores a aproximadamente \SI{3.4}{kHz}. La estrategia general fue combinar una etapa pasaaltos y una etapa pasabajos:
 
 \begin{equation}
-    Q=\frac{1}{\sqrt{2}}\approx 0{,}707
+    H(s)=\Hpa(s)\Hpb(s).
 \end{equation}
 
-El problema principal apareció al usar inductores de \SI{1}{mH}. Para lograr un corte inferior cercano a \SI{300}{Hz}, la reactancia del inductor resulta muy baja:
+\subsection{Alternativa A: etapa RLC y etapa RC-RC}
 
-\begin{equation}
-    X_L=2\pi f L
-    =2\pi\cdot 300\cdot 1\times 10^{-3}
-    \approx \SI{1.88}{\ohm}
-\end{equation}
-
-Como consecuencia, las resistencias necesarias quedaban del orden de pocos ohms y la salida del TL082 debía entregar una corriente elevada. En la simulación transitoria se observó una corriente de salida del orden de:
-
-\begin{equation}
-    I_{\text{opamp}}\approx \SI{27}{mA}
-\end{equation}
-
-Este valor no resulta conveniente para un TL082 trabajando como etapa de señal, ya que puede producir limitación de corriente, deformación de la señal y funcionamiento fuera de la región lineal.
-
-
-
-También se evaluó aumentar los valores de inductancia para obtener resistencias más razonables. Por ejemplo, para el corte inferior se requería una inductancia cercana a \SI{100}{mH}. Si bien esto mejora los valores de resistencia, no se contaba con inductores suficientemente grandes y adecuados para la implementación, por lo que esta alternativa no fue adoptada.
-
-\subsection{Diseño final adoptado}
-
-El diseño final se realizó mediante redes RC de segundo orden aproximadas, con buffers implementados con el TL082. La estructura general es:
-
-\begin{equation}
-    \text{pasa bajos RC-RC} \rightarrow \text{buffer} \rightarrow \text{pasa altos RC-RC} \rightarrow \text{buffer}
-\end{equation}
-
-El primer bloque atenúa altas frecuencias, mientras que el segundo bloque atenúa bajas frecuencias. En conjunto forman un filtro pasabanda. El uso de buffers permite desacoplar etapas y evitar que la carga de una etapa modifique fuertemente el comportamiento de la anterior.
+La primera alternativa estudiada combinaba un pasabajos RLC con una etapa pasaaltos RC-RC, separados por un buffer. El objetivo era obtener el corte superior mediante el RLC y el corte inferior mediante el bloque RC.
 
 \begin{figure}[H]
     \centering
+    \begin{circuitikz}[american, scale=0.82, transform shape]
+        \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.4) to[R,l=$R_1$] (2,2.4) to[L,l=$L_1$] (4,2.4) coordinate(a);
+        \draw (a) to[C,l=$C_1$] (4,0) node[ground]{};
+        \node[op amp, noinv input up] (op) at (6.2,2.4) {};
+        \draw (a) -- (op.+);
+        \draw (op.out) -- ++(0.8,0) coordinate(b);
+        \draw (op.-) -- ++(-0.35,0) |- (op.out);
+        \draw (b) to[C,l=$C_3$] ++(2,0) coordinate(c) to[C,l=$C_4$] ++(2,0) coordinate(d);
+        \draw (c) to[R,l_=$R_3$] ++(0,-2) node[ground]{};
+        \draw (d) to[R,l_=$R_4$] ++(0,-2) node[ground]{};
+        \draw (d) -- ++(1,0) node[right]{$v_o$};
+    \end{circuitikz}
+    \caption{Alternativa A: pasabajos RLC, buffer y pasaaltos RC-RC.}
+    \label{fig:opcion_a}
+\end{figure}
+
+Para el pasabajos RLC con salida en el capacitor:
+
+\begin{equation}
+    \Hpb(s)=\frac{1}{s^2L_1C_1+sR_1C_1+1}.
+\end{equation}
+
+Si se impone un corte superior cercano a \SI{3.4}{kHz} y se usa $L_1=\SI{1}{mH}$:
+
+\begin{equation}
+    C_1=\frac{1}{(2\pi f_c)^2L_1}
+    =\frac{1}{(2\pi\cdot 3400)^2\cdot 10^{-3}}
+    \approx \SI{2.19}{\micro F}.
+\end{equation}
+
+Para una respuesta Butterworth se tomó:
+
+\begin{equation}
+    Q=\frac{1}{\sqrt{2}}\approx 0.707.
+\end{equation}
+
+En un RLC serie:
+
+\begin{equation}
+    Q=\frac{\omega_0L}{R}
+    \quad \Rightarrow \quad
+    R=\frac{\omega_0L}{Q}.
+\end{equation}
+
+Entonces:
+
+\begin{equation}
+    R_1=\frac{2\pi\cdot 3400\cdot 10^{-3}}{0.707}\approx \SI{30.2}{\ohm}.
+\end{equation}
+
+Se adoptaban comercialmente $C_1=\SI{2.2}{\micro F}$ y $R_1=\SI{30}{\ohm}$.
+
+La etapa pasaaltos RC-RC, con $R_3=R_4=R$ y $C_3=C_4=C$, tiene una transferencia aproximada:
+
+\begin{equation}
+    \Hpa(s)=\frac{(sRC)^2}{(sRC)^2+3sRC+1}.
+\end{equation}
+
+Esta alternativa fue descartada porque no quedaba simétrica en términos de implementación: una etapa era resonante RLC y la otra era una red RC-RC cargada. En consecuencia, las pendientes, fase y sensibilidad a tolerancias no resultaban parejas. Además, no era la opción más simple para PCB.
+
+\subsection{Alternativa B: dos etapas RLC con buffer}
+
+La segunda alternativa consistía en utilizar dos etapas RLC, una pasabajos y una pasaaltos, separadas por un buffer. Esta opción era más simétrica desde el punto de vista conceptual.
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[american, scale=0.82, transform shape]
+        \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.4) to[R,l=$R_1$] (2,2.4) to[L,l=$L_1$] (4,2.4) coordinate(a);
+        \draw (a) to[C,l=$C_1$] (4,0) node[ground]{};
+        \node[op amp, noinv input up] (op) at (6.2,2.4) {};
+        \draw (a) -- (op.+);
+        \draw (op.out) -- ++(0.8,0) coordinate(b);
+        \draw (op.-) -- ++(-0.35,0) |- (op.out);
+        \draw (b) to[R,l=$R_2$] ++(2,0) to[C,l=$C_2$] ++(2,0) coordinate(c) to[L,l=$L_2$] ++(0,-2.4) node[ground]{};
+        \draw (c) -- ++(1,0) node[right]{$v_o$};
+    \end{circuitikz}
+    \caption{Alternativa B: dos etapas RLC separadas por buffer.}
+    \label{fig:opcion_b}
+\end{figure}
+
+Para la etapa pasaaltos RLC con salida en el inductor:
+
+\begin{equation}
+    \Hpa(s)=\frac{s^2L_2C_2}{s^2L_2C_2+sR_2C_2+1}.
+\end{equation}
+
+Si se fija $f_c=\SI{300}{Hz}$ y $L_2=\SI{1}{mH}$, el capacitor necesario es:
+
+\begin{equation}
+    C_2=\frac{1}{(2\pi\cdot 300)^2\cdot 10^{-3}}\approx \SI{281}{\micro F}.
+\end{equation}
+
+Con $Q=0.707$:
+
+\begin{equation}
+    R_2=\frac{2\pi\cdot 300\cdot 10^{-3}}{0.707}\approx \SI{2.66}{\ohm}.
+\end{equation}
+
+Este valor de resistencia es demasiado bajo para ser atacado directamente por la salida del TL082. En la simulación transitoria se obtuvo una corriente de salida del orden de:
+
+\begin{equation}
+    I_{\mathrm{opamp}}\approx\SI{27}{mA}.
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{\figpath verificacion_corriente_tl082.png}
+    \caption{Verificación de corriente exigida al TL082 en una alternativa RLC con $L=\SI{1}{mH}$.}
+    \label{fig:corriente_tl082}
+\end{figure}
+
+Este resultado motivó descartar la alternativa RLC con inductores de \SI{1}{mH}. Matemáticamente cumplía la función, pero físicamente exigía demasiada corriente al operacional.
+
+\subsection{Rediseño RLC con inductores comerciales mayores}
+
+Para que las resistencias de las etapas RLC no fueran de pocos ohms, se analizó qué inductancia sería necesaria. Partiendo de:
+
+\begin{equation}
+    R=\frac{\omega_0L}{Q},
+\end{equation}
+
+se despeja:
+
+\begin{equation}
+    L=\frac{RQ}{\omega_0}.
+\end{equation}
+
+Para el corte inferior de \SI{300}{Hz}, si se busca $R\approx\SI{270}{\ohm}$:
+
+\begin{equation}
+    L_2=\frac{270\cdot0.707}{2\pi\cdot300}\approx\SI{101}{mH}.
+\end{equation}
+
+Se obtiene un valor comercial cercano de \SI{100}{mH}. El capacitor asociado sería:
+
+\begin{equation}
+    C_2=\frac{1}{(2\pi\cdot300)^2\cdot\SI{100}{mH}}\approx\SI{2.81}{\micro F},
+\end{equation}
+
+por lo que puede adoptarse $C_2=\SI{2.7}{\micro F}$.
+
+Para el corte superior de \SI{3.4}{kHz}, si se busca $R\approx\SI{300}{\ohm}$:
+
+\begin{equation}
+    L_1=\frac{300\cdot0.707}{2\pi\cdot3400}\approx\SI{9.9}{mH}.
+\end{equation}
+
+Se obtiene un valor comercial de \SI{10}{mH}. El capacitor asociado es:
+
+\begin{equation}
+    C_1=\frac{1}{(2\pi\cdot3400)^2\cdot\SI{10}{mH}}\approx\SI{219}{nF},
+\end{equation}
+
+por lo que se adopta $C_1=\SI{220}{nF}$.
+
+Esta alternativa mejora las resistencias, pero depende de inductores de mayor tamaño y de su resistencia serie. Por disponibilidad y simplicidad de fabricación, se decidió avanzar con una solución RC.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{\figpath comparacion_opciones_filtro.pdf}
+    \caption{Comparación teórica de las alternativas evaluadas.}
+    \label{fig:comparacion_opciones}
+\end{figure}
+
+\subsection{Diseño final adoptado: RC-RC con buffers}
+
+El diseño final utiliza un pasabajos RC-RC, un buffer, un pasaaltos RC-RC y un buffer de salida. La topología final es compatible con la restricción de la consigna, ya que el TL082 se utiliza como seguidor de tensión.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
     \begin{circuitikz}[american]
-        \draw
-        (0,0) node[left]{$v_i$} to[R,l=$R_1$] (2,0)
-        to[short,*-] (2.6,0)
-        to[R,l=$R_2$] (4.6,0)
-        to[short,*-] (5.1,0);
-        \draw (2.6,0) to[C,l_=$C_1$] (2.6,-1.8) node[ground]{};
-        \draw (5.1,0) to[C,l_=$C_2$] (5.1,-1.8) node[ground]{};
-
-        \node[op amp, noinv input up] (op1) at (7.1,0) {};
-        \draw (5.1,0) -- (op1.+);
-        \draw (op1.out) -- ++(0.8,0) coordinate (b1);
+        \draw (0,0) node[left]{$v_i$} to[R,l=$R_1$] (2,0) coordinate(n1) to[R,l=$R_2$] (4,0) coordinate(n2);
+        \draw (n1) to[C,l_=$C_1$] ++(0,-1.8) node[ground]{};
+        \draw (n2) to[C,l_=$C_2$] ++(0,-1.8) node[ground]{};
+        \node[op amp, noinv input up] (op1) at (6,0) {};
+        \draw (n2) -- (op1.+);
+        \draw (op1.out) -- ++(0.8,0) coordinate(b1);
         \draw (op1.-) -- ++(-0.35,0) |- (op1.out);
-
-        \draw (b1) to[C,l=$C_3$] ++(2,0) coordinate (n3)
-        to[C,l=$C_4$] ++(2,0) coordinate (n4)
-        -- ++(0.3,0);
+        \draw (b1) to[C,l=$C_3$] ++(2,0) coordinate(n3) to[C,l=$C_4$] ++(2,0) coordinate(n4);
         \draw (n3) to[R,l_=$R_3$] ++(0,-1.8) node[ground]{};
         \draw (n4) to[R,l_=$R_4$] ++(0,-1.8) node[ground]{};
-
-        \node[op amp, noinv input up] (op2) at (14.2,0) {};
+        \node[op amp, noinv input up] (op2) at (13.2,0) {};
         \draw (n4) -- (op2.+);
         \draw (op2.out) -- ++(0.8,0) node[right]{$v_o$};
         \draw (op2.-) -- ++(-0.35,0) |- (op2.out);
     \end{circuitikz}
-    \caption{Topología final adoptada para el filtro pasabanda.}
-    \label{fig:topologia_final}
+    \end{adjustbox}
+    \caption{Filtro final adoptado: pasabajos RC-RC, buffer, pasaaltos RC-RC y buffer de salida.}
+    \label{fig:filtro_final_circuitikz}
 \end{figure}
 
-Los valores elegidos para el filtro final fueron:
+\subsection{Cálculo de los valores RC}
+
+Para dos etapas RC iguales en cascada sin buffer intermedio, el pasabajos queda:
+
+\begin{equation}
+    \Hpb(s)=\frac{1}{(sRC)^2+3sRC+1}.
+\end{equation}
+
+Esta red no tiene el corte de \SI{-3}{dB} exactamente en $1/(2\pi RC)$. Para esta topología, el punto de \SI{-3}{dB} aparece aproximadamente en:
+
+\begin{equation}
+    f_{c,PB}\approx 0.374\frac{1}{2\pi RC}.
+\end{equation}
+
+Se desea $f_{c,PB}\approx\SI{3.4}{kHz}$. Por lo tanto:
+
+\begin{equation}
+    \frac{1}{2\pi RC}\approx\frac{\SI{3.4}{kHz}}{0.374}\approx\SI{9.1}{kHz}.
+\end{equation}
+
+Adoptando $C_1=C_2=\SI{10}{nF}$:
+
+\begin{equation}
+    R_1=R_2\approx\frac{1}{2\pi\cdot \SI{9.1}{kHz}\cdot \SI{10}{nF}}\approx\SI{1.75}{k\ohm}.
+\end{equation}
+
+Se adopta el valor comercial:
+
+\begin{equation}
+    \boxed{R_1=R_2=\SI{1.8}{k\ohm}},
+    \qquad
+    \boxed{C_1=C_2=\SI{10}{nF}}.
+\end{equation}
+
+Para el pasaaltos RC-RC:
+
+\begin{equation}
+    \Hpa(s)=\frac{(sRC)^2}{(sRC)^2+3sRC+1}.
+\end{equation}
+
+El punto de \SI{-3}{dB} aparece aproximadamente en:
+
+\begin{equation}
+    f_{c,PA}\approx 2.67\frac{1}{2\pi RC}.
+\end{equation}
+
+Se desea $f_{c,PA}\approx\SI{300}{Hz}$. Por lo tanto:
+
+\begin{equation}
+    \frac{1}{2\pi RC}\approx\frac{\SI{300}{Hz}}{2.67}\approx\SI{112}{Hz}.
+\end{equation}
+
+Adoptando $C_3=C_4=\SI{100}{nF}$:
+
+\begin{equation}
+    R_3=R_4\approx\frac{1}{2\pi\cdot\SI{112}{Hz}\cdot\SI{100}{nF}}\approx\SI{14.2}{k\ohm}.
+\end{equation}
+
+Se adopta el valor comercial:
+
+\begin{equation}
+    \boxed{R_3=R_4=\SI{15}{k\ohm}},
+    \qquad
+    \boxed{C_3=C_4=\SI{100}{nF}}.
+\end{equation}
+
+\subsection{Transferencia total del filtro final}
+
+La transferencia total idealizada se obtiene como:
+
+\begin{equation}
+    H(s)=\Hpb(s)\Hpa(s).
+\end{equation}
+
+Reemplazando las expresiones:
+
+\begin{equation}
+    \boxed{
+    H(s)=
+    \frac{1}{(sR_{PB}C_{PB})^2+3sR_{PB}C_{PB}+1}
+    \cdot
+    \frac{(sR_{PA}C_{PA})^2}{(sR_{PA}C_{PA})^2+3sR_{PA}C_{PA}+1}
+    }
+\end{equation}
+
+con:
+
+\begin{equation}
+    R_{PB}=\SI{1.8}{k\ohm}, \quad C_{PB}=\SI{10}{nF}, \quad
+    R_{PA}=\SI{15}{k\ohm}, \quad C_{PA}=\SI{100}{nF}.
+\end{equation}
+
+El sistema tiene dos ceros en el origen aportados por la etapa pasaaltos. Los polos provienen de los dos denominadores cuadráticos de las redes RC-RC. La ubicación de estos polos determina la pendiente y el ancho de la banda útil.
+
+\subsection{Valores finales}
 
 \begin{table}[H]
     \centering
     \begin{tabular}{ccc}
         \toprule
-        Etapa & Componente & Valor \\
+        Etapa & Componente & Valor adoptado \\
         \midrule
         Pasabajos & $R_1=R_2$ & \SI{1.8}{k\ohm} \\
         Pasabajos & $C_1=C_2$ & \SI{10}{nF} \\
@@ -104,38 +325,16 @@ Los valores elegidos para el filtro final fueron:
         \bottomrule
     \end{tabular}
     \caption{Valores adoptados para el filtro final.}
-    \label{tab:valores_finales_filtro}
+    \label{tab:valores_filtro_final}
 \end{table}
-
-\subsection{Transferencia aproximada del filtro final}
-
-Cada bloque RC-RC se puede analizar como una red de segundo orden no ideal, ya que no existe un buffer entre los dos RC internos. Para dos resistencias y dos capacitores iguales, el pasabajos queda aproximado por:
-
-\begin{equation}
-    H_{PB}(s)=\frac{1}{(sRC)^2+3sRC+1}
-\end{equation}
-
-La red pasaaltos de dos RC en cascada presenta una forma análoga:
-
-\begin{equation}
-    H_{PA}(s)=\frac{(sRC)^2}{(sRC)^2+3sRC+1}
-\end{equation}
-
-Por lo tanto, la transferencia total aproximada del filtro final se expresa como:
-
-\begin{equation}
-    H(s)=H_{PB}(s)H_{PA}(s)
-\end{equation}
-
-La respuesta final fue ajustada y verificada mediante LTspice, ya que al no estar bufferizadas las dos celdas RC internas de cada bloque, las frecuencias de corte reales no coinciden exactamente con $1/(2\pi RC)$.
 
 \subsection{Esquemático en Altium}
 
-En la Figura~\ref{fig:esquematico_altium} se muestra el esquemático implementado en Altium. Se incluyeron entradas por conector, entrada por jack, salida por conector, bornera de alimentación y el circuito de filtrado con el TL082.
+El diseño se implementó en Altium con entrada por conector, entrada por jack, salida por conector y bornera de alimentación. Se incluyeron dos seguidores de tensión del TL082, uno para desacoplar las etapas y otro para entregar la señal de salida.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.98\textwidth]{\figpath esquematico_altium.png}
-    \caption{Esquemático del filtro final en Altium.}
+    \caption{Esquemático final implementado en Altium.}
     \label{fig:esquematico_altium}
 \end{figure}

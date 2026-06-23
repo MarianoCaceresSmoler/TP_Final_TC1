@@ -1,41 +1,34 @@
 \section{Interfaz gráfica en Python}
 
-Se desarrolló una interfaz gráfica en Python para graficar archivos CSV provenientes del osciloscopio y de LTspice. El programa fue diseñado para aceptar archivos temporales y archivos de Bode, detectando automáticamente el tipo de archivo cargado.
+Se desarrolló una interfaz gráfica para visualizar archivos CSV provenientes del osciloscopio y de LTspice. El objetivo fue evitar tener que reprocesar manualmente cada medición y permitir una comparación rápida entre señales medidas, simuladas y respuestas en frecuencia.
 
 \subsection{Funcionalidades implementadas}
 
-La interfaz permite realizar las siguientes operaciones:
+La aplicación permite:
 
 \begin{itemize}[itemsep=0.2em]
     \item cargar uno o varios archivos CSV;
-    \item arrastrar y soltar archivos sobre la ventana;
-    \item detectar si el archivo corresponde a una señal temporal o a un diagrama de Bode;
-    \item impedir la mezcla accidental de datos temporales y datos de Bode en un mismo gráfico;
-    \item graficar múltiples canales, incluso si provienen de archivos distintos;
-    \item modificar escala vertical, offset vertical y offset horizontal de cada canal;
-    \item alinear señales temporales a $t=0$ para comparar mediciones con simulaciones;
-    \item desplazar un canal en el eje horizontal mediante teclado, mouse o ingreso numérico;
-    \item agregar cursores sobre una curva, con cálculo automático de la coordenada $Y$;
-    \item comparar cursores mediante diferencias $\Delta X$ y $\Delta Y$;
-    \item activar modo XY para obtener figuras de Lissajous;
+    \item arrastrar archivos sobre la ventana;
+    \item detectar automáticamente si el archivo corresponde a una señal temporal o a un Bode;
+    \item trabajar en modo exclusivo: modo temporal o modo Bode, evitando mezclar ejes físicos incompatibles;
+    \item superponer canales de distintos archivos;
+    \item modificar escala vertical, offset vertical y offset horizontal por canal;
+    \item alinear señales temporales a $t=0$;
+    \item mover señales temporales con mouse, flechas o coordenada escrita;
+    \item cambiar el color de cada canal;
     \item marcar máximos y mínimos;
+    \item agregar cursores con cálculo automático de la coordenada $Y$;
+    \item comparar cursores mediante $\Delta X$ y $\Delta Y$;
+    \item usar modo XY para figuras de Lissajous;
     \item exportar el gráfico final a PDF.
 \end{itemize}
 
-\subsection{Organización del programa}
+\subsection{Criterio de diseño de la interfaz}
 
-El archivo principal de la interfaz se incluye en la carpeta \texttt{codigo/}. Se utilizaron las bibliotecas \texttt{pandas}, \texttt{numpy}, \texttt{matplotlib} y \texttt{tkinter}. De forma opcional, se empleó \texttt{tkinterdnd2} para habilitar la carga de archivos mediante arrastrar y soltar.
+La aplicación separa los archivos en dos clases. Los CSV temporales contienen tiempo y tensión, mientras que los archivos de Bode contienen frecuencia, magnitud en dB y fase. Por este motivo se implementó un modo exclusivo: si se está trabajando con Bode y se intenta cargar un archivo temporal, el programa solicita confirmación para limpiar los Bode y cambiar de modo. Lo mismo ocurre en el caso inverso. Esta decisión evita superponer datos con unidades incompatibles.
 
-\begin{lstlisting}[style=pythonstyle, caption={Comando de instalación de dependencias.}]
-py -m pip install pandas numpy matplotlib tkinterdnd2
-\end{lstlisting}
+En modo temporal, la interfaz permite cambiar unidades de tiempo y tensión. En modo Bode, en cambio, se grafica automáticamente magnitud y fase contra frecuencia en escala logarítmica. Se eliminaron de la vista las herramientas que no corresponden al modo activo, para que el uso sea más claro.
 
-\begin{lstlisting}[style=pythonstyle, caption={Ejecución de la interfaz.}]
-py gui_tc1_user_friendly_pdf.py
-\end{lstlisting}
+\subsection{Archivos entregados}
 
-\subsection{Modo temporal y modo Bode}
-
-Una mejora importante fue separar el funcionamiento en dos modos excluyentes. Si la interfaz se encuentra en modo Bode y se intenta cargar una señal temporal, el programa avisa al usuario y pregunta si desea borrar los Bode cargados y cambiar a modo temporal. Análogamente, si se está trabajando en modo temporal y se carga un Bode, el programa solicita confirmación antes de limpiar los datos actuales. Esto evita superponer datos con ejes físicos incompatibles.
-
-En modo temporal, el eje horizontal representa tiempo y puede expresarse en segundos, milisegundos, microsegundos o nanosegundos. En modo Bode, el eje horizontal representa frecuencia en hertz y se grafica automáticamente en escala logarítmica, separando magnitud y fase en dos subgráficos.
+El código fuente se incluye en la carpeta \texttt{codigo/}. En la entrega final se prevé utilizar un ejecutable, por lo que el informe no depende de la ejecución manual del script. El objetivo de incluir el código es documentar la implementación y permitir su revisión.

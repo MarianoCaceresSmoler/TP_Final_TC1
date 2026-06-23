@@ -1,6 +1,6 @@
 \section{Resultados del filtro final}
 
-Una vez definido el diseño final, se simuló la respuesta en frecuencia y se comparó con mediciones realizadas en protoboard y en placa. La comparación permite evaluar tanto la validez del modelo como el efecto de la implementación física.
+Una vez definido el diseño final, se simuló la respuesta en frecuencia en LTspice y se comparó con mediciones realizadas en protoboard y en placa. Para cumplir con la consigna, los gráficos de Bode se presentan con frecuencia en hertz y magnitud en decibeles.
 
 \begin{figure}[H]
     \centering
@@ -9,23 +9,27 @@ Una vez definido el diseño final, se simuló la respuesta en frecuencia y se co
     \label{fig:bode_filtro_final}
 \end{figure}
 
-Se observa el comportamiento pasabanda buscado: las bajas frecuencias son atenuadas por la etapa pasaaltos, mientras que las altas frecuencias son atenuadas por la etapa pasabajos. En la zona intermedia la atenuación es menor, por lo que el circuito permite conservar una parte importante del contenido asociado a la voz humana.
+La respuesta medida conserva el comportamiento pasabanda buscado: se atenúan las bajas frecuencias por la etapa pasaaltos y las altas frecuencias por la etapa pasabajos. La zona útil se ubica alrededor del rango elegido para voz humana.
 
-Las diferencias entre simulación, protoboard y placa pueden deberse a:
+\subsection{Comparación con la simulación}
+
+La simulación representa componentes ideales o modelos simplificados. En la medición real aparecen efectos no incluidos completamente:
 
 \begin{itemize}[itemsep=0.2em]
     \item tolerancias de resistencias y capacitores;
-    \item capacitancias e inductancias parásitas del armado;
-    \item ruido de medición;
     \item impedancia de salida del generador;
-    \item impedancia de entrada del instrumento de medición;
-    \item diferencias entre el modelo ideal del operacional y su comportamiento real.
+    \item impedancia de entrada de los instrumentos;
+    \item capacitancias parásitas de protoboard y PCB;
+    \item diferencias entre el modelo del TL082 y el componente real;
+    \item ruido de medición y contactos.
 \end{itemize}
 
-\subsection{Comparación entre protoboard y placa}
+La placa presenta una respuesta más repetible que la protoboard, ya que reduce longitudes de conexión y falsos contactos. Sin embargo, no elimina por completo las parasitarias ni las tolerancias de los componentes.
 
-La medición en protoboard suele presentar mayor dispersión debido a contactos, cables y capacidades parásitas. En la placa final se espera una respuesta más repetible, ya que las pistas son más cortas y las conexiones se encuentran soldadas. Sin embargo, la placa también introduce sus propias parasitarias, especialmente si las pistas de entrada y salida quedan próximas o si no se dispone de un buen plano de referencia.
+\subsection{Cumplimiento del objetivo}
 
-\subsection{Criterio de cumplimiento}
+El objetivo del producto era realizar un primer filtrado de voz humana, no obtener un filtro ideal de alta selectividad. El diseño final cumple este objetivo porque presenta una zona de paso en frecuencias medias y atenúa tanto componentes graves como componentes agudas. En particular, el filtro reduce frecuencias por debajo de la zona de voz y también disminuye el contenido por encima de algunos kilohertz, que no resulta tan relevante para la inteligibilidad básica.
 
-El producto se considera adecuado si conserva una banda útil para la voz y atenúa de forma apreciable las frecuencias por debajo y por encima de la banda de interés. Dado que se trata de un primer filtrado, no se busca eliminar completamente todo contenido fuera de banda, sino reducirlo lo suficiente para mejorar la selectividad del sistema.
+\subsection{Observaciones sobre la implementación física}
+
+La solución RC con buffers fue conveniente para PCB porque utiliza componentes pequeños, económicos y disponibles. Además, evita exigir corrientes elevadas al TL082. Esto fue una ventaja importante frente a las alternativas RLC, donde los inductores de bajo valor forzaban impedancias muy bajas y los inductores de valor alto aumentaban tamaño, costo y resistencia serie.

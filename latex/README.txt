@@ -1,19 +1,12 @@
-Proyecto LaTeX - TP Final TC1
+Proyecto LaTeX - Trabajo Practico Final TC1
 
-Compilacion:
-  pdflatex main.tex
-  pdflatex main.tex
+Contenido:
+- main.tex y preamble.tex: archivo principal y configuración del informe.
+- tex/: secciones del informe.
+- figuras/: gráficos y capturas usados por el informe.
+- data/: CSV medidos y simulados.
+- ltspice/: archivos .asc de simulación.
+- codigo/: código fuente de la GUI.
+- consigna.pdf: enunciado del trabajo práctico.
 
-Estructura:
-  main.tex            Archivo principal
-  preamble.tex        Paquetes y configuracion
-  tex/                Secciones del informe
-  figuras/            Graficos y capturas
-  data/               CSV usados para los graficos
-  ltspice/            Archivos .asc de LTspice
-  codigo/             GUI en Python
-
-Notas:
-  - El informe ya incluye graficos generados a partir de los CSV cargados.
-  - Los archivos opcionA.asc, opcionB.asc y filtroFINAL.asc estan incluidos para justificar el proceso de diseño del filtro.
-  - El PDF main.pdf fue compilado como vista previa del proyecto.
+El informe está preparado para ser entregado junto con los archivos fuente, datos y simulaciones.
