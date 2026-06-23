@@ -4,17 +4,16 @@
 \contentsline {section}{\numberline {2}Interfaz gráfica en Python}{3}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Funcionalidades implementadas}{3}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Criterio de diseño de la interfaz}{4}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Archivos entregados}{4}{subsection.2.3}%
 \contentsline {section}{\numberline {3}Análisis transitorio}{4}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Circuito analizado}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.1}Circuito analizado}{4}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Modelo teórico}{5}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Comparación entre simulación y medición}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.3}Comparación entre simulación y medición}{5}{subsection.3.3}%
 \contentsline {subsection}{\numberline {3.4}Caso ideal con resistencias nulas}{6}{subsection.3.4}%
 \contentsline {section}{\numberline {4}Filtros de segundo orden}{6}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Circuitos analizados}{7}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Transferencias y tipo de filtro}{7}{subsection.4.2}%
 \contentsline {subsubsection}{\numberline {4.2.1}Circuito 2: pasabajos}{7}{subsubsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2}Circuito 3: pasaaltos}{8}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2}Circuito 3: pasaaltos}{7}{subsubsection.4.2.2}%
 \contentsline {subsubsection}{\numberline {4.2.3}Circuito 4: pasabanda}{8}{subsubsection.4.2.3}%
 \contentsline {subsubsection}{\numberline {4.2.4}Circuito 5: rechazo de banda}{8}{subsubsection.4.2.4}%
 \contentsline {subsection}{\numberline {4.3}Respuesta teórica y polos/ceros}{9}{subsection.4.3}%

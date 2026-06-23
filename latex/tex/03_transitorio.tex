@@ -6,16 +6,37 @@ La primera simulación corresponde al circuito RLC de la consigna. La fuente con
 
 \begin{figure}[H]
     \centering
-    \begin{circuitikz}[american]
-        \draw
-        (0,0) node[ground]{} to[V,l=$V_i$] (0,3)
-        to[R,l=$R_1$] (2.2,3)
-        to[spst,l={llave}] (4,3)
-        -- (5.4,3) coordinate(top);
-        \draw (top) to[C,l=$C$] ++(0,-1.5) to[R,l=$R_2$] ++(0,-1.5) node[ground]{};
-        \draw (top) -- ++(2,0) coordinate(topL) to[L,l=$L$] ++(0,-1.5) to[R,l=$R_3$] ++(0,-1.5) node[ground]{};
-        \draw (topL) to[open,v^=$v_o$] ++(0,-3);
-    \end{circuitikz}
+    \begin{tikzpicture}[transform shape]
+        % Fuente de entrada con signos + y - (v={$V_i$})
+        \draw (5, 1.5) to[square voltage source, v_={$V_i$}, american voltages] (5, -1.5);
+        
+        % Resistencias superiores
+        \draw (6.25, 1.5) to[american resistor, l={$R_i$}] (7.25, 1.5);
+        \draw (8.25, 1.5) to[american resistor, l={$R_1$}] (9.5, 1.5);
+        
+        % Rama del capacitor y R2
+        \draw (11.5, 1.25) to[capacitor, l={$C$}] (11.5, 0.25);
+        \draw (11.5, 0.25) to[american resistor, l={$R_2$}] (11.5, -1.5);
+        
+        % Rama del inductor y R3
+        \draw (13, 1.5) to[american inductor, l={$L$}] (13, -0);
+        \draw (13, -0) to[american resistor, l={$R_3$}] (13, -1.25);
+        
+        % Conexiones de cables (líneas horizontales y verticales)
+        \draw (5, 1.5) -- (6.25, 1.5);
+        \draw (7.25, 1.5) -- (8.25, 1.5);
+        \draw (9.5, 1.5) -- (11.5, 1.5);
+        \draw (11.5, 1.5) -| (11.5, 1.25);
+        \draw (11.5, 1.5) -- (13, 1.5);
+        \draw (5, -1.5) -- (11.5, -1.5);
+        \draw (11.5, -1.5) -- (13, -1.5);
+        \draw (13, -1.25) -| (13, -1.5);
+    
+        % Extensión a la derecha para indicar Vo con sus signos + y - en paralelo
+        \draw (13, 1.5) -- (14.5, 1.5) 
+              to[open, v={$V_o$}, american voltages] (14.5, -1.5) 
+              -- (13, -1.5);
+    \end{tikzpicture}
     \caption{Circuito utilizado para el análisis transitorio.}
     \label{fig:circuito_transitorio}
 \end{figure}
