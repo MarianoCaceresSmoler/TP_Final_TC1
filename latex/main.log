@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.30)  24 JUN 2026 16:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.30)  24 JUN 2026 16:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -873,7 +873,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.42 ...n}{\numberline {D}GUI}{25}{appendix.Alph4}
+l.42 ...n}{\numberline {D}GUI}{26}{appendix.Alph4}
                                                   % [1])
 \tf@toc=\write5
 \openout5 = `main.toc'.
@@ -912,36 +912,41 @@ Package pdftex.def Info: figuras/montecarlo_transitorio_21_dispersion.pdf  used 
 \absvshift=\dimen345
 \absvshift=\dimen346
 \absvshift=\dimen347
- [11]
-<figuras/bode_filtros_teoricos.pdf, id=994, 650.43pt x 361.35pt>
+ [11] [12]
+<figuras/bode_filtros_teoricos.pdf, id=1009, 650.43pt x 361.35pt>
 File: figuras/bode_filtros_teoricos.pdf Graphic file (type pdf)
 <use figuras/bode_filtros_teoricos.pdf>
-Package pdftex.def Info: figuras/bode_filtros_teoricos.pdf  used on input line 159.
+Package pdftex.def Info: figuras/bode_filtros_teoricos.pdf  used on input line 204.
 (pdftex.def)             Requested size: 426.67638pt x 237.04713pt.
- [12]
-<figuras/polos_ceros_circuitos.pdf, id=1009, 578.16pt x 505.89pt>
+<figuras/bode_filtros_fase.pdf, id=1010, 758.835pt x 448.07399pt>
+File: figuras/bode_filtros_fase.pdf Graphic file (type pdf)
+<use figuras/bode_filtros_fase.pdf>
+Package pdftex.def Info: figuras/bode_filtros_fase.pdf  used on input line 211.
+(pdftex.def)             Requested size: 426.67638pt x 251.94527pt.
+ [13 <./figuras/bode_filtros_teoricos.pdf>]
+<figuras/polos_ceros_circuitos.pdf, id=1064, 578.16pt x 505.89pt>
 File: figuras/polos_ceros_circuitos.pdf Graphic file (type pdf)
 <use figuras/polos_ceros_circuitos.pdf>
-Package pdftex.def Info: figuras/polos_ceros_circuitos.pdf  used on input line 166.
+Package pdftex.def Info: figuras/polos_ceros_circuitos.pdf  used on input line 218.
 (pdftex.def)             Requested size: 417.3988pt x 365.22086pt.
- [13 <./figuras/bode_filtros_teoricos.pdf> <./figuras/polos_ceros_circuitos.pdf>]
-<figuras/bode_circuito2.pdf, id=1095, 578.16pt x 433.62pt>
+ [14 <./figuras/bode_filtros_fase.pdf> <./figuras/polos_ceros_circuitos.pdf>]
+<figuras/bode_circuito2.pdf, id=1166, 578.16pt x 433.62pt>
 File: figuras/bode_circuito2.pdf Graphic file (type pdf)
 <use figuras/bode_circuito2.pdf>
-Package pdftex.def Info: figuras/bode_circuito2.pdf  used on input line 179.
+Package pdftex.def Info: figuras/bode_circuito2.pdf  used on input line 231.
 (pdftex.def)             Requested size: 417.3988pt x 313.04646pt.
-<figuras/bode_circuito5.pdf, id=1096, 578.16pt x 433.62pt>
+<figuras/bode_circuito5.pdf, id=1167, 578.16pt x 433.62pt>
 File: figuras/bode_circuito5.pdf Graphic file (type pdf)
 <use figuras/bode_circuito5.pdf>
-Package pdftex.def Info: figuras/bode_circuito5.pdf  used on input line 186.
+Package pdftex.def Info: figuras/bode_circuito5.pdf  used on input line 238.
 (pdftex.def)             Requested size: 417.3988pt x 313.04646pt.
- [14 <./figuras/bode_circuito2.pdf>]
-<figuras/montecarlo_circuito5.pdf, id=1147, 650.43pt x 505.89pt>
+ [15 <./figuras/bode_circuito2.pdf>]
+<figuras/montecarlo_circuito5.pdf, id=1218, 650.43pt x 505.89pt>
 File: figuras/montecarlo_circuito5.pdf Graphic file (type pdf)
 <use figuras/montecarlo_circuito5.pdf>
-Package pdftex.def Info: figuras/montecarlo_circuito5.pdf  used on input line 209.
+Package pdftex.def Info: figuras/montecarlo_circuito5.pdf  used on input line 261.
 (pdftex.def)             Requested size: 417.3988pt x 324.64848pt.
- [15 <./figuras/bode_circuito5.pdf>]) (./tex/05_diseno_filtro_pcb.tex [16 <./figuras/montecarlo_circuito5.pdf>]
+ [16 <./figuras/bode_circuito5.pdf>]) (./tex/05_diseno_filtro_pcb.tex [17 <./figuras/montecarlo_circuito5.pdf>]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 28.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -951,31 +956,31 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 52.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [17{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}]
-<figuras/verificacion_corriente_tl082.png, id=1271, 2055.68pt x 1063.975pt>
+) [18{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}]
+<figuras/verificacion_corriente_tl082.png, id=1344, 2055.68pt x 1063.975pt>
 File: figuras/verificacion_corriente_tl082.png Graphic file (type png)
 <use figuras/verificacion_corriente_tl082.png>
 Package pdftex.def Info: figuras/verificacion_corriente_tl082.png  used on input line 131.
 (pdftex.def)             Requested size: 380.30266pt x 196.83229pt.
- [18]
-<figuras/comparacion_opciones_filtro.pdf, id=1286, 578.16pt x 361.35pt>
+ [19]
+<figuras/comparacion_opciones_filtro.pdf, id=1357, 578.16pt x 361.35pt>
 File: figuras/comparacion_opciones_filtro.pdf Graphic file (type pdf)
 <use figuras/comparacion_opciones_filtro.pdf>
 Package pdftex.def Info: figuras/comparacion_opciones_filtro.pdf  used on input line 184.
 (pdftex.def)             Requested size: 398.85074pt x 249.28215pt.
- [19 <./figuras/verificacion_corriente_tl082.png>] [20 <./figuras/comparacion_opciones_filtro.pdf>] [21]
-<figuras/esquematico_altium.png, id=1375, 934.99312pt x 462.72874pt>
+ [20 <./figuras/verificacion_corriente_tl082.png>] [21 <./figuras/comparacion_opciones_filtro.pdf>] [22]
+<figuras/esquematico_altium.png, id=1446, 934.99312pt x 462.72874pt>
 File: figuras/esquematico_altium.png Graphic file (type png)
 <use figuras/esquematico_altium.png>
 Package pdftex.def Info: figuras/esquematico_altium.png  used on input line 337.
 (pdftex.def)             Requested size: 454.50201pt x 224.9386pt.
 ) (./tex/06_resultados_medidos.tex
-<figuras/bode_filtro_final.pdf, id=1376, 578.16pt x 433.62pt>
+<figuras/bode_filtro_final.pdf, id=1447, 578.16pt x 433.62pt>
 File: figuras/bode_filtro_final.pdf Graphic file (type pdf)
 <use figuras/bode_filtro_final.pdf>
 Package pdftex.def Info: figuras/bode_filtro_final.pdf  used on input line 7.
 (pdftex.def)             Requested size: 426.67638pt x 320.00702pt.
- [22 <./figuras/esquematico_altium.png>] [23 <./figuras/bode_filtro_final.pdf>]) (./tex/07_conclusiones.tex) (./tex/08_anexos.tex [24]) [25] 
+ [23 <./figuras/esquematico_altium.png>] [24 <./figuras/bode_filtro_final.pdf>]) (./tex/07_conclusiones.tex) (./tex/08_anexos.tex [25]) [26] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./main.aux
 LaTeX Info: Redefining \. on input line 12.
@@ -989,18 +994,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 1509C45F28DC31A2A469DEBD7FBEF174;8326.
  ) 
 Here is how much of TeX's memory you used:
- 50169 strings out of 476047
- 1193350 string characters out of 5792075
+ 50185 strings out of 476047
+ 1193751 string characters out of 5792075
  1975975 words of memory out of 5000000
- 71423 multiletter control sequences out of 15000+600000
+ 71431 multiletter control sequences out of 15000+600000
  615468 words of font info for 85 fonts, out of 8000000 for 9000
  85 hyphenation exceptions out of 8191
  104i,13n,104p,1187b,1227s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on main.pdf (26 pages, 626009 bytes).
+Output written on main.pdf (27 pages, 646932 bytes).
 PDF statistics:
- 1558 PDF objects out of 1728 (max. 8388607)
- 1029 compressed objects within 11 object streams
- 169 named destinations out of 1000 (max. 500000)
- 406 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1630 PDF objects out of 1728 (max. 8388607)
+ 1050 compressed objects within 11 object streams
+ 177 named destinations out of 1000 (max. 500000)
+ 411 words of extra memory for PDF output out of 10000 (max. 10000000)
 

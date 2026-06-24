@@ -32,8 +32,52 @@ Con $R=\SI{50}{\ohm}$, $L=\SI{1}{mH}$ y $C=\SI{82}{nF}$:
     f_0\approx\SI{17.6}{kHz},
     \qquad
     Q\approx 2.21,
+    
+\end{equation}
+
+Para el pasabanda y el rechazo de banda también se calcularon las frecuencias de corte inferior y superior. Definiendo
+
+\begin{equation}
+    \alpha=\frac{R}{2L},
+\end{equation}
+
+se obtiene:
+
+\begin{equation}
+    \omega_1=-\alpha+\sqrt{\alpha^2+\omega_0^2},
     \qquad
-    B\approx \frac{f_0}{Q}\approx\SI{7.96}{kHz}.
+    \omega_2=\alpha+\sqrt{\alpha^2+\omega_0^2}.
+\end{equation}
+
+Con los valores utilizados:
+
+\begin{equation}
+    \alpha=\frac{50}{2\cdot 1\,\text{mH}}
+    =\SI{25e3}{rad/s},
+    \qquad
+    \omega_0\approx\SI{110.4e3}{rad/s}.
+\end{equation}
+
+Por lo tanto:
+
+\begin{equation}
+    \omega_1\approx\SI{88.2e3}{rad/s},
+    \qquad
+    \omega_2\approx\SI{138.2e3}{rad/s}.
+\end{equation}
+
+En frecuencia:
+
+\begin{equation}
+    f_1\approx\SI{14.0}{kHz},
+    \qquad
+    f_2\approx\SI{22.0}{kHz}.
+\end{equation}
+
+Así, el ancho de banda resulta:
+
+\begin{equation}
+    B=f_2-f_1\approx\SI{8.0}{kHz}.
 \end{equation}
 
 \subsection{Circuitos analizados}
@@ -157,8 +201,15 @@ Por lo tanto, el circuito presenta ceros sobre el eje imaginario en la frecuenci
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.92\textwidth]{\figpath bode_filtros_teoricos.pdf}
-    \caption{Respuesta en frecuencia teórica de los cuatro circuitos RLC.}
+    \caption{Mòdulo de la respuesta en frecuencia teórica de los cuatro circuitos RLC.}
     \label{fig:bode_teoricos_orden2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{\figpath bode_filtros_fase.pdf}
+    \caption{Fase de la respuesta en frecuencia teórica de los cuatro circuitos RLC.}
+    \label{fig:bode_teoricos_fase}
 \end{figure}
 
 \begin{figure}[H]
