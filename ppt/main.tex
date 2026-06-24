@@ -114,70 +114,172 @@
 \section{Transitorio RLC}
 
 \begin{frame}{Circuito de transitorio}
-    \begin{columns}[T,onlytextwidth]
-        \column{0.48\textwidth}
-        \centering
-        \begin{circuitikz}[american, scale=0.78, transform shape]
-            \draw (0,0) node[ground]{} to[battery1,l=$V_i$] (0,3) to[R,l=$R_1$] (2.0,3) to[spst,l=llave] (3.1,3) coordinate(a);
-            \draw (a) -- (5.0,3) coordinate(top);
-            \draw (top) to[C,l=$C$] (5.0,1.45) to[R,l=$R_2$] (5.0,0) node[ground]{};
-            \draw (top) -- (7.0,3) to[L,l=$L$] (7.0,1.45) to[R,l=$R_3$] (7.0,0) node[ground]{};
-            \draw (8.0,3) to[open,v^=$v_o$] (8.0,0);
-        \end{circuitikz}
-        \column{0.48\textwidth}
-        \begin{block}{Datos del grupo}
-        \begin{align*}
-            V_i&=\SI{10}{V}, & L&=\SI{1}{mH}\\
-            R_1&=\SI{50}{\ohm}, & R_2&=\SI{8.2}{\ohm},\\
-            R_3&=\SI{6.8}{\ohm}, & C&=\SI{47}{nF}
-        \end{align*}
-        \end{block}
-        \begin{itemize}
-            \item Se midió $v_o(t)$ al abrir/cerrar la llave.
-            \item Se simuló tensión y corriente en LTspice.
-        \end{itemize}
-    \end{columns}
+
+\begin{columns}[T,onlytextwidth]
+
+% ---------------- Circuito ----------------
+\column{0.62\textwidth}
+\centering
+\scriptsize
+
+\resizebox{\linewidth}{!}{
+\begin{circuitikz}[american]
+
+    % Fuente
+    \draw (0,-2.4) to[square voltage source, v_={$V_i$}] (0,2.4);
+
+    % Rama superior
+    \draw (0,2.4) -- (0.6,2.4)
+        to[R,l=$R_i$] (1.8,2.4)
+        -- (2.2,2.4)
+        to[R,l=$R_1$] (3.4,2.4)
+        -- (4.1,2.4);
+
+    % Rama C-R2
+    \draw (4.1,2.4)
+        to[C,l=$C$] (4.1,1.1)
+        to[R,l=$R_2$] (4.1,-2.4);
+
+    % Rama L-Rl-R3
+    \draw (4.1,2.4) -- (5.45,2.4)
+        to[L,l=$L$] (5.45,0.8)
+        to[R,l=$R_l$] (5.45,-0.7)
+        to[R,l=$R_3$] (5.45,-2.4);
+
+    % Retorno inferior
+    \draw (0,-2.4) -- (5.45,-2.4);
+
+    % Tensión de salida
+    \draw (5.45,2.4) -- (6.35,2.4)
+        to[open,v^=$V_o$] (6.35,-2.4)
+        -- (5.45,-2.4);
+
+\end{circuitikz}
+}
+
+\vspace{0.15cm}
+\footnotesize
+\textbf{Figura:} Circuito utilizado para el análisis transitorio.
+
+% ---------------- Datos ----------------
+\column{0.35\textwidth}
+
+\begin{block}{Datos del grupo}
+\small
+\begin{align*}
+    V_i &= \SI{10}{V} \\
+    L &= \SI{1}{mH} \\
+    R_1 &= \SI{50}{\ohm} \\
+    R_2 &= \SI{8.2}{\ohm} \\
+    R_3 &= \SI{6.8}{\ohm} \\
+    C &= \SI{47}{nF}
+\end{align*}
+\end{block}
+
+\small
+\begin{itemize}
+    \item Se midió $v_o(t)$ al abrir/cerrar la llave.
+    \item Se simuló tensión y corriente en LTspice.
+\end{itemize}
+
+\end{columns}
+
 \end{frame}
 
 \begin{frame}{Comparación medición - simulación}
     \centering
     \includegraphics[width=0.94\textwidth,height=0.70\textheight,keepaspectratio]{transitorio_2_1_tensiones_comparacion_alineado.pdf}
-    \smallnote{Las curvas se alinearon temporalmente para comparar la forma del transitorio y el sobrepico.}
 \end{frame}
 
 \begin{frame}{Corriente simulada en el capacitor}
     \centering
     \includegraphics[width=0.92\textwidth,height=0.70\textheight,keepaspectratio]{transitorio_2_1_corriente_capacitor_simulada.pdf}
-    \smallnote{La corriente presenta los picos esperados durante los cambios de estado de la llave.}
 \end{frame}
 
 \begin{frame}{Pseudofrecuencia y sobrepico}
-    \begin{columns}[T,onlytextwidth]
-        \column{0.50\textwidth}
-        \centering
-        \includegraphics[width=\textwidth,height=0.63\textheight,keepaspectratio]{transitorio_21_pseudofrecuencia_sobrepico.pdf}
-        \column{0.46\textwidth}
-        \begin{block}{Parámetros usados}
-        \begin{equation*}
-            f_d=\frac{\omega_d}{2\pi}
-        \end{equation*}
-        \begin{equation*}
-            V_{sp}=V_{max}-V_{final}
-        \end{equation*}
-        \end{block}
-        \begin{itemize}
-            \item $f_d$ mide la oscilación amortiguada.
-            \item El sobrepico resume cuánto excede el valor final.
-            \item Las diferencias provienen de tolerancias, resistencias parásitas y el armado real.
-        \end{itemize}
-    \end{columns}
+
+\begin{columns}[T,onlytextwidth]
+
+% ---------------- Izquierda ----------------
+\column{0.48\textwidth}
+
+\begin{block}{Cálculo usado}
+\scriptsize
+
+Usando los valores nominales de simulación:
+
+\begin{equation*}
+R_s=\SI{100}{\ohm},\quad
+R_C=\SI{8.2}{\ohm},\quad
+R_L=\SI{20.8}{\ohm}
+\end{equation*}
+
+\begin{equation*}
+L=\SI{1}{mH},
+\qquad
+C=\SI{47}{nF}
+\end{equation*}
+
+La pseudofrecuencia se obtuvo a partir de la respuesta amortiguada:
+
+\begin{equation*}
+f_d=\frac{\omega_d}{2\pi}
+\end{equation*}
+
+El sobrepico se calculó como:
+
+\begin{equation*}
+V_{sp}=V_{max}-V_{\infty}
+\end{equation*}
+
+\end{block}
+
+% ---------------- Derecha ----------------
+\column{0.48\textwidth}
+
+\begin{block}{Resultados}
+\scriptsize
+
+\begin{equation*}
+\boxed{f_d \approx \SI{16.76}{kHz}}
+\end{equation*}
+
+
+De la simulación nominal:
+
+\begin{equation*}
+V_{max}\approx \SI{6.37}{V}
+\end{equation*}
+
+\begin{equation*}
+V_{\infty}\approx \SI{1.72}{V}
+\end{equation*}
+
+\begin{equation*}
+\boxed{V_{sp}\approx \SI{4.65}{V}}
+\end{equation*}
+
+De la medición experimental:
+
+\begin{equation*}
+\boxed{V_{sp,med}\approx \SI{4.71}{V}}
+\end{equation*}
+
+\end{block}
+
+\end{columns}
+
+\vspace{0.15cm}
+
+
 \end{frame}
 
 \begin{frame}{Montecarlo del transitorio}
-    \begin{columns}[T,onlytextwidth]
+    \begin{columns}[c,onlytextwidth]
         \column{0.50\textwidth}
-        \centering
+        \centering 
         \includegraphics[width=\textwidth,height=0.62\textheight,keepaspectratio]{montecarlo_transitorio_21_histogramas.pdf}
+
         \column{0.46\textwidth}
         \begin{block}{Tolerancias}
         \begin{itemize}
@@ -267,11 +369,37 @@
 \end{frame}
 
 \begin{frame}{Polos y ceros}
-    \centering
-    \includegraphics[width=0.88\textwidth,height=0.70\textheight,keepaspectratio]{polos_ceros_circuitos.pdf}
-    \smallnote{Pasabajos: sin ceros finitos. Pasaaltos: dos ceros en el origen. Pasabanda: un cero en el origen. Rechazo: ceros en $\pm j\omega_0$.}
-\end{frame}
 
+\begin{columns}[c,onlytextwidth]
+
+% -------- Gráfico --------
+\column{0.63\textwidth}
+\centering
+\includegraphics[
+    width=\textwidth,
+    height=0.72\textheight,
+    keepaspectratio
+]{polos_ceros_circuitos.pdf}
+
+% -------- Texto --------
+\column{0.33\textwidth}
+
+\begin{block}{Ceros según filtro}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Pasabajos:} sin ceros finitos.
+    \item \textbf{Pasaaltos:} dos ceros en el origen.
+    \item \textbf{Pasabanda:} un cero en el origen.
+    \item \textbf{Rechazo:} ceros en $\pm j\omega_0$.
+\end{itemize}
+\end{block}
+
+\scriptsize
+Los cuatro circuitos comparten los mismos polos, ya que tienen el mismo denominador. Lo que cambia es el numerador de cada transferencia.
+
+\end{columns}
+
+\end{frame}
 \begin{frame}{Circuitos 2 y 5: medición vs simulación}
     \begin{columns}[T,onlytextwidth]
         \column{0.49\textwidth}
@@ -341,36 +469,62 @@
 \end{frame}
 
 \begin{frame}{Diseño final adoptado}
-    \centering
-    \begin{adjustbox}{max width=0.96\textwidth}
-    \begin{circuitikz}[american, scale=0.85, transform shape]
-        \draw (0,0) node[left]{$v_i$} to[R,l=$R_1$] (2,0) coordinate(n1) to[R,l=$R_2$] (4,0) coordinate(n2);
-        \draw (n1) to[C,l_=$C_1$] ++(0,-1.6) node[ground]{};
-        \draw (n2) to[C,l_=$C_2$] ++(0,-1.6) node[ground]{};
-        \node[op amp, noinv input up] (op1) at (5.8,0) {};
-        \draw (n2) -- (op1.+);
-        \draw (op1.out) -- ++(0.7,0) coordinate(b1);
-        \draw (op1.-) -- ++(-0.3,0) |- (op1.out);
-        \draw (b1) to[C,l=$C_3$] ++(1.8,0) coordinate(n3) to[C,l=$C_4$] ++(1.8,0) coordinate(n4);
-        \draw (n3) to[R,l_=$R_3$] ++(0,-1.6) node[ground]{};
-        \draw (n4) to[R,l_=$R_4$] ++(0,-1.6) node[ground]{};
-        \node[op amp, noinv input up] (op2) at (12.2,0) {};
-        \draw (n4) -- (op2.+);
-        \draw (op2.out) -- ++(0.7,0) node[right]{$v_o$};
-        \draw (op2.-) -- ++(-0.3,0) |- (op2.out);
-    \end{circuitikz}
-    \end{adjustbox}
-    \vspace{0.8em}
-    \begin{columns}[T,onlytextwidth]
-        \column{0.48\textwidth}
-        \begin{equation*}
-            \Hpb(s)=\frac{1}{(sRC)^2+3sRC+1}
-        \end{equation*}
-        \column{0.48\textwidth}
-        \begin{equation*}
-            \Hpa(s)=\frac{(sRC)^2}{(sRC)^2+3sRC+1}
-        \end{equation*}
-    \end{columns}
+
+\centering
+
+\resizebox{0.96\textwidth}{!}{
+\begin{circuitikz}[american, transform shape]
+
+    % Fuente de entrada
+    \draw (3.357,-1.029) to[sV,l={$v_i$}] (3.357,-3.279);
+    \node[ground] at (3.357,-3.279){};
+
+    % Pasabajos RC
+    \draw (3.357,-1.029) to[R,l={$R_1$}] (5.5,-1);
+    \draw (5.5,-1) to[R,l={$R_2$}] (9.25,-1);
+    \draw (5.5,-1) to[C,l={$C_1$}] (5.5,-3.25);
+    \draw (8.5,-1) to[C,l_={$C_2$}] (8.5,-3.25);
+    \node[ground] at (5.5,-3.25){};
+    \node[ground] at (8.5,-3.25){};
+
+    % Buffer 1
+    \node[op amp, yscale=-1] (op1) at (10.44,-1.49){};
+    \draw (9.25,-1) -- (op1.+);
+    \draw (op1.-) |- (11.63,-3.74) -| (op1.out);
+    \draw (op1.out) -- (12.107,-1);
+
+    % Pasaaltos RC
+    \draw (12.107,-1) to[C,l={$C_3$}] (13.75,-1);
+    \draw (13.75,-1) to[C,l={$C_4$}] (15.75,-1);
+    \draw (13.75,-1) to[R,l={$R_3$}] (13.75,-3.25);
+    \draw (15.75,-1) to[R,l_={$R_4$}] (15.75,-3.25);
+    \node[ground] at (13.75,-3.25){};
+    \node[ground] at (15.75,-3.25){};
+
+    % Buffer 2
+    \node[op amp, yscale=-1] (op2) at (17.69,-1.49){};
+    \draw (15.75,-1) -- (op2.+);
+    \draw (op2.-) |- (18,-2.99) -| (op2.out);
+    \draw (op2.out) -- (20,-1.49);
+    \node[right] at (20,-1.49) {$v_o$};
+
+\end{circuitikz}
+}
+
+\vspace{0.5em}
+
+\begin{columns}[c,onlytextwidth]
+    \column{0.48\textwidth}
+    \begin{equation*}
+        H_{PB}(s)=\frac{1}{(sRC)^2+3sRC+1}
+    \end{equation*}
+
+    \column{0.48\textwidth}
+    \begin{equation*}
+        H_{PA}(s)=\frac{(sRC)^2}{(sRC)^2+3sRC+1}
+    \end{equation*}
+\end{columns}
+
 \end{frame}
 
 \begin{frame}{Valores del filtro final}
@@ -419,11 +573,42 @@
 \end{frame}
 
 \begin{frame}{Bode del filtro final}
-    \centering
-    \includegraphics[width=0.92\textwidth,height=0.70\textheight,keepaspectratio]{bode_filtro_final.pdf}
-    \smallnote{La respuesta final se compara entre simulación y medición para verificar si cumple la banda de voz.}
-\end{frame}
 
+\begin{columns}[c,onlytextwidth]
+
+% -------- Gráfico --------
+\column{0.66\textwidth}
+\centering
+\includegraphics[
+    width=\textwidth,
+    height=0.72\textheight,
+    keepaspectratio
+]{bode_filtro_final.pdf}
+
+% -------- Texto --------
+\column{0.30\textwidth}
+
+\begin{block}{Verificación}
+\scriptsize
+\begin{itemize}
+    \item Se comparó la respuesta simulada con la medición.
+    \item El objetivo era verificar la banda útil de voz.
+    \item La banda pasante queda aproximadamente entre:
+    \[
+        \SI{300}{Hz}
+        \ \text{y}\
+        \SI{3.4}{kHz}
+    \]
+    \item Fuera de esa zona, el filtro atenúa la señal.
+\end{itemize}
+\end{block}
+
+\scriptsize
+Las diferencias se deben a tolerancias, respuesta no ideal del operacional y efectos de la placa.
+
+\end{columns}
+
+\end{frame}
 % -----------------------------------------------------------------
 \section{Cierre}
 
