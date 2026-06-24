@@ -109,10 +109,243 @@ La figura \ref{fig:transitorio_21_corriente}  ilustra de forma exclusiva el comp
 
 Cuando la señal de entrada conmuta al estado alto, la corriente no cambia instantáneamente, pero que experimenta un crecimiento rápido hasta alcanzar un valor máximo sobreamortiguado de $85.68\text{ mA}$ a los $29.45\ \mu\text{s}$. Posteriormente, la corriente se estabiliza en un valor estacionario de aproximadamente $83\text{ mA}$.En el proceso de conmutación inversa (flanco de bajada), la corriente cae abruptamente buscando el valor cero, llegando a presentar un leve valor mínimo negativo de $-2.90\text{ mA}$ a los $129.33\ \mu\text{s}$ antes de asentarse por completo en $0\text{ mA}$.
 
-\subsection{Pseudofrecuencia de oscilación y valor máximo de sobrepico}
+
+\subsection{Pseudofrecuencia de oscilación y sobrepico}
+
+Para cuantificar el transitorio se trabajó sobre la señal de salida $v_o(t)$ y sobre el circuito utilizado en la simulación de Montecarlo \texttt{2\_1\_MC.asc}. El objetivo fue obtener dos magnitudes pedidas por la consigna: la pseudofrecuencia de oscilación del transitorio y el valor máximo de sobrepico.
+
+Desde el punto de vista teórico, el circuito puede representarse mediante una impedancia serie de entrada y dos ramas en paralelo: una rama capacitiva y una rama inductiva. Definiendo
+
+\begin{equation}
+    R_s = R_i + R_1,
+    \qquad
+    R_C = R_2,
+    \qquad
+    R_L^\star = R_l + R_3,
+\end{equation}
+
+las impedancias de las ramas quedan
+
+\begin{equation}
+    Z_C = R_C + \frac{1}{sC},
+    \qquad
+    Z_L = R_L^\star + sL.
+\end{equation}
+
+La impedancia equivalente del paralelo es
+
+\begin{equation}
+    Z_p = Z_C \parallel Z_L.
+\end{equation}
+
+Por divisor de tensión, la transferencia entre la fuente y el nodo de salida resulta
+
+\begin{equation}
+    H(s)=\frac{V_o(s)}{V_i(s)}=\frac{Z_p}{R_s+Z_p}.
+\end{equation}
+
+Al desarrollar esta expresión se obtiene una transferencia de segundo orden:
+
+\begin{equation}
+    H(s)=
+    \frac{b_2s^2+b_1s+b_0}{a_2s^2+a_1s+a_0},
+\end{equation}
+
+con
+
+\begin{align}
+    b_2 &= R_CCL, \\
+    b_1 &= L + R_CCR_L^\star, \\
+    b_0 &= R_L^\star,
+\end{align}
+
+\begin{align}
+    a_2 &= LC(R_s+R_C), \\
+    a_1 &= L + C\left[R_s(R_C+R_L^\star)+R_C R_L^\star\right], \\
+    a_0 &= R_s+R_L^\star.
+\end{align}
+
+Los polos del sistema son
+
+\begin{equation}
+    s_{1,2}=-\alpha \pm j\omega_d,
+\end{equation}
+
+siendo
+
+\begin{equation}
+    \alpha=\frac{a_1}{2a_2},
+    \qquad
+    \omega_0=\sqrt{\frac{a_0}{a_2}},
+    \qquad
+    \omega_d=\sqrt{\omega_0^2-\alpha^2}.
+\end{equation}
+
+Por lo tanto, la pseudofrecuencia de oscilación se calcula como
+
+\begin{equation}
+    \boxed{f_d=\frac{\omega_d}{2\pi}}.
+\end{equation}
+
+Usando los valores nominales de simulación,
+
+\begin{equation}
+    R_s=\SI{100}{\ohm},\quad
+    R_C=\SI{8.2}{\ohm},\quad
+    R_L^\star=\SI{20.8}{\ohm},\quad
+    L=\SI{1}{mH},\quad
+    C=\SI{47}{nF},
+\end{equation}
+
+se obtuvo
+
+\begin{equation}
+    \boxed{f_d \approx \SI{16.76}{kHz}},
+    \qquad
+    \boxed{\zeta \approx 0.730}.
+\end{equation}
+
+El sobrepico máximo se calculó como la diferencia entre el máximo alcanzado durante el transitorio y el valor final de la respuesta al escalón:
+
+\begin{equation}
+    V_{sp}=V_{\max}-V_{\infty}.
+\end{equation}
+
+De la simulación nominal se obtuvo
+
+\begin{equation}
+    V_{\max} \approx \SI{6.37}{V},
+    \qquad
+    V_{\infty} \approx \SI{1.72}{V},
+    \qquad
+    \boxed{V_{sp} \approx \SI{4.65}{V}}.
+\end{equation}
+
+A partir de la medición experimental se obtuvo un sobrepico del mismo orden:
+
+\begin{equation}
+    \boxed{V_{sp,med} \approx \SI{4.71}{V}}.
+\end{equation}
+
+La diferencia entre los valores se atribuye a tolerancias de componentes, resistencia serie de la bobina, resistencia interna de la fuente, contactos de la protoboard y ruido de medición.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{\figpath transitorio_21_pseudofrecuencia_sobrepico.pdf}
+    \caption{Pseudofrecuencia de oscilación y sobrepico máximo para el transitorio del punto 2.1.}
+    \label{fig:transitorio_21_parametros}
+\end{figure}
 
 \subsection{Caso ideal con resistencias nulas}
 
-Si las resistencias fueran nulas, el circuito no tendría disipación de energía. En un modelo ideal, la energía intercambiaría indefinidamente entre el capacitor y el inductor, obteniéndose una oscilación sin amortiguamiento. En la realidad esto no ocurre porque siempre existen resistencias parásitas: resistencia de cables, resistencia serie de inductores, resistencia interna de la fuente, pérdidas dieléctricas y pérdidas por contacto. Por lo tanto, aunque no se agreguen resistencias externas, el circuito real siempre presenta amortiguamiento.
+Si las resistencias fueran nulas, el circuito quedaría formado únicamente por elementos ideales $L$ y $C$. En ese caso no existiría disipación de energía, por lo que el sistema no tendría amortiguamiento:
+
+\begin{equation}
+    \alpha \rightarrow 0,
+    \qquad
+    \zeta \rightarrow 0.
+\end{equation}
+
+Entonces, los polos quedarían sobre el eje imaginario,
+
+\begin{equation}
+    s_{1,2}=\pm j\omega_0,
+\end{equation}
+
+con
+
+\begin{equation}
+    \omega_0=\frac{1}{\sqrt{LC}}.
+\end{equation}
+
+Por lo tanto, la respuesta no se amortiguaría, sino que presentaría una oscilación sostenida. Para los valores nominales del circuito,
+
+\begin{equation}
+    f_0=\frac{1}{2\pi\sqrt{LC}}
+    =\frac{1}{2\pi\sqrt{\SI{1}{mH}\cdot\SI{47}{nF}}}
+    \approx \SI{23.2}{kHz}.
+\end{equation}
+
+Este caso no puede ocurrir exactamente en la realidad. Todo circuito físico posee pérdidas: resistencia serie de la bobina, resistencia equivalente serie del capacitor, resistencia de cables, contactos, resistencia interna de la fuente y pérdidas magnéticas. Además, una fuente real tampoco puede entregar corriente infinita. Por eso, aunque en LTspice se puedan colocar resistencias ideales de $\SI{0}{\ohm}$, en un montaje real siempre existe amortiguamiento.
 
 \subsection{Montecarlo de tolerancias}
+
+Para estudiar la sensibilidad del transitorio se utilizó el archivo \texttt{2\_1\_MC.asc}. En dicho archivo se realiza un barrido de Montecarlo mediante
+
+\begin{equation}
+    \texttt{.step param run 1 50 1},
+\end{equation}
+
+por lo que se consideraron $50$ corridas. Las tolerancias usadas fueron las pedidas por la consigna:
+
+\begin{equation}
+    \Delta R = \pm 5\%,
+    \qquad
+    \Delta C = \pm 10\%,
+    \qquad
+    \Delta L = 0\%.
+\end{equation}
+
+En el archivo de LTspice, el capacitor se define con una llamada del tipo
+
+\begin{equation}
+    C=\texttt{mc(47n,0.1)},
+\end{equation}
+
+mientras que las resistencias variables se definen de forma análoga mediante
+
+\begin{equation}
+    R=\texttt{mc(R\_0,0.05)}.
+\end{equation}
+
+Para cada corrida se calcularon los parámetros relevantes de la respuesta: la pseudofrecuencia $f_d$ y el sobrepico máximo $V_{sp}$. Además, para separar el efecto de cada componente, se compararon cuatro casos:
+
+\begin{itemize}[itemsep=0.2em]
+    \item variación simultánea de todos los componentes con tolerancia;
+    \item variación únicamente del capacitor;
+    \item variación únicamente de $R_2$;
+    \item variación únicamente de $R_3$.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{\figpath montecarlo_transitorio_21_histogramas.pdf}
+    \caption{Histogramas de Montecarlo del transitorio. En el eje vertical, ``Cantidad de simulaciones'' indica cuántas corridas cayeron dentro de cada intervalo.}
+    \label{fig:montecarlo_transitorio_hist}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\linewidth]{\figpath montecarlo_transitorio_21_dispersion.pdf}
+    \caption{Relación entre pseudofrecuencia y sobrepico para las corridas de Montecarlo.}
+    \label{fig:montecarlo_transitorio_dispersion}
+\end{figure}
+
+Los resultados numéricos principales se resumen en la Tabla~\ref{tab:mc_transitorio}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lcccc}
+        \toprule
+        Caso & $\overline{f_d}$ [kHz] & $\sigma_{f_d}$ [kHz] & $\overline{V_{sp}}$ [V] & $\sigma_{V_{sp}}$ [V] \\
+        \midrule
+        Todos & 16.74 & 0.22 & 4.67 & 0.08 \\
+        Solo C & 16.74 & 0.07 & 4.64 & 0.08 \\
+        Solo $R_2$ & 16.77 & 0.02 & 4.65 & 0.01 \\
+        Solo $R_3$ & 16.77 & 0.01 & 4.65 & 0.01 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Resumen estadístico del Montecarlo del transitorio.}
+    \label{tab:mc_transitorio}
+\end{table}
+
+Al variar todos los componentes, se obtiene la mayor dispersión combinada, ya que cambian simultáneamente la frecuencia natural y el amortiguamiento. Cuando se varía solo el capacitor, la dispersión dominante aparece en la pseudofrecuencia, ya que
+
+\begin{equation}
+    \omega_0 \propto \frac{1}{\sqrt{C}}.
+\end{equation}
+
+Por lo tanto, un aumento de $C$ reduce la frecuencia de oscilación, mientras que una disminución de $C$ la aumenta. En cambio, al variar solo $R_2$ o solo $R_3$, la frecuencia cambia menos, pero sí se modifica el amortiguamiento y, por lo tanto, el sobrepico. La variación de $R_3$ afecta directamente la rama inductiva, por lo que modifica la disipación asociada a la oscilación de la bobina. La variación de $R_2$ afecta principalmente la rama del capacitor y también cambia la forma del transitorio, aunque con menor impacto sobre la pseudofrecuencia que el capacitor.
+
+En conclusión, el capacitor es el componente más influyente sobre la pseudofrecuencia, mientras que las resistencias modifican principalmente el amortiguamiento y el sobrepico. Esto coincide con la interpretación física del circuito: $L$ y $C$ fijan la escala temporal de la oscilación, mientras que las resistencias determinan cuánta energía se disipa en cada ciclo.
+
