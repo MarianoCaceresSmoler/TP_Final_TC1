@@ -22,18 +22,26 @@ La primera alternativa estudiada combinaba un pasabajos RLC con una etapa pasaal
 
 \begin{figure}[H]
     \centering
-    \begin{circuitikz}[american, scale=0.82, transform shape]
-        \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.4) to[R,l=$R_1$] (2,2.4) to[L,l=$L_1$] (4,2.4) coordinate(a);
-        \draw (a) to[C,l=$C_1$] (4,0) node[ground]{};
-        \node[op amp, noinv input up] (op) at (6.2,2.4) {};
-        \draw (a) -- (op.+);
-        \draw (op.out) -- ++(0.8,0) coordinate(b);
-        \draw (op.-) -- ++(-0.35,0) |- (op.out);
-        \draw (b) to[C,l=$C_3$] ++(2,0) coordinate(c) to[C,l=$C_4$] ++(2,0) coordinate(d);
-        \draw (c) to[R,l_=$R_3$] ++(0,-2) node[ground]{};
-        \draw (d) to[R,l_=$R_4$] ++(0,-2) node[ground]{};
-        \draw (d) -- ++(1,0) node[right]{$v_o$};
-    \end{circuitikz}
+\begin{tikzpicture}[transform shape]
+	% Paths, nodes and wires:
+	\draw (4.25, 1) to[sinusoidal current source, l={$v_i$}] (4.25, -1.25);
+	\draw (4.25, 1) to[american resistor, l={$R_1$}] (6.25, 1);
+	\draw (6.25, 1) to[american inductor, l={$L1$}] (8, 1);
+	\draw (8, 1) to[capacitor, l={$C_1$}] (8, -1.25);
+	\node[ground] at (8, -1.25){};
+	\node[op amp, yscale=-1] at (10.333, 0.51){};
+	\draw (8, 1) -| (9.143, 1.029);
+	\draw (11.523, 0.51) to[capacitor, l={$C_3$}] (13, 0.5);
+	\draw (13, 0.5) to[capacitor, l={$C_4$}] (15, 0.5);
+	\draw (13, 0.5) to[american resistor, l={$R_3$}] (13, -1.25);
+	\draw (15, 0.5) to[american resistor, l={$R_4$}] (15, -1.25);
+	\draw (15, 0.5) -- (15.75, 0.5);
+	\draw (9.143, 0.02) |- (11.5, -1.75) -| (11.5, 0.5);
+	\node[ground] at (13, -1.25){};
+	\node[ground] at (15, -1.25){};
+	\node[ground] at (4.25, -1.25){};
+    \node at (15.75, 0.5) [right] {$v_o$};
+\end{tikzpicture}
     \caption{Alternativa A: pasabajos RLC, buffer y pasaaltos RC-RC.}
     \label{fig:opcion_a}
 \end{figure}
@@ -52,7 +60,7 @@ Si se impone un corte superior cercano a \SI{3.4}{kHz} y se usa $L_1=\SI{1}{mH}$
     \approx \SI{2.19}{\micro F}.
 \end{equation}
 
-Para una respuesta Butterworth se tomó:
+Para una respuesta lo más plana posible se tomó:
 
 \begin{equation}
     Q=\frac{1}{\sqrt{2}}\approx 0.707.
@@ -80,7 +88,14 @@ La etapa pasaaltos RC-RC, con $R_3=R_4=R$ y $C_3=C_4=C$, tiene una transferencia
     \Hpa(s)=\frac{(sRC)^2}{(sRC)^2+3sRC+1}.
 \end{equation}
 
-Esta alternativa fue descartada porque no quedaba simétrica en términos de implementación: una etapa era resonante RLC y la otra era una red RC-RC cargada. En consecuencia, las pendientes, fase y sensibilidad a tolerancias no resultaban parejas. Además, no era la opción más simple para PCB.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{\figpath bode_opcion_a.pdf}
+    \caption{Bode de la alternativa A: pasabajos RLC, buffer y pasaaltos RC-RC.}
+    \label{fig:opcion_a_bode}
+\end{figure}
+
+Esta alternativa fue descartada porque no quedaba simétrica en términos de implementación: una etapa era resonante RLC y la otra era una red RC-RC cargada. En consecuencia, las pendientes, fase y sensibilidad a tolerancias no resultaban parejas (Figura \ref{fig:opcion_a_bode}).
 
 \subsection{Alternativa B: dos etapas RLC con buffer}
 
@@ -88,18 +103,27 @@ La segunda alternativa consistía en utilizar dos etapas RLC, una pasabajos y un
 
 \begin{figure}[H]
     \centering
-    \begin{circuitikz}[american, scale=0.82, transform shape]
-        \draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.4) to[R,l=$R_1$] (2,2.4) to[L,l=$L_1$] (4,2.4) coordinate(a);
-        \draw (a) to[C,l=$C_1$] (4,0) node[ground]{};
-        \node[op amp, noinv input up] (op) at (6.2,2.4) {};
-        \draw (a) -- (op.+);
-        \draw (op.out) -- ++(0.8,0) coordinate(b);
-        \draw (op.-) -- ++(-0.35,0) |- (op.out);
-        \draw (b) to[R,l=$R_2$] ++(2,0) to[C,l=$C_2$] ++(2,0) coordinate(c) to[L,l=$L_2$] ++(0,-2.4) node[ground]{};
-        \draw (c) -- ++(1,0) node[right]{$v_o$};
-    \end{circuitikz}
-    \caption{Alternativa B: dos etapas RLC separadas por buffer.}
-    \label{fig:opcion_b}
+\begin{tikzpicture}[transform shape]
+	% Paths, nodes and wires:
+	\draw (4.25, 1) to[sinusoidal current source, l={$v_i$}] (4.25, -1.25);
+	\draw (4.25, 1) to[american resistor, l={$R_1$}] (6.25, 1);
+	\draw (6.25, 1) to[american inductor, l={$L1$}] (8, 1);
+	\draw (8, 1) to[capacitor, l={$C_1$}] (8, -1.25);
+	\node[ground] at (8, -1.25){};
+	\node[op amp, yscale=-1] at (10.333, 0.51){};
+	\draw (8, 1) -| (9.143, 1.029);
+	\draw (9.143, 0.02) |- (11.5, -1.75) -| (11.5, 0.5);
+	\node[ground] at (4.25, -1.25){};
+	\draw (12, 1) to[american resistor, l={$R_2$}] (13.5, 1);
+	\draw (13.5, 1) to[capacitor, l={$C_2$}] (15, 1);
+	\draw (15, 1) to[american inductor, l={$L_2$}] (15, -1.25);
+	\node[ground] at (15, -1.25){};
+	\draw (11.523, 0.51) |- (12, 1);
+    \draw (15, 1) -- (15.75, 1);
+    \node at (15.75, 1) [right] {$v_o$};
+\end{tikzpicture}
+\caption{Alternativa B: dos etapas RLC separadas por buffer.}
+\label{fig:opcion_b}
 \end{figure}
 
 Para la etapa pasaaltos RLC con salida en el inductor:
@@ -107,6 +131,15 @@ Para la etapa pasaaltos RLC con salida en el inductor:
 \begin{equation}
     \Hpa(s)=\frac{s^2L_2C_2}{s^2L_2C_2+sR_2C_2+1}.
 \end{equation}
+
+El gráfico de Bode de la alternativa B se muestra en la Figura \ref{fig:opcion_b_bode}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{\figpath bode_opcion_b.pdf}
+    \caption{Bode de la alternativa B: dos etapas RLC separadas por buffer.}
+    \label{fig:opcion_b_bode}
+\end{figure}
 
 Si se fija $f_c=\SI{300}{Hz}$ y $L_2=\SI{1}{mH}$, el capacitor necesario es:
 
@@ -126,12 +159,12 @@ Este valor de resistencia es demasiado bajo para ser atacado directamente por la
     I_{\mathrm{opamp}}\approx\SI{27}{mA}.
 \end{equation}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.82\textwidth]{\figpath verificacion_corriente_tl082.png}
-    \caption{Verificación de corriente exigida al TL082 en una alternativa RLC con $L=\SI{1}{mH}$.}
-    \label{fig:corriente_tl082}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.82\textwidth]{\figpath verificacion_corriente_tl082.png}
+%     \caption{Verificación de corriente exigida al TL082 en una alternativa RLC con $L=\SI{1}{mH}$.}
+%     \label{fig:corriente_tl082}
+% \end{figure}
 
 Este resultado motivó descartar la alternativa RLC con inductores de \SI{1}{mH}. Matemáticamente cumplía la función, pero físicamente exigía demasiada corriente al operacional.
 
@@ -177,39 +210,47 @@ Se obtiene un valor comercial de \SI{10}{mH}. El capacitor asociado es:
 
 por lo que se adopta $C_1=\SI{220}{nF}$.
 
-Esta alternativa mejora las resistencias, pero depende de inductores de mayor tamaño y de su resistencia serie. Por disponibilidad y simplicidad de fabricación, se decidió avanzar con una solución RC.
+Esta alternativa solucionaba el problema de corriente del TL082, pero los inductores de \SI{100}{mH} comerciales tienen mucha resistencia serie, y junto a la tolerancia propia de los componentes la respuesta de Bode terminaba por degradarse. Por este motivo, se decidió descartar la alternativa RLC-RLC.
 
+La respuesta de esta alternativa resulta igual a la anterior, pero con inductores más grandes y resistencias más altas. La Figura \ref{fig:bode_opcion_c} muestra la respuesta de Bode de esta alternativa.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.86\textwidth]{\figpath comparacion_opciones_filtro.pdf}
-    \caption{Comparación teórica de las alternativas evaluadas.}
-    \label{fig:comparacion_opciones}
+    \includegraphics[width=0.86\textwidth]{\figpath bode_opcion_c.pdf}
+    \caption{Bode filtro de dos etapas RLC con valores modificados.}
+    \label{fig:bode_opcion_c}
 \end{figure}
 
 \subsection{Diseño final adoptado: RC-RC con buffers}
 
-El diseño final utiliza un pasabajos RC-RC, un buffer, un pasaaltos RC-RC y un buffer de salida. La topología final es compatible con la restricción de la consigna, ya que el TL082 se utiliza como seguidor de tensión.
+El diseño final utiliza un pasabajos RC-RC, un buffer, un pasaaltos CR-CR y un buffer de salida. La topología final es compatible con la restricción de la consigna, ya que el TL082 se utiliza como seguidor de tensión.
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{max width=\textwidth}
-    \begin{circuitikz}[american]
-        \draw (0,0) node[left]{$v_i$} to[R,l=$R_1$] (2,0) coordinate(n1) to[R,l=$R_2$] (4,0) coordinate(n2);
-        \draw (n1) to[C,l_=$C_1$] ++(0,-1.8) node[ground]{};
-        \draw (n2) to[C,l_=$C_2$] ++(0,-1.8) node[ground]{};
-        \node[op amp, noinv input up] (op1) at (6,0) {};
-        \draw (n2) -- (op1.+);
-        \draw (op1.out) -- ++(0.8,0) coordinate(b1);
-        \draw (op1.-) -- ++(-0.35,0) |- (op1.out);
-        \draw (b1) to[C,l=$C_3$] ++(2,0) coordinate(n3) to[C,l=$C_4$] ++(2,0) coordinate(n4);
-        \draw (n3) to[R,l_=$R_3$] ++(0,-1.8) node[ground]{};
-        \draw (n4) to[R,l_=$R_4$] ++(0,-1.8) node[ground]{};
-        \node[op amp, noinv input up] (op2) at (13.2,0) {};
-        \draw (n4) -- (op2.+);
-        \draw (op2.out) -- ++(0.8,0) node[right]{$v_o$};
-        \draw (op2.-) -- ++(-0.35,0) |- (op2.out);
-    \end{circuitikz}
-    \end{adjustbox}
+    \begin{tikzpicture}[transform shape]
+	% Paths, nodes and wires:
+	\draw (3.357, -1.029) to[sinusoidal current source, l={$v_i$}] (3.357, -3.279);
+	\node[op amp, yscale=-1] at (10.44, -1.49){};
+	\draw (9.273, -1.97) |- (11.63, -3.74) -| (11.63, -1.49);
+	\node[ground] at (3.357, -3.279){};
+	\draw (11.63, -1.49) |- (12.107, -1);
+	\draw (3.357, -1.029) to[american resistor, l={$R_1$}] (5.5, -1);
+	\draw (5.5, -1) to[american resistor, l={$R_2$}] (9.25, -1);
+	\draw (5.5, -1) to[capacitor, l={$C_1$}] (5.5, -3.25);
+	\draw (8.5, -1) to[capacitor, l_={$C_2$}] (8.5, -3.25);
+	\draw (12.107, -1) to[capacitor, l={$C_3$}] (13.75, -1);
+	\draw (13.75, -1) to[capacitor, l={$C_4$}] (15.75, -1);
+	\draw (13.75, -1) to[american resistor, l={$R_3$}] (13.75, -3.25);
+	\draw (15.75, -1) to[american resistor, l_={$R_4$}] (15.75, -3.25);
+	\node[op amp, yscale=-1] at (17.69, -1.49){};
+	\draw (16.5, -1.02) |- (15.75, -1);
+	\draw (16.5, -1.99) -| (16.5, -2.99) -- (19, -2.99) |- (18.88, -1.5);
+	\draw (19, -1.5) -- (19, -1) -- (20, -1);
+	\node[ground] at (5.5, -3.25){};
+	\node[ground] at (8.5, -3.25){};
+	\node[ground] at (13.75, -3.25){};
+	\node[ground] at (15.75, -3.25){};
+    \node at (20, -1) [right] {$v_o$};
+\end{tikzpicture}
     \caption{Filtro final adoptado: pasabajos RC-RC, buffer, pasaaltos RC-RC y buffer de salida.}
     \label{fig:filtro_final_circuitikz}
 \end{figure}
@@ -307,6 +348,40 @@ con:
 \end{equation}
 
 El sistema tiene dos ceros en el origen aportados por la etapa pasaaltos. Los polos provienen de los dos denominadores cuadráticos de las redes RC-RC. La ubicación de estos polos determina la pendiente y el ancho de la banda útil.
+Los polos de las etapas combinadas resultan:
+\begin{enumerate}
+    \item Polos de la etapa pasabajos RC-RC:
+    \begin{equation}
+        p_{PB,1}\approx -145446.33\text{ rad/s},
+        \qquad
+        p_{PB,2}\approx -21220.33\text{ rad/s}.
+    \end{equation}
+    \item Polos de la etapa pasaaltos RC-RC:
+    \begin{equation}
+        p_{PA,1}\approx -1745.36\text{ rad/s},
+        \qquad
+        p_{PA,2}\approx -254.64\text{ rad/s}.
+    \end{equation}
+\end{enumerate}
+
+% Ceros:
+% z1, 2 = 0 (cero doble en el origen)
+% Polos:
+% p1 = -145446.33 rad/s
+% p2 = -21220.33 rad/s
+% p3 = -1745.36 rad/s
+% p4 = -254.64 rad/s
+
+
+Los polos y ceros del filtro final se muestran en la Figura \ref{fig:polos_ceros_filtro_final}. La respuesta en frecuencia se muestra en la Figura \ref{fig:bode_filtro_final}.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{\figpath diagrama_polos_ceros_filtro_final.pdf}
+    \caption{Diagrama de polos y ceros del filtro final.}
+    \label{fig:polos_ceros_filtro_final}
+\end{figure}
 
 \subsection{Valores finales}
 

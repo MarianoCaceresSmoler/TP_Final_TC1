@@ -1,11 +1,11 @@
-\section{Conclusiones}
+% \section{Conclusiones}
 
-Se desarrolló una interfaz gráfica que permite trabajar con archivos CSV temporales y de Bode, manteniendo modos separados para evitar errores de interpretación. La herramienta permite superponer señales, ajustar escalas, usar cursores, mover señales en fase y exportar gráficos a PDF, lo que facilitó la comparación entre simulación y medición.
+% Se desarrolló una interfaz gráfica que permite trabajar con archivos CSV temporales y de Bode, manteniendo modos separados para evitar errores de interpretación. La herramienta permite superponer señales, ajustar escalas, usar cursores, mover señales en fase y exportar gráficos a PDF, lo que facilitó la comparación entre simulación y medición.
 
-En el análisis transitorio se verificó que la respuesta medida y la simulada coinciden en forma general cuando se alinean temporalmente. Las diferencias restantes se explican por no idealidades reales: resistencia serie de inductores, tolerancias, ruido y efectos del armado.
+% En el análisis transitorio se verificó que la respuesta medida y la simulada coinciden en forma general cuando se alinean temporalmente. Las diferencias restantes se explican por no idealidades reales: resistencia serie de inductores, tolerancias, ruido y efectos del armado.
 
-En los filtros de segundo orden se identificaron las funciones de transferencia, los tipos de filtro, los parámetros característicos, los polos y ceros. La ubicación de los ceros permitió justificar el comportamiento de cada circuito: pasabajos, pasaaltos, pasabanda y rechazo de banda.
+% En los filtros de segundo orden se identificaron las funciones de transferencia, los tipos de filtro, los parámetros característicos, los polos y ceros. La ubicación de los ceros permitió justificar el comportamiento de cada circuito: pasabajos, pasaaltos, pasabanda y rechazo de banda.
 
-Para el filtro de voz se evaluaron varias alternativas. Las opciones RLC fueron útiles para el análisis, pero no resultaron convenientes para la implementación final: con inductores de \SI{1}{mH} las resistencias necesarias eran muy bajas y exigían corrientes elevadas al TL082; con inductores mayores, la implementación se volvía menos práctica por disponibilidad y tamaño. La alternativa mixta RLC/RC-RC tampoco fue adoptada porque no quedaba simétrica ni tan predecible como diseño final.
+% Para el filtro de voz se evaluaron varias alternativas. Las opciones RLC fueron útiles para el análisis, pero no resultaron convenientes para la implementación final: con inductores de \SI{1}{mH} las resistencias necesarias eran muy bajas y exigían corrientes elevadas al TL082; con inductores mayores, la implementación se volvía menos práctica por disponibilidad y tamaño. La alternativa mixta RLC/RC-RC tampoco fue adoptada porque no quedaba simétrica ni tan predecible como diseño final.
 
-Finalmente se implementó un filtro pasabanda mediante redes RC-RC y buffers con TL082. Esta solución respeta las restricciones de la consigna, utiliza componentes comerciales, simplifica el diseño de PCB y cumple el objetivo de realizar un primer filtrado de voz humana.
+% Finalmente se implementó un filtro pasabanda mediante redes RC-RC y buffers con TL082. Esta solución respeta las restricciones de la consigna, utiliza componentes comerciales, simplifica el diseño de PCB y cumple el objetivo de realizar un primer filtrado de voz humana.

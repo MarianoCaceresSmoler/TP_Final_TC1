@@ -1,58 +1,58 @@
-\appendix
-\section{Archivos incluidos}
+% \appendix
+% \section{Archivos incluidos}
 
-El proyecto se organiza en los siguientes directorios:
+% El proyecto se organiza en los siguientes directorios:
 
-\begin{itemize}[itemsep=0.2em]
-    \item \texttt{tex/}: secciones del informe en \LaTeX.
-    \item \texttt{figuras/}: gráficos generados, capturas y circuitos utilizados en el informe.
-    \item \texttt{data/}: archivos CSV experimentales y simulados.
-    \item \texttt{ltspice/}: archivos \texttt{.asc} de LTspice.
-    \item \texttt{codigo/}: código fuente de la GUI.
-\end{itemize}
+% \begin{itemize}[itemsep=0.2em]
+%     \item \texttt{tex/}: secciones del informe en \LaTeX.
+%     \item \texttt{figuras/}: gráficos generados, capturas y circuitos utilizados en el informe.
+%     \item \texttt{data/}: archivos CSV experimentales y simulados.
+%     \item \texttt{ltspice/}: archivos \texttt{.asc} de LTspice.
+%     \item \texttt{codigo/}: código fuente de la GUI.
+% \end{itemize}
 
-\section{Archivos de LTspice relevantes}
+% \section{Archivos de LTspice relevantes}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{ll}
-        \toprule
-        Archivo & Descripción \\
-        \midrule
-        \texttt{2\_1.asc} & Simulación del transitorio RLC. \\
-        \texttt{2\_1\_MC.asc} & Montecarlo del transitorio RLC. \\
-        \texttt{2\_2.asc} & Simulación de filtros de segundo orden. \\
-        \texttt{2\_2\_MC.asc} & Montecarlo del circuito 5 de filtros. \\
-        \texttt{opcionA.asc} & Alternativa RLC + RC-RC con buffer. \\
-        \texttt{opcionB.asc} & Alternativa con dos etapas RLC y buffer. \\
-        \texttt{filtroFINAL.asc} & Filtro final RC-RC con buffers. \\
-        \bottomrule
-    \end{tabular}
-    \caption{Archivos de simulación incluidos.}
-\end{table}
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{ll}
+%         \toprule
+%         Archivo & Descripción \\
+%         \midrule
+%         \texttt{2\_1.asc} & Simulación del transitorio RLC. \\
+%         \texttt{2\_1\_MC.asc} & Montecarlo del transitorio RLC. \\
+%         \texttt{2\_2.asc} & Simulación de filtros de segundo orden. \\
+%         \texttt{2\_2\_MC.asc} & Montecarlo del circuito 5 de filtros. \\
+%         \texttt{opcionA.asc} & Alternativa RLC + RC-RC con buffer. \\
+%         \texttt{opcionB.asc} & Alternativa con dos etapas RLC y buffer. \\
+%         \texttt{filtroFINAL.asc} & Filtro final RC-RC con buffers. \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Archivos de simulación incluidos.}
+% \end{table}
 
-\section{Archivos de datos}
+% \section{Archivos de datos}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{ll}
-        \toprule
-        Archivo & Uso en el informe \\
-        \midrule
-        \texttt{2\_1\_osciloscopio.csv} & Transitorio medido. \\
-        \texttt{2\_1\_simulado.csv} & Transitorio simulado. \\
-        \texttt{2\_2\_2\_osciloscopio.csv} & Bode medido del Circuito 2. \\
-        \texttt{2\_2\_2\_simulado.csv} & Bode simulado del Circuito 2. \\
-        \texttt{2\_2\_5\_osciloscopio.csv} & Bode medido del Circuito 5. \\
-        \texttt{2\_2\_5\_simuladoCONrl.csv} & Bode simulado del Circuito 5 con resistencia serie. \\
-        \texttt{bodeFiltroFinalsimulado.csv} & Bode simulado del filtro final. \\
-        \texttt{bodeFiltroRealProtoboard.csv} & Bode medido en protoboard. \\
-        \texttt{bodeFiltroRealPlaca.csv} & Bode medido en placa. \\
-        \bottomrule
-    \end{tabular}
-    \caption{Datos experimentales y simulados incluidos.}
-\end{table}
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{ll}
+%         \toprule
+%         Archivo & Uso en el informe \\
+%         \midrule
+%         \texttt{2\_1\_osciloscopio.csv} & Transitorio medido. \\
+%         \texttt{2\_1\_simulado.csv} & Transitorio simulado. \\
+%         \texttt{2\_2\_2\_osciloscopio.csv} & Bode medido del Circuito 2. \\
+%         \texttt{2\_2\_2\_simulado.csv} & Bode simulado del Circuito 2. \\
+%         \texttt{2\_2\_5\_osciloscopio.csv} & Bode medido del Circuito 5. \\
+%         \texttt{2\_2\_5\_simuladoCONrl.csv} & Bode simulado del Circuito 5 con resistencia serie. \\
+%         \texttt{bodeFiltroFinalsimulado.csv} & Bode simulado del filtro final. \\
+%         \texttt{bodeFiltroRealProtoboard.csv} & Bode medido en protoboard. \\
+%         \texttt{bodeFiltroRealPlaca.csv} & Bode medido en placa. \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Datos experimentales y simulados incluidos.}
+% \end{table}
 
-\section{GUI}
+% \section{GUI}
 
-El código fuente de la interfaz se entrega dentro de \texttt{codigo/}. En la entrega final se utilizará un ejecutable generado a partir de dicho código, por lo que no se incluyen instrucciones de compilación o instalación en este informe.
+% El código fuente de la interfaz se entrega dentro de \texttt{codigo/}. En la entrega final se utilizará un ejecutable generado a partir de dicho código, por lo que no se incluyen instrucciones de compilación o instalación en este informe.

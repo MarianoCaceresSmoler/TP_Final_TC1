@@ -1,6 +1,6 @@
 \section{Resultados del filtro final}
 
-Una vez definido el diseño final, se simuló la respuesta en frecuencia en LTspice y se comparó con mediciones realizadas en protoboard y en placa. Para cumplir con la consigna, los gráficos de Bode se presentan con frecuencia en hertz y magnitud en decibeles.
+Una vez definido el diseño final, se simuló la respuesta en frecuencia en LTspice y se comparó con mediciones realizadas en protoboard y en placa.
 
 \begin{figure}[H]
     \centering
@@ -10,8 +10,6 @@ Una vez definido el diseño final, se simuló la respuesta en frecuencia en LTsp
 \end{figure}
 
 La respuesta medida conserva el comportamiento pasabanda buscado: se atenúan las bajas frecuencias por la etapa pasaaltos y las altas frecuencias por la etapa pasabajos. La zona útil se ubica alrededor del rango elegido para voz humana.
-
-\subsection{Comparación con la simulación}
 
 La simulación representa componentes ideales o modelos simplificados. En la medición real aparecen efectos no incluidos completamente:
 
@@ -23,13 +21,3 @@ La simulación representa componentes ideales o modelos simplificados. En la med
     \item diferencias entre el modelo del TL082 y el componente real;
     \item ruido de medición y contactos.
 \end{itemize}
-
-La placa presenta una respuesta más repetible que la protoboard, ya que reduce longitudes de conexión y falsos contactos. Sin embargo, no elimina por completo las parasitarias ni las tolerancias de los componentes.
-
-\subsection{Cumplimiento del objetivo}
-
-El objetivo del producto era realizar un primer filtrado de voz humana, no obtener un filtro ideal de alta selectividad. El diseño final cumple este objetivo porque presenta una zona de paso en frecuencias medias y atenúa tanto componentes graves como componentes agudas. En particular, el filtro reduce frecuencias por debajo de la zona de voz y también disminuye el contenido por encima de algunos kilohertz, que no resulta tan relevante para la inteligibilidad básica.
-
-\subsection{Observaciones sobre la implementación física}
-
-La solución RC con buffers fue conveniente para PCB porque utiliza componentes pequeños, económicos y disponibles. Además, evita exigir corrientes elevadas al TL082. Esto fue una ventaja importante frente a las alternativas RLC, donde los inductores de bajo valor forzaban impedancias muy bajas y los inductores de valor alto aumentaban tamaño, costo y resistencia serie.
