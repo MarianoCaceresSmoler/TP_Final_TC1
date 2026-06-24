@@ -1,0 +1,6 @@
+\babel@toc {spanish}{}\relax 
+\beamer@sectionintoc {1}{GUI en Python}{4}{0}{1}
+\beamer@sectionintoc {2}{Transitorio RLC}{6}{0}{2}
+\beamer@sectionintoc {3}{Filtros de segundo orden}{12}{0}{3}
+\beamer@sectionintoc {4}{Filtro pasabanda para voz}{19}{0}{4}
+\beamer@sectionintoc {5}{Cierre}{26}{0}{5}
