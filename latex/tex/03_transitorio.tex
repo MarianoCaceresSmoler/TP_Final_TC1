@@ -54,37 +54,7 @@ Los valores utilizados fueron:
 
 Cabe aclarar que además de agregarse la resistencia interna del generador ($R_i=\SI{50}{\ohm}$), se incluyó la resistencia propia de la bobina ($R_l=\SI{14}{\ohm}$), ya que influye directamente en el amortiguamiento.
 
-\subsection{Modelo teórico}
-
-El circuito se puede describir como un sistema lineal de segundo orden. La respuesta de una variable del circuito tiene la forma:
-
-\begin{equation}
-    x(t)=x_{forzada}+x_{natural}(t)
-\end{equation}
-
-\begin{equation}
-\Rightarrow  x(t)=x_{\infty}+e^{-\alpha t}\left(A\cos(\omega_d t)+B\sin(\omega_d t)\right),
-\end{equation}
-
-si el caso es subamortiguado. La frecuencia amortiguada es:
-
-\begin{equation}
-    \omega_d=\sqrt{\omega_0^2-\alpha^2}.
-\end{equation}
-
-La pseudofrecuencia observada en el osciloscopio se obtiene a partir del período entre máximos sucesivos:
-
-\begin{equation}
-    f_d=\frac{1}{T_d}.
-\end{equation}
-
-El sobrepico se calcula comparando el máximo de la señal con el valor final:
-
-\begin{equation}
-    M_p=\frac{V_{\max}-V_f}{|V_f|}\cdot 100\%.
-\end{equation}
-
-\subsection{Comparación entre simulación y medición}
+\subsection{Resultados simulados y experimentales}
 
 \begin{figure}[H]
     \centering
@@ -93,7 +63,7 @@ El sobrepico se calcula comparando el máximo de la señal con el valor final:
     \label{fig:transitorio_21_tensiones}
 \end{figure}
 
-A partir de la figura \ref{fig:transitorio_21_tensiones} se observa que la señal medida experimentalmente sigue con notable precisión la morfología y los valores de la simulación de la rama completa ($L + R_3$). Durante los flancos de subida y bajada de la señal de entrada, se producen picos de tensión controlados por el comportamiento inductivo, alcanzando máximos cercanos a los $6\text{ V}$.La diferencia más crítica entre los modelos simulados radica en el estado estacionario (zonas planas de la onda): mientras que la tensión puramente inductiva decae por completo hasta $0\text{ V}$ debido a que un inductor ideal actúa como un cortocircuito en corriente continua, la curva experimental y la simulación de la rama completa se estabilizan en un valor constante no nulo de aproximadamente $1.7\text{ V}$. Esto demuestra empíricamente que la tensión de salida medida $V_o$ corresponde a la caída de potencial total de la rama paralela derecha del circuito, viéndose afectada directamente por la conducción de corriente sobre la resistencia $R_3$.
+A partir de la figura \ref{fig:transitorio_21_tensiones} se observa que la señal medida experimentalmente sigue con notable precisión la morfología y los valores de la simulación de la rama completa ($L + R_l + R_3$). Durante los flancos de subida y bajada de la señal de entrada, se producen picos de tensión controlados por el comportamiento inductivo, alcanzando máximos cercanos a los $6\text{ V}$.La diferencia más crítica entre los modelos simulados radica en el estado estacionario (zonas planas de la onda): mientras que la tensión puramente inductiva decae por completo hasta $0\text{ V}$ debido a que un inductor ideal actúa como un cortocircuito en corriente continua, la curva experimental y la simulación de la rama completa se estabilizan en un valor constante no nulo de aproximadamente $1.7\text{ V}$. Esto demuestra empíricamente que la tensión de salida medida $V_o$ corresponde a la caída de potencial total de la rama paralela derecha del circuito, viéndose afectada directamente por la conducción de corriente sobre la resistencia $R_3$.
 
 En cuanto a los posibles errores y discrepancias, sobre todo se puede observar que la curva del osciloscopio muestra un ruido ausente en las simulaciones ideales, fenómeno propio de la interferencia electromagnética externa y el ruido de los componentes reales. Luego, existen ligeras diferencias en las amplitudes máximas y mínimas absolutas entre la señal real y la simulada, así como también hay pequeñas variaciones en los valores temporales del transitorio, lo que podría atribuirse a la tolerancia de los componentes utilizados. Sin embargo, la coincidencia entre los resultados obtenidos por simulación y por medición experimental es lo suficientemente buena como para validar el modelo teórico.
 
@@ -112,7 +82,7 @@ Cuando la señal de entrada conmuta al estado alto, la corriente no cambia insta
 
 \subsection{Pseudofrecuencia de oscilación y sobrepico}
 
-Para cuantificar el transitorio se trabajó sobre la señal de salida $v_o(t)$ y sobre el circuito utilizado en la simulación de Montecarlo \texttt{2\_1\_MC.asc}. El objetivo fue obtener dos magnitudes pedidas por la consigna: la pseudofrecuencia de oscilación del transitorio y el valor máximo de sobrepico.
+Para cuantificar el transitorio se trabajó sobre la señal de salida $V_o(t)$, con el objetivo de obtener dos magnitudes pedidas por la consigna: la pseudofrecuencia de oscilación del transitorio y el valor máximo de sobrepico.
 
 Desde el punto de vista teórico, el circuito puede representarse mediante una impedancia serie de entrada y dos ramas en paralelo: una rama capacitiva y una rama inductiva. Definiendo
 
@@ -229,12 +199,12 @@ A partir de la medición experimental se obtuvo un sobrepico del mismo orden:
 
 La diferencia entre los valores se atribuye a tolerancias de componentes, resistencia serie de la bobina, resistencia interna de la fuente, contactos de la protoboard y ruido de medición.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\linewidth]{\figpath transitorio_21_pseudofrecuencia_sobrepico.pdf}
-    \caption{Pseudofrecuencia de oscilación y sobrepico máximo para el transitorio del punto 2.1.}
-    \label{fig:transitorio_21_parametros}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\linewidth]{\figpath transitorio_21_pseudofrecuencia_sobrepico.pdf}
+%     \caption{Pseudofrecuencia de oscilación y sobrepico máximo para el transitorio del punto 2.1.}
+%     \label{fig:transitorio_21_parametros}
+% \end{figure}
 
 \subsection{Caso ideal con resistencias nulas}
 
@@ -270,7 +240,7 @@ Este caso no puede ocurrir exactamente en la realidad. Todo circuito físico pos
 
 \subsection{Montecarlo de tolerancias}
 
-Para estudiar la sensibilidad del transitorio se utilizó el archivo \texttt{2\_1\_MC.asc}. En dicho archivo se realiza un barrido de Montecarlo mediante
+Para estudiar la sensibilidad del transitorio y la respuesta frente a la tolerancia de los componentes, se realiza un barrido de Montecarlo mediante
 
 \begin{equation}
     \texttt{.step param run 1 50 1},
@@ -286,17 +256,17 @@ por lo que se consideraron $50$ corridas. Las tolerancias usadas fueron las pedi
     \Delta L = 0\%.
 \end{equation}
 
-En el archivo de LTspice, el capacitor se define con una llamada del tipo
+% En el archivo de LTspice, el capacitor se define con una llamada del tipo
 
-\begin{equation}
-    C=\texttt{mc(47n,0.1)},
-\end{equation}
+% \begin{equation}
+%     C=\texttt{mc(47n,0.1)},
+% \end{equation}
 
-mientras que las resistencias variables se definen de forma análoga mediante
+% mientras que las resistencias variables se definen de forma análoga mediante
 
-\begin{equation}
-    R=\texttt{mc(R\_0,0.05)}.
-\end{equation}
+% \begin{equation}
+%     R=\texttt{mc(R\_0,0.05)}.
+% \end{equation}
 
 Para cada corrida se calcularon los parámetros relevantes de la respuesta: la pseudofrecuencia $f_d$ y el sobrepico máximo $V_{sp}$. Además, para separar el efecto de cada componente, se compararon cuatro casos:
 

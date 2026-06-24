@@ -6,38 +6,37 @@
 \contentsline {subsection}{\numberline {2.2}Criterio de diseño de la interfaz}{4}{subsection.2.2}%
 \contentsline {section}{\numberline {3}Análisis transitorio}{4}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Circuito analizado}{5}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Modelo teórico}{5}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Comparación entre simulación y medición}{6}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Pseudofrecuencia de oscilación y sobrepico}{7}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Caso ideal con resistencias nulas}{9}{subsection.3.5}%
-\contentsline {subsection}{\numberline {3.6}Montecarlo de tolerancias}{10}{subsection.3.6}%
-\contentsline {section}{\numberline {4}Filtros de segundo orden}{12}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Circuitos analizados}{12}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Transferencias y tipo de filtro}{12}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Circuito 2: pasabajos}{12}{subsubsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2}Circuito 3: pasaaltos}{13}{subsubsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.3}Circuito 4: pasabanda}{13}{subsubsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.4}Circuito 5: rechazo de banda}{13}{subsubsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.3}Respuesta teórica y polos/ceros}{14}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Comparación experimental: Circuitos 2 y 5}{15}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Montecarlo del Circuito 5}{16}{subsection.4.5}%
-\contentsline {subsection}{\numberline {4.6}¿Se puede realizar un pasabanda de primer orden?}{17}{subsection.4.6}%
-\contentsline {section}{\numberline {5}Diseño del filtro pasabanda para PCB}{17}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Especificación adoptada}{17}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Alternativa A: etapa RLC y etapa RC-RC}{18}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Alternativa B: dos etapas RLC con buffer}{19}{subsection.5.3}%
-\contentsline {subsection}{\numberline {5.4}Rediseño RLC con inductores comerciales mayores}{20}{subsection.5.4}%
-\contentsline {subsection}{\numberline {5.5}Diseño final adoptado: RC-RC con buffers}{21}{subsection.5.5}%
-\contentsline {subsection}{\numberline {5.6}Cálculo de los valores RC}{21}{subsection.5.6}%
-\contentsline {subsection}{\numberline {5.7}Transferencia total del filtro final}{22}{subsection.5.7}%
-\contentsline {subsection}{\numberline {5.8}Valores finales}{23}{subsection.5.8}%
-\contentsline {subsection}{\numberline {5.9}Esquemático en Altium}{23}{subsection.5.9}%
-\contentsline {section}{\numberline {6}Resultados del filtro final}{23}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Comparación con la simulación}{24}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Cumplimiento del objetivo}{25}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Observaciones sobre la implementación física}{25}{subsection.6.3}%
-\contentsline {section}{\numberline {7}Conclusiones}{25}{section.7}%
-\contentsline {section}{\numberline {A}Archivos incluidos}{25}{appendix.Alph1}%
-\contentsline {section}{\numberline {B}Archivos de LTspice relevantes}{26}{appendix.Alph2}%
-\contentsline {section}{\numberline {C}Archivos de datos}{26}{appendix.Alph3}%
-\contentsline {section}{\numberline {D}GUI}{26}{appendix.Alph4}%
+\contentsline {subsection}{\numberline {3.2}Resultados simulados y experimentales}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Pseudofrecuencia de oscilación y sobrepico}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Caso ideal con resistencias nulas}{8}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Montecarlo de tolerancias}{9}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Filtros de segundo orden}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Circuitos analizados}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Transferencias y tipo de filtro}{11}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Circuito 2: pasabajos}{11}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Circuito 3: pasaaltos}{12}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Circuito 4: pasabanda}{12}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Circuito 5: rechazo de banda}{12}{subsubsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.3}Respuesta teórica y polos/ceros}{13}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Comparación experimental: Circuitos 2 y 5}{14}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Montecarlo del Circuito 5}{15}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}¿Se puede realizar un pasabanda de primer orden?}{16}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Diseño del filtro pasabanda para PCB}{16}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Especificación adoptada}{16}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Alternativa A: etapa RLC y etapa RC-RC}{17}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Alternativa B: dos etapas RLC con buffer}{18}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Rediseño RLC con inductores comerciales mayores}{19}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Diseño final adoptado: RC-RC con buffers}{20}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Cálculo de los valores RC}{20}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Transferencia total del filtro final}{21}{subsection.5.7}%
+\contentsline {subsection}{\numberline {5.8}Valores finales}{22}{subsection.5.8}%
+\contentsline {subsection}{\numberline {5.9}Esquemático en Altium}{22}{subsection.5.9}%
+\contentsline {section}{\numberline {6}Resultados del filtro final}{22}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Comparación con la simulación}{23}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Cumplimiento del objetivo}{24}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Observaciones sobre la implementación física}{24}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Conclusiones}{24}{section.7}%
+\contentsline {section}{\numberline {A}Archivos incluidos}{24}{appendix.Alph1}%
+\contentsline {section}{\numberline {B}Archivos de LTspice relevantes}{25}{appendix.Alph2}%
+\contentsline {section}{\numberline {C}Archivos de datos}{25}{appendix.Alph3}%
+\contentsline {section}{\numberline {D}GUI}{25}{appendix.Alph4}%
