@@ -92,60 +92,53 @@
 
 % -----------------------------------------------------------------
 \begin{frame}{GUI desarrollada}
+\scriptsize
+\setlength{\itemsep}{1pt}
 
 \begin{columns}[T,onlytextwidth]
 
-\column{0.50\textwidth}
-\begin{block}{Carga y visualización}
-\scriptsize
-\begin{itemize}
-    \item Carga de CSV de osciloscopio, LTspice y Bode.
-    \item Soporta cantidad variable de canales.
-    \item Drag \& drop de archivos.
+\column{0.49\textwidth}
+\textbf{Carga y visualización}
+\begin{itemize}\itemsep1pt
+    \item CSV de osciloscopio, LTspice y Bode.
+    \item Cantidad variable de canales.
+    \item Drag \& drop.
     \item Modo exclusivo: tiempo o Bode.
-    \item Superposición de varios CSV compatibles.
-    \item Título, nombres de ejes y unidades configurables.
-    \item Grilla configurable, escalas logarítmicas y exportación a PDF.
+    \item Superposición de CSV compatibles.
+    \item Título, ejes, unidades y grilla configurables.
+    \item Escalas logarítmicas.
+    \item Exportación directa a PDF.
 \end{itemize}
-\end{block}
 
-\begin{block}{Edición por canal}
-\scriptsize
-\begin{itemize}
-    \item Activar/desactivar canales.
-    \item Cambio de color.
-    \item Escala vertical y offset vertical.
-    \item Desplazamiento temporal con mouse, flechas o valor escrito.
+\textbf{Edición por canal}
+\begin{itemize}\itemsep1pt
+    \item Activar/desactivar canal.
+    \item Color, escala Y y offset Y.
+    \item Offset X por mouse, flechas o teclado.
     \item Alineación automática a $t=0$.
 \end{itemize}
-\end{block}
 
-\column{0.48\textwidth}
-\begin{block}{Herramientas de análisis}
-\scriptsize
-\begin{itemize}
-    \item Cursores múltiples por canal.
-    \item $Y$ automática al elegir $X$.
-    \item Líneas verticales y horizontales.
-    \item Comparación entre cursores: $\Delta X$ y $\Delta Y$.
-    \item Movimiento de cursores con mouse, teclado o coordenada escrita.
-    \item Marcado automático de máximos y mínimos.
+\column{0.49\textwidth}
+\textbf{Cursores y análisis}
+\begin{itemize}\itemsep1pt
+    \item Varios cursores por canal.
+    \item Se ingresa $X$ y se calcula $Y$ automáticamente.
+    \item Línea vertical y horizontal.
+    \item Comparación $\Delta X$ y $\Delta Y$.
+    \item Movimiento con mouse, flechas o coordenada escrita.
+    \item Máximos y mínimos automáticos.
 \end{itemize}
-\end{block}
 
-\begin{block}{Modos especiales}
-\scriptsize
-\begin{itemize}
-    \item Modo Bode: magnitud en dB y fase en grados, con frecuencia logarítmica.
-    \item Modo XY/Lissajous para comparar dos señales temporales.
-    \item Rechazo de archivos inválidos sin cerrar la aplicación.
+\textbf{Modos especiales}
+\begin{itemize}\itemsep1pt
+    \item Bode: magnitud en dB y fase en grados.
+    \item Frecuencia en escala logarítmica.
+    \item Modo XY / Lissajous.
+    \item Rechazo de archivos inválidos sin crashear.
 \end{itemize}
-\end{block}
 
 \end{columns}
-
 \end{frame}
-
 % -----------------------------------------------------------------
 \section{Transitorio RLC}
 
