@@ -91,23 +91,59 @@
 \end{frame}
 
 % -----------------------------------------------------------------
-\section{GUI en Python}
-
 \begin{frame}{GUI desarrollada}
-    \begin{columns}[T,onlytextwidth]
-        \column{0.58\textwidth}
-        \begin{itemize}
-            \item Carga de CSV con cantidad variable de canales.
-            \item Selección exclusiva de modo: tiempo o Bode.
-            \item Escala, offset y color por canal.
-            \item Cursores con $Y$ automática, líneas vertical/horizontal y comparación $\Delta X$, $\Delta Y$.
-            \item Exportación directa de gráficos a PDF.
-        \end{itemize}
-        \column{0.38\textwidth}
-        \begin{block}{Mejora práctica}
-        La misma herramienta se usó para comparar medición, LTspice y resultados teóricos sin reprocesar manualmente los CSV.
-        \end{block}
-    \end{columns}
+
+\begin{columns}[T,onlytextwidth]
+
+\column{0.50\textwidth}
+\begin{block}{Carga y visualización}
+\scriptsize
+\begin{itemize}
+    \item Carga de CSV de osciloscopio, LTspice y Bode.
+    \item Soporta cantidad variable de canales.
+    \item Drag \& drop de archivos.
+    \item Modo exclusivo: tiempo o Bode.
+    \item Superposición de varios CSV compatibles.
+    \item Título, nombres de ejes y unidades configurables.
+    \item Grilla configurable, escalas logarítmicas y exportación a PDF.
+\end{itemize}
+\end{block}
+
+\begin{block}{Edición por canal}
+\scriptsize
+\begin{itemize}
+    \item Activar/desactivar canales.
+    \item Cambio de color.
+    \item Escala vertical y offset vertical.
+    \item Desplazamiento temporal con mouse, flechas o valor escrito.
+    \item Alineación automática a $t=0$.
+\end{itemize}
+\end{block}
+
+\column{0.48\textwidth}
+\begin{block}{Herramientas de análisis}
+\scriptsize
+\begin{itemize}
+    \item Cursores múltiples por canal.
+    \item $Y$ automática al elegir $X$.
+    \item Líneas verticales y horizontales.
+    \item Comparación entre cursores: $\Delta X$ y $\Delta Y$.
+    \item Movimiento de cursores con mouse, teclado o coordenada escrita.
+    \item Marcado automático de máximos y mínimos.
+\end{itemize}
+\end{block}
+
+\begin{block}{Modos especiales}
+\scriptsize
+\begin{itemize}
+    \item Modo Bode: magnitud en dB y fase en grados, con frecuencia logarítmica.
+    \item Modo XY/Lissajous para comparar dos señales temporales.
+    \item Rechazo de archivos inválidos sin cerrar la aplicación.
+\end{itemize}
+\end{block}
+
+\end{columns}
+
 \end{frame}
 
 % -----------------------------------------------------------------
