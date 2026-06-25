@@ -4,15 +4,17 @@ __pycache__/
 *$py.class
 
 # Virtual environments
-.venv/
-venv/
-env/
-ENV/
+*.venv/
+*venv/
+*env/
+*ENV/
+*build_venv/
 
 # PyInstaller
-build/
-dist/
+*build/
+*dist/
 *.spec
+*.exe
 
 # Windows executable / generated binaries
 *.exe
@@ -27,27 +29,27 @@ dist/
 *.log
 
 # OS files
-.DS_Store
-Thumbs.db
-desktop.ini
+*.DS_Store
+*Thumbs.db
+*desktop.ini
 
 # IDE / editors
-.vscode/
-.idea/
+*.vscode/
+*.idea/
 
 # Python packaging
 *.egg-info/
-.eggs/
-pip-wheel-metadata/
+*.eggs/
+*pip-wheel-metadata/
 
 # Test/cache folders
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+*.pytest_cache/
+*.mypy_cache/
+*.ruff_cache/
 
 # Local environment files
-.env
-.env.local
+*.env
+*.env.local
 
 # Matplotlib / temporary files
 *.tmp
