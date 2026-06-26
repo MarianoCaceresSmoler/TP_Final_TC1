@@ -429,6 +429,78 @@ En un circuito real siempre existen pérdidas: resistencia serie de la bobina, r
 % -----------------------------------------------------------------
 \section{Filtros de segundo orden}
 
+\begin{frame}{Circuitos analizados y caída medida}
+\scriptsize
+\centering
+
+\begin{tabular}{cc}
+
+% Circuito 2
+\begin{minipage}{0.46\textwidth}
+\centering
+\begin{circuitikz}[american, scale=0.58, transform shape]
+\draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.4)
+to[R,l=$R$] (1.8,2.4)
+to[L,l=$L$] (3.6,2.4)
+to[C,l_=$C$] (3.6,0) node[ground]{};
+\draw[red, thick] (4.4,2.4) to[open,v^=$v_o$] (4.4,0);
+\node at (2,-0.55) {Circuito 2: caída en $C$};
+\end{circuitikz}
+\end{minipage}
+
+&
+
+% Circuito 3
+\begin{minipage}{0.46\textwidth}
+\centering
+\begin{circuitikz}[american, scale=0.58, transform shape]
+\draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.4)
+to[R,l=$R$] (1.8,2.4)
+to[C,l=$C$] (3.6,2.4)
+to[L,l_=$L$] (3.6,0) node[ground]{};
+\draw[red, thick] (4.4,2.4) to[open,v^=$v_o$] (4.4,0);
+\node at (2,-0.55) {Circuito 3: caída en $L$};
+\end{circuitikz}
+\end{minipage}
+
+\\[1.0cm]
+
+% Circuito 4
+\begin{minipage}{0.46\textwidth}
+\centering
+\begin{circuitikz}[american, scale=0.58, transform shape]
+\draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.4)
+to[L,l=$L$] (1.8,2.4)
+to[C,l=$C$] (3.6,2.4)
+to[R,l_=$R$] (3.6,0) node[ground]{};
+\draw[red, thick] (4.4,2.4) to[open,v^=$v_o$] (4.4,0);
+\node at (2,-0.55) {Circuito 4: caída en $R$};
+\end{circuitikz}
+\end{minipage}
+
+&
+
+% Circuito 5
+\begin{minipage}{0.46\textwidth}
+\centering
+\begin{circuitikz}[american, scale=0.58, transform shape]
+\draw (0,0) node[ground]{} to[sV,l=$v_i$] (0,2.4)
+to[R,l=$R$] (1.8,2.4)
+to[L,l=$L$] (3.6,2.4)
+to[C,l_=$C$] (3.6,0) node[ground]{};
+\draw[red, thick] (2.45,2.4) to[open,v^=$v_o$] (2.45,0);
+\node at (1.7,-0.55) {Circuito 5: caída en $L+C$};
+\end{circuitikz}
+\end{minipage}
+
+\end{tabular}
+
+\vspace{0.2cm}
+\small
+La marca roja indica dónde se toma la salida $v_o$ en cada caso.
+
+\end{frame}
+
 \begin{frame}{Parámetros comunes de los RLC}
     \begin{columns}[T,onlytextwidth]
         \column{0.48\textwidth}

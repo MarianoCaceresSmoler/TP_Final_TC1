@@ -1,4 +1,4 @@
 \babel@toc {spanish}{}\relax 
 \beamer@sectionintoc {1}{Transitorio RLC}{6}{0}{1}
 \beamer@sectionintoc {2}{Filtros de segundo orden}{13}{0}{2}
-\beamer@sectionintoc {3}{Filtro pasabanda para voz}{20}{0}{3}
+\beamer@sectionintoc {3}{Filtro pasabanda para voz}{21}{0}{3}
