@@ -562,6 +562,10 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmss12.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT ./figuras/diagrama_polos_ceros_filtro_final.pdf
+INPUT ./figuras/diagrama_polos_ceros_filtro_final.pdf
+INPUT ./figuras/diagrama_polos_ceros_filtro_final.pdf
+INPUT ./figuras/diagrama_polos_ceros_filtro_final.pdf
 INPUT ./figuras/esquematico_altium.png
 INPUT ./figuras/esquematico_altium.png
 INPUT ./figuras/esquematico_altium.png
@@ -570,10 +574,6 @@ INPUT ./figuras/bode_filtro_final.pdf
 INPUT ./figuras/bode_filtro_final.pdf
 INPUT ./figuras/bode_filtro_final.pdf
 INPUT ./figuras/bode_filtro_final.pdf
-INPUT ./figuras/diagrama_polos_ceros_filtro_final.pdf
-INPUT ./figuras/diagrama_polos_ceros_filtro_final.pdf
-INPUT ./figuras/diagrama_polos_ceros_filtro_final.pdf
-INPUT ./figuras/diagrama_polos_ceros_filtro_final.pdf
 OUTPUT main.nav
 OUTPUT main.toc
 OUTPUT main.snm

@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1782475794.66357 "/home/nano/Facultad/TP_FInal_TC1/ppt/main.tex" "main.pdf" "main" 1782475796.72408 0
+["pdflatex"] 1782476607.56585 "/home/nano/Facultad/TP_FInal_TC1/ppt/main.tex" "main.pdf" "main" 1782476609.61528 0
   "/etc/texmf/web2c/texmf.cnf" 1774621812.9245 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0600.600pk" 1782475794.0359 12316 d8dc6716a4aa38bb6c2c5cc71451b079 ""
   "/home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0800.600pk" 1782423480.08611 15932 d90da20e0c6ece8502d86eaf4c3f35f6 ""
@@ -17,7 +17,7 @@
   "/home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss0800.600pk" 1782423476.62151 8588 b2d6d482b87e45a7708d28d2ebb9eff5 ""
   "/home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1000.600pk" 1782423480.57667 10604 af2334f5897c1c56a392d2795a0e2ba5 ""
   "/home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk" 1782423478.29986 11620 13a3a6c6807f2cb99e40b20aa36984cd ""
-  "/home/nano/Facultad/TP_FInal_TC1/ppt/main.tex" 1782475791.16475 24229 d07cbde10bb46c4d6ad57e483544c8b7 ""
+  "/home/nano/Facultad/TP_FInal_TC1/ppt/main.tex" 1782476607.35466 24230 1549d76dab54071e870423caff196e39 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecss0500.tfm" 1136768653 3584 3cb5b0e5e7e89823423413806ab1d938 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecss0600.tfm" 1136768653 3584 29c1411d292c531bfea559d981c42321 ""
@@ -332,10 +332,10 @@
   "figuras/montecarlo_transitorio_21_histogramas.pdf" 1782408344.083 23418 a6559bdae31ca82beba79c9bcd11614d ""
   "figuras/polos_ceros_circuitos.pdf" 1782408344.083 15070 30fff8d9de2cc1aad0b2811899f46f10 ""
   "figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf" 1782408344.083 35612 ad81f71cd00ab721d6a901f5608ba65d ""
-  "main.aux" 1782475796.62679 5406 434dbc9a9a747ae53be6845acd6e1b77 "pdflatex"
-  "main.nav" 1782475796.62779 3484 e613c6dfb756c30f29abd5f36108fa3d "pdflatex"
-  "main.out" 1782475796.62779 470 a49b1eaad442c5ac8edadb5ba30808d2 "pdflatex"
-  "main.tex" 1782475791.16475 24229 d07cbde10bb46c4d6ad57e483544c8b7 ""
+  "main.aux" 1782476609.51932 5406 434dbc9a9a747ae53be6845acd6e1b77 "pdflatex"
+  "main.nav" 1782476609.52032 3484 e613c6dfb756c30f29abd5f36108fa3d "pdflatex"
+  "main.out" 1782476609.52032 470 a49b1eaad442c5ac8edadb5ba30808d2 "pdflatex"
+  "main.tex" 1782476607.35466 24230 1549d76dab54071e870423caff196e39 ""
   (generated)
   "main.aux"
   "main.log"

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.27)  26 JUN 2026 09:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.27)  26 JUN 2026 09:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1134,32 +1134,32 @@ Overfull \vbox (6.05208pt too high) detected at line 769
 ] [25
 
 ]
-<figuras/esquematico_altium.png, id=694, 1273.75874pt x 867.24pt>
-File: figuras/esquematico_altium.png Graphic file (type png)
-<use figuras/esquematico_altium.png>
-Package pdftex.def Info: figuras/esquematico_altium.png  used on input line 814.
-(pdftex.def)             Requested size: 225.14626pt x 153.29106pt.
- [26
-
- <./figuras/esquematico_altium.png>]
-<figuras/bode_filtro_final.pdf, id=702, 578.16pt x 433.62pt>
-File: figuras/bode_filtro_final.pdf Graphic file (type pdf)
-<use figuras/bode_filtro_final.pdf>
-Package pdftex.def Info: figuras/bode_filtro_final.pdf  used on input line 852.
-(pdftex.def)             Requested size: 216.4213pt x 162.31596pt.
- [27
-
- <./figuras/bode_filtro_final.pdf>] [28
-
-]
-<figuras/diagrama_polos_ceros_filtro_final.pdf, id=762, 686.565pt x 419.166pt>
+<figuras/diagrama_polos_ceros_filtro_final.pdf, id=694, 686.565pt x 419.166pt>
 File: figuras/diagrama_polos_ceros_filtro_final.pdf Graphic file (type pdf)
 <use figuras/diagrama_polos_ceros_filtro_final.pdf>
-Package pdftex.def Info: figuras/diagrama_polos_ceros_filtro_final.pdf  used on input line 934.
+Package pdftex.def Info: figuras/diagrama_polos_ceros_filtro_final.pdf  used on input line 825.
 (pdftex.def)             Requested size: 262.89835pt x 160.50636pt.
- [29
+ [26
 
- <./figuras/diagrama_polos_ceros_filtro_final.pdf>] [30
+ <./figuras/diagrama_polos_ceros_filtro_final.pdf>]
+<figuras/esquematico_altium.png, id=747, 1273.75874pt x 867.24pt>
+File: figuras/esquematico_altium.png Graphic file (type png)
+<use figuras/esquematico_altium.png>
+Package pdftex.def Info: figuras/esquematico_altium.png  used on input line 841.
+(pdftex.def)             Requested size: 225.14626pt x 153.29106pt.
+ [27
+
+ <./figuras/esquematico_altium.png>]
+<figuras/bode_filtro_final.pdf, id=756, 578.16pt x 433.62pt>
+File: figuras/bode_filtro_final.pdf Graphic file (type pdf)
+<use figuras/bode_filtro_final.pdf>
+Package pdftex.def Info: figuras/bode_filtro_final.pdf  used on input line 879.
+(pdftex.def)             Requested size: 216.4213pt x 162.31596pt.
+ [28
+
+ <./figuras/bode_filtro_final.pdf>] [29
+
+] [30
 
 ]
 \tf@nav=\write6
@@ -1191,7 +1191,7 @@ Here is how much of TeX's memory you used:
  85 hyphenation exceptions out of 8191
  102i,20n,123p,1908b,1346s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0600.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0600.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0900.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0900.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss0800.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0800.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1440.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1095.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1095.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1200.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0800.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1000.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1000.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1200.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1440.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on main.pdf (30 pages, 651991 bytes).
+Output written on main.pdf (30 pages, 651938 bytes).
 PDF statistics:
  1386 PDF objects out of 1440 (max. 8388607)
  375 compressed objects within 4 object streams

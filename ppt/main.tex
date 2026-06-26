@@ -797,6 +797,33 @@ R=\frac{2.67}{2\pi f_c C}
     \end{center}
 \end{frame}
 
+\begin{frame}{Polos y ceros del filtro final}
+
+\begin{columns}[c,onlytextwidth]
+
+\column{0.66\textwidth}
+\centering
+\includegraphics[
+    width=\textwidth,
+    height=0.72\textheight,
+    keepaspectratio
+]{diagrama_polos_ceros_filtro_final.pdf}
+
+\column{0.30\textwidth}
+\scriptsize
+\begin{block}{Interpretación}
+\begin{itemize}
+    \item El filtro final tiene un cero doble en el origen.
+    \item Los polos son reales y negativos.
+    \item Al estar en el semiplano izquierdo, el sistema es estable.
+    \item Los polos determinan los cortes inferior y superior de la banda pasante.
+\end{itemize}
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
 \begin{frame}{Implementación en Altium}
     \begin{columns}[T,onlytextwidth]
         \column{0.60\textwidth}
@@ -906,32 +933,6 @@ La mayor diferencia aparece en el corte inferior. Esto se atribuye principalment
 
 \end{frame}
 
-\begin{frame}{Polos y ceros del filtro final}
-
-\begin{columns}[c,onlytextwidth]
-
-\column{0.66\textwidth}
-\centering
-\includegraphics[
-    width=\textwidth,
-    height=0.72\textheight,
-    keepaspectratio
-]{diagrama_polos_ceros_filtro_final.pdf}
-
-\column{0.30\textwidth}
-\scriptsize
-\begin{block}{Interpretación}
-\begin{itemize}
-    \item El filtro final tiene un cero doble en el origen.
-    \item Los polos son reales y negativos.
-    \item Al estar en el semiplano izquierdo, el sistema es estable.
-    \item Los polos determinan los cortes inferior y superior de la banda pasante.
-\end{itemize}
-\end{block}
-
-\end{columns}
-
-\end{frame}
 % -----------------------------------------------------------------
 
 
