@@ -139,6 +139,38 @@
 
 \end{columns}
 \end{frame}
+
+\begin{frame}{GUI: bibliotecas utilizadas}
+
+\scriptsize
+
+\begin{columns}[T,onlytextwidth]
+
+\column{0.48\textwidth}
+\begin{block}{Interfaz y archivos}
+\begin{itemize}
+    \item \textbf{tkinter}: construcción de la ventana, botones, menús y tablas.
+    \item \textbf{tkinterdnd2}: arrastrar y soltar archivos CSV.
+    \item \textbf{pathlib / os}: manejo de rutas y nombres de archivos.
+    \item \textbf{csv / re}: detección de formato y lectura flexible de archivos.
+\end{itemize}
+\end{block}
+
+\column{0.48\textwidth}
+\begin{block}{Procesamiento y gráficos}
+\begin{itemize}
+    \item \textbf{pandas}: lectura y organización de datos CSV.
+    \item \textbf{numpy}: operaciones numéricas, interpolación y manejo de vectores.
+    \item \textbf{matplotlib}: gráficos temporales, Bode, XY, cursores y exportación a PDF.
+    \item \textbf{dataclasses / typing}: organización interna del código.
+\end{itemize}
+\end{block}
+
+\end{columns}
+
+\vspace{0.15cm}
+
+\end{frame}
 % -----------------------------------------------------------------
 \section{Transitorio RLC}
 
@@ -207,7 +239,7 @@
 
 \small
 \begin{itemize}
-    \item Se midió $v_o(t)$ al abrir/cerrar la llave.
+    \item Se midió $v_o(t)$ usando una señal cuadrada.
     \item Se simuló tensión y corriente en LTspice.
 \end{itemize}
 
@@ -303,6 +335,48 @@ De la medición experimental:
 
 \end{frame}
 
+\begin{frame}{Caso ideal: resistencias nulas}
+
+\begin{columns}[c,onlytextwidth]
+
+\column{0.48\textwidth}
+\begin{block}{Si $R=0$}
+\scriptsize
+Si las resistencias fueran nulas, el circuito no tendría pérdidas disipativas:
+
+\[
+\alpha = \frac{R}{2L}=0
+\]
+
+Entonces la frecuencia amortiguada sería:
+
+\[
+\omega_d=\omega_0
+\]
+
+y la respuesta oscilaría indefinidamente.
+\end{block}
+
+\column{0.48\textwidth}
+\begin{block}{Interpretación física}
+\scriptsize
+\begin{itemize}
+    \item La energía iría alternando entre $L$ y $C$.
+    \item No habría amortiguamiento.
+    \item El transitorio no decaería.
+    \item En la práctica no puede ocurrir.
+\end{itemize}
+\end{block}
+
+\end{columns}
+
+\vspace{0.15cm}
+
+\scriptsize
+En un circuito real siempre existen pérdidas: resistencia serie de la bobina, resistencia de cables, contactos de protoboard, resistencia interna de la fuente y pérdidas en el capacitor.
+
+\end{frame}
+
 \begin{frame}{Montecarlo del transitorio}
     \begin{columns}[c,onlytextwidth]
         \column{0.50\textwidth}
@@ -325,6 +399,33 @@ De la medición experimental:
     \end{columns}
 \end{frame}
 
+
+\begin{frame}{Dispersión del Montecarlo}
+
+\begin{columns}[c,onlytextwidth]
+
+\column{0.62\textwidth}
+\centering
+\includegraphics[
+    width=\textwidth,
+    height=0.72\textheight,
+    keepaspectratio
+]{montecarlo_transitorio_21_dispersion.pdf}
+
+\column{0.34\textwidth}
+\scriptsize
+\begin{block}{Interpretación}
+\begin{itemize}
+    \item Cada punto representa una corrida de Montecarlo.
+    \item Se compara pseudofrecuencia $f_d$ contra sobrepico $V_{sp}$.
+    \item La dispersión muestra cómo afectan las tolerancias.
+    \item Mayor $V_{sp}$ indica menor amortiguamiento.
+\end{itemize}
+\end{block}
+
+\end{columns}
+
+\end{frame}
 % -----------------------------------------------------------------
 \section{Filtros de segundo orden}
 
@@ -498,10 +599,10 @@ Los cuatro circuitos comparten los mismos polos, ya que tienen el mismo denomina
 \end{frame}
 
 \begin{frame}{Diseño final adoptado}
-
 \centering
+\vspace{-0.2cm}
 
-\resizebox{0.96\textwidth}{!}{
+\resizebox{0.88\textwidth}{!}{
 \begin{circuitikz}[american, transform shape]
 
     % Fuente de entrada
@@ -540,18 +641,129 @@ Los cuatro circuitos comparten los mismos polos, ya que tienen el mismo denomina
 \end{circuitikz}
 }
 
-\vspace{0.5em}
+\vspace{0.25cm}
+
+\tiny
+
+\begin{columns}[T,onlytextwidth]
+
+\column{0.50\textwidth}
+\textbf{Pasabajos general}
+\[
+H_{PB}(s)=
+\frac{1}{
+s^2R_1R_2C_1C_2
++s(R_1C_1+R_1C_2+R_2C_2)+1
+}
+\]
+
+\[
+R_1=R_2=R_{PB},\quad C_1=C_2=C_{PB}
+\]
+
+\[
+\boxed{
+H_{PB}(s)=
+\frac{1}{(sR_{PB}C_{PB})^2+3sR_{PB}C_{PB}+1}
+}
+\]
+
+\column{0.50\textwidth}
+\textbf{Pasaaltos general}
+\[
+H_{PA}(s)=
+\frac{
+s^2R_3R_4C_3C_4
+}{
+s^2R_3R_4C_3C_4
++s(R_3C_3+R_3C_4+R_4C_4)+1
+}
+\]
+
+\[
+R_3=R_4=R_{PA},\quad C_3=C_4=C_{PA}
+\]
+
+\[
+\boxed{
+H_{PA}(s)=
+\frac{(sR_{PA}C_{PA})^2}
+{(sR_{PA}C_{PA})^2+3sR_{PA}C_{PA}+1}
+}
+\]
+
+\end{columns}
+
+\vspace{0.05cm}
+
+\tiny
+Los buffers desacoplan ambas etapas, por lo que la transferencia total se obtiene como
+\[
+H(s)=H_{PB}(s)\,H_{PA}(s).
+\]
+
+\end{frame}
+\begin{frame}{Diseño final: elección de componentes}
+\scriptsize
 
 \begin{columns}[c,onlytextwidth]
-    \column{0.48\textwidth}
-    \begin{equation*}
-        H_{PB}(s)=\frac{1}{(sRC)^2+3sRC+1}
-    \end{equation*}
 
-    \column{0.48\textwidth}
-    \begin{equation*}
-        H_{PA}(s)=\frac{(sRC)^2}{(sRC)^2+3sRC+1}
-    \end{equation*}
+\column{0.48\textwidth}
+\begin{block}{Etapa pasabajos}
+Se buscó el corte superior de voz:
+
+\[
+f_{c,PB}\approx \SI{3.4}{kHz}
+\]
+
+Para dos RC iguales en cascada:
+
+\[
+f_{c,PB}\approx \frac{0.374}{2\pi RC}
+\]
+
+Fijando:
+
+\[
+C_1=C_2=\SI{10}{nF}
+\]
+
+\[
+R=\frac{0.374}{2\pi f_c C}
+\approx \SI{1.75}{k\ohm}
+\]
+
+
+
+\end{block}
+
+\column{0.48\textwidth}
+\begin{block}{Etapa pasaaltos}
+Se buscó el corte inferior de voz:
+
+\[
+f_{c,PA}\approx \SI{300}{Hz}
+\]
+
+Para dos RC iguales en cascada:
+
+\[
+f_{c,PA}\approx \frac{2.67}{2\pi RC}
+\]
+
+Fijando:
+
+\[
+C_3=C_4=\SI{100}{nF}
+\]
+
+\[
+R=\frac{2.67}{2\pi f_c C}
+\approx \SI{14.2}{k\ohm}
+\]
+
+\end{block}
+
 \end{columns}
 
 \end{frame}
@@ -638,18 +850,93 @@ Las diferencias se deben a tolerancias, respuesta no ideal del operacional y efe
 \end{columns}
 
 \end{frame}
+
+\begin{frame}{Frecuencias de corte logradas}
+
+\scriptsize
+
+Se tomaron las frecuencias de corte como los puntos de \(-3\,\mathrm{dB}\) respecto del máximo medido en la placa.
+
+\begin{columns}[c,onlytextwidth]
+
+\column{0.48\textwidth}
+\begin{block}{Objetivo}
+\[
+f_{c1,\text{obj}}=\SI{300}{Hz}
+\]
+\[
+f_{c2,\text{obj}}=\SI{3.4}{kHz}
+\]
+\end{block}
+
+\column{0.48\textwidth}
+\begin{block}{Resultado medido}
+\[
+f_{c1,\text{med}}\approx\SI{219}{Hz}
+\]
+\[
+f_{c2,\text{med}}\approx\SI{3.18}{kHz}
+\]
+\end{block}
+
+\end{columns}
+
+\vspace{0.25cm}
+
+\begin{block}{Diferencia}
+\[
+\Delta f_{c1}=219-300=-\SI{81}{Hz}
+\qquad
+\Rightarrow
+\qquad
+\varepsilon_{c1}\approx -27\%
+\]
+
+\[
+\Delta f_{c2}=3178-3400=-\SI{222}{Hz}
+\qquad
+\Rightarrow
+\qquad
+\varepsilon_{c2}\approx -6.5\%
+\]
+\end{block}
+
+\scriptsize
+La mayor diferencia aparece en el corte inferior. Esto se atribuye principalmente a tolerancias de componentes, efectos no ideales del operacional y diferencias entre el modelo simulado y el circuito físico.
+
+\end{frame}
+
+\begin{frame}{Polos y ceros del filtro final}
+
+\begin{columns}[c,onlytextwidth]
+
+\column{0.66\textwidth}
+\centering
+\includegraphics[
+    width=\textwidth,
+    height=0.72\textheight,
+    keepaspectratio
+]{diagrama_polos_ceros_filtro_final.pdf}
+
+\column{0.30\textwidth}
+\scriptsize
+\begin{block}{Interpretación}
+\begin{itemize}
+    \item El filtro final tiene un cero doble en el origen.
+    \item Los polos son reales y negativos.
+    \item Al estar en el semiplano izquierdo, el sistema es estable.
+    \item Los polos determinan los cortes inferior y superior de la banda pasante.
+\end{itemize}
+\end{block}
+
+\end{columns}
+
+\end{frame}
 % -----------------------------------------------------------------
-\section{Cierre}
+
 
 \begin{frame}{Conclusiones}
-    \begin{itemize}
-        \item La GUI permitió una comparación rápida entre datos de osciloscopio, simulación y Bode.
-        \item El transitorio mostró el comportamiento subamortiguado esperado y se cuantificaron $f_d$ y sobrepico.
-        \item Los filtros RLC se clasificaron correctamente a partir de sus ceros y polos.
-        \item Para el diseño de PCB se descartaron alternativas que no eran convenientes físicamente.
-        \item La solución final RC-RC con buffers cumple la restricción de uso del TL082 y es realizable en PCB.
-    \end{itemize}
-    \vfill
+
     \begin{center}
         \Large \textbf{Preguntas}
     \end{center}

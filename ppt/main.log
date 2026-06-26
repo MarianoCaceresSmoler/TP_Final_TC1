@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.27)  25 JUN 2026 18:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.27)  26 JUN 2026 08:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1039,131 +1039,161 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] [5
 
+] [6
+
 ]
 \absvshift=\dimen386
 
-Overfull \vbox (21.31555pt too high) detected at line 216
+Overfull \vbox (21.31555pt too high) detected at line 248
  []
 
-[6
+[7
 
 ]
-<figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf, id=85, 794.97pt x 433.62pt>
+<figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf, id=87, 794.97pt x 433.62pt>
 File: figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf Graphic file (type pdf)
 <use figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf>
-Package pdftex.def Info: figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf  used on input line 221.
-(pdftex.def)             Requested size: 289.30646pt x 157.80351pt.
- [7
-
- <./figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf>]
-<figuras/transitorio_2_1_corriente_capacitor_simulada.pdf, id=141, 794.97pt x 433.62pt>
-File: figuras/transitorio_2_1_corriente_capacitor_simulada.pdf Graphic file (type pdf)
-<use figuras/transitorio_2_1_corriente_capacitor_simulada.pdf>
-Package pdftex.def Info: figuras/transitorio_2_1_corriente_capacitor_simulada.pdf  used on input line 226.
+Package pdftex.def Info: figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf  used on input line 253.
 (pdftex.def)             Requested size: 289.30646pt x 157.80351pt.
  [8
 
+ <./figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf>]
+<figuras/transitorio_2_1_corriente_capacitor_simulada.pdf, id=142, 794.97pt x 433.62pt>
+File: figuras/transitorio_2_1_corriente_capacitor_simulada.pdf Graphic file (type pdf)
+<use figuras/transitorio_2_1_corriente_capacitor_simulada.pdf>
+Package pdftex.def Info: figuras/transitorio_2_1_corriente_capacitor_simulada.pdf  used on input line 258.
+(pdftex.def)             Requested size: 289.30646pt x 157.80351pt.
+ [9
+
  <./figuras/transitorio_2_1_corriente_capacitor_simulada.pdf>]
-Overfull \vbox (27.33699pt too high) detected at line 304
- []
-
-[9
-
-]
-<figuras/montecarlo_transitorio_21_histogramas.pdf, id=197, 1020.2019pt x 456.50504pt>
-File: figuras/montecarlo_transitorio_21_histogramas.pdf Graphic file (type pdf)
-<use figuras/montecarlo_transitorio_21_histogramas.pdf>
-Package pdftex.def Info: figuras/montecarlo_transitorio_21_histogramas.pdf  used on input line 326.
-(pdftex.def)             Requested size: 199.16429pt x 89.11913pt.
-
-Overfull \vbox (6.11128pt too high) detected at line 326
+Overfull \vbox (27.33699pt too high) detected at line 336
  []
 
 [10
 
- <./figuras/montecarlo_transitorio_21_histogramas.pdf>] [11
-
-] [12
-
-] [13
+] [11
 
 ]
-<figuras/bode_filtros_teoricos.pdf, id=277, 650.43pt x 361.35pt>
+<figuras/montecarlo_transitorio_21_histogramas.pdf, id=203, 1020.2019pt x 456.50504pt>
+File: figuras/montecarlo_transitorio_21_histogramas.pdf Graphic file (type pdf)
+<use figuras/montecarlo_transitorio_21_histogramas.pdf>
+Package pdftex.def Info: figuras/montecarlo_transitorio_21_histogramas.pdf  used on input line 400.
+(pdftex.def)             Requested size: 199.16429pt x 89.11913pt.
+
+Overfull \vbox (6.11128pt too high) detected at line 400
+ []
+
+[12
+
+ <./figuras/montecarlo_transitorio_21_histogramas.pdf>]
+<figuras/montecarlo_transitorio_21_dispersion.pdf, id=264, 615.49902pt x 398.68903pt>
+File: figuras/montecarlo_transitorio_21_dispersion.pdf Graphic file (type pdf)
+<use figuras/montecarlo_transitorio_21_dispersion.pdf>
+Package pdftex.def Info: figuras/montecarlo_transitorio_21_dispersion.pdf  used on input line 428.
+(pdftex.def)             Requested size: 246.96536pt x 159.97162pt.
+ [13
+
+ <./figuras/montecarlo_transitorio_21_dispersion.pdf>] [14
+
+] [15
+
+] [16
+
+]
+<figuras/bode_filtros_teoricos.pdf, id=350, 650.43pt x 361.35pt>
 File: figuras/bode_filtros_teoricos.pdf Graphic file (type pdf)
 <use figuras/bode_filtros_teoricos.pdf>
-Package pdftex.def Info: figuras/bode_filtros_teoricos.pdf  used on input line 398.
+Package pdftex.def Info: figuras/bode_filtros_teoricos.pdf  used on input line 499.
 (pdftex.def)             Requested size: 195.18013pt x 108.4334pt.
-<figuras/bode_fase_circuitos_2_3_4_5.pdf, id=278, 758.835pt x 448.07399pt>
+<figuras/bode_fase_circuitos_2_3_4_5.pdf, id=351, 758.835pt x 448.07399pt>
 File: figuras/bode_fase_circuitos_2_3_4_5.pdf Graphic file (type pdf)
 <use figuras/bode_fase_circuitos_2_3_4_5.pdf>
-Package pdftex.def Info: figuras/bode_fase_circuitos_2_3_4_5.pdf  used on input line 398.
+Package pdftex.def Info: figuras/bode_fase_circuitos_2_3_4_5.pdf  used on input line 499.
 (pdftex.def)             Requested size: 195.18509pt x 115.25214pt.
- [14
-
- <./figuras/bode_filtros_teoricos.pdf> <./figuras/bode_fase_circuitos_2_3_4_5.pdf>]
-<figuras/polos_ceros_circuitos.pdf, id=384, 578.16pt x 505.89pt>
-File: figuras/polos_ceros_circuitos.pdf Graphic file (type pdf)
-<use figuras/polos_ceros_circuitos.pdf>
-Package pdftex.def Info: figuras/polos_ceros_circuitos.pdf  used on input line 431.
-(pdftex.def)             Requested size: 185.50018pt x 162.31265pt.
- [15
-
- <./figuras/polos_ceros_circuitos.pdf>]
-<figuras/bode_circuito2.pdf, id=426, 578.16pt x 433.62pt>
-File: figuras/bode_circuito2.pdf Graphic file (type pdf)
-<use figuras/bode_circuito2.pdf>
-Package pdftex.def Info: figuras/bode_circuito2.pdf  used on input line 442.
-(pdftex.def)             Requested size: 186.35591pt x 139.76694pt.
-<figuras/bode_circuito5.pdf, id=427, 578.16pt x 433.62pt>
-File: figuras/bode_circuito5.pdf Graphic file (type pdf)
-<use figuras/bode_circuito5.pdf>
-Package pdftex.def Info: figuras/bode_circuito5.pdf  used on input line 442.
-(pdftex.def)             Requested size: 186.35591pt x 139.76694pt.
- [16
-
- <./figuras/bode_circuito2.pdf> <./figuras/bode_circuito5.pdf>]
-<figuras/montecarlo_circuito5.pdf, id=523, 650.43pt x 505.89pt>
-File: figuras/montecarlo_circuito5.pdf Graphic file (type pdf)
-<use figuras/montecarlo_circuito5.pdf>
-Package pdftex.def Info: figuras/montecarlo_circuito5.pdf  used on input line 459.
-(pdftex.def)             Requested size: 188.40152pt x 146.53452pt.
  [17
 
- <./figuras/montecarlo_circuito5.pdf>] [18
+ <./figuras/bode_filtros_teoricos.pdf> <./figuras/bode_fase_circuitos_2_3_4_5.pdf>]
+<figuras/polos_ceros_circuitos.pdf, id=457, 578.16pt x 505.89pt>
+File: figuras/polos_ceros_circuitos.pdf Graphic file (type pdf)
+<use figuras/polos_ceros_circuitos.pdf>
+Package pdftex.def Info: figuras/polos_ceros_circuitos.pdf  used on input line 532.
+(pdftex.def)             Requested size: 185.50018pt x 162.31265pt.
+ [18
 
-] [19
+ <./figuras/polos_ceros_circuitos.pdf>]
+<figuras/bode_circuito2.pdf, id=499, 578.16pt x 433.62pt>
+File: figuras/bode_circuito2.pdf Graphic file (type pdf)
+<use figuras/bode_circuito2.pdf>
+Package pdftex.def Info: figuras/bode_circuito2.pdf  used on input line 543.
+(pdftex.def)             Requested size: 186.35591pt x 139.76694pt.
+<figuras/bode_circuito5.pdf, id=500, 578.16pt x 433.62pt>
+File: figuras/bode_circuito5.pdf Graphic file (type pdf)
+<use figuras/bode_circuito5.pdf>
+Package pdftex.def Info: figuras/bode_circuito5.pdf  used on input line 543.
+(pdftex.def)             Requested size: 186.35591pt x 139.76694pt.
+ [19
 
-]
-<figuras/comparacion_opciones_filtro.pdf, id=589, 578.16pt x 361.35pt>
-File: figuras/comparacion_opciones_filtro.pdf Graphic file (type pdf)
-<use figuras/comparacion_opciones_filtro.pdf>
-Package pdftex.def Info: figuras/comparacion_opciones_filtro.pdf  used on input line 498.
-(pdftex.def)             Requested size: 207.13173pt x 129.45734pt.
+ <./figuras/bode_circuito2.pdf> <./figuras/bode_circuito5.pdf>]
+<figuras/montecarlo_circuito5.pdf, id=597, 650.43pt x 505.89pt>
+File: figuras/montecarlo_circuito5.pdf Graphic file (type pdf)
+<use figuras/montecarlo_circuito5.pdf>
+Package pdftex.def Info: figuras/montecarlo_circuito5.pdf  used on input line 560.
+(pdftex.def)             Requested size: 188.40152pt x 146.53452pt.
  [20
 
- <./figuras/comparacion_opciones_filtro.pdf>] [21
+ <./figuras/montecarlo_circuito5.pdf>] [21
 
 ] [22
 
 ]
-<figuras/esquematico_altium.png, id=658, 1273.75874pt x 867.24pt>
-File: figuras/esquematico_altium.png Graphic file (type png)
-<use figuras/esquematico_altium.png>
-Package pdftex.def Info: figuras/esquematico_altium.png  used on input line 602.
-(pdftex.def)             Requested size: 225.14626pt x 153.29106pt.
+<figuras/comparacion_opciones_filtro.pdf, id=662, 578.16pt x 361.35pt>
+File: figuras/comparacion_opciones_filtro.pdf Graphic file (type pdf)
+<use figuras/comparacion_opciones_filtro.pdf>
+Package pdftex.def Info: figuras/comparacion_opciones_filtro.pdf  used on input line 599.
+(pdftex.def)             Requested size: 207.13173pt x 129.45734pt.
  [23
 
- <./figuras/esquematico_altium.png>]
-<figuras/bode_filtro_final.pdf, id=666, 578.16pt x 433.62pt>
-File: figuras/bode_filtro_final.pdf Graphic file (type pdf)
-<use figuras/bode_filtro_final.pdf>
-Package pdftex.def Info: figuras/bode_filtro_final.pdf  used on input line 640.
-(pdftex.def)             Requested size: 216.4213pt x 162.31596pt.
- [24
+ <./figuras/comparacion_opciones_filtro.pdf>]
+Overfull \vbox (17.53271pt too high) detected at line 705
+ []
 
- <./figuras/bode_filtro_final.pdf>] [25
+[24
+
+]
+Overfull \vbox (6.05208pt too high) detected at line 769
+ []
+
+[25
 
 ] [26
+
+]
+<figuras/esquematico_altium.png, id=741, 1273.75874pt x 867.24pt>
+File: figuras/esquematico_altium.png Graphic file (type png)
+<use figuras/esquematico_altium.png>
+Package pdftex.def Info: figuras/esquematico_altium.png  used on input line 814.
+(pdftex.def)             Requested size: 225.14626pt x 153.29106pt.
+ [27
+
+ <./figuras/esquematico_altium.png>]
+<figuras/bode_filtro_final.pdf, id=749, 578.16pt x 433.62pt>
+File: figuras/bode_filtro_final.pdf Graphic file (type pdf)
+<use figuras/bode_filtro_final.pdf>
+Package pdftex.def Info: figuras/bode_filtro_final.pdf  used on input line 852.
+(pdftex.def)             Requested size: 216.4213pt x 162.31596pt.
+ [28
+
+ <./figuras/bode_filtro_final.pdf>] [29
+
+]
+<figuras/diagrama_polos_ceros_filtro_final.pdf, id=808, 686.565pt x 419.166pt>
+File: figuras/diagrama_polos_ceros_filtro_final.pdf Graphic file (type pdf)
+<use figuras/diagrama_polos_ceros_filtro_final.pdf>
+Package pdftex.def Info: figuras/diagrama_polos_ceros_filtro_final.pdf  used on input line 934.
+(pdftex.def)             Requested size: 262.89835pt x 160.50636pt.
+ [30
+
+ <./figuras/diagrama_polos_ceros_filtro_final.pdf>] [31
 
 ]
 \tf@nav=\write6
@@ -1184,20 +1214,20 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: FB89ED626B0D4220D3EF1FAA73190020;543.
+(rerunfilecheck)             Checksum: A49B1EAAD442C5AC8EDADB5BA30808D2;470.
  ) 
 Here is how much of TeX's memory you used:
- 52755 strings out of 467867
- 1304044 string characters out of 5418334
- 1920024 words of memory out of 5000000
- 80888 multiletter control sequences out of 15000+600000
- 654613 words of font info for 112 fonts, out of 8000000 for 9000
+ 52791 strings out of 467867
+ 1305184 string characters out of 5418334
+ 1927281 words of memory out of 5000000
+ 80914 multiletter control sequences out of 15000+600000
+ 655388 words of font info for 113 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,20n,123p,1911b,1416s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss0900.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx0900.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1440.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1200.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1000.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1000.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1200.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1440.pk><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on main.pdf (26 pages, 682947 bytes).
+ <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss0600.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx0600.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss0900.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx0900.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1440.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1200.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1000.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1000.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1200.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1440.pk><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on main.pdf (31 pages, 769495 bytes).
 PDF statistics:
- 1239 PDF objects out of 1440 (max. 8388607)
- 57 named destinations out of 1000 (max. 500000)
- 135 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1431 PDF objects out of 1440 (max. 8388607)
+ 66 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
