@@ -1,376 +1,380 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.27)  26 JUN 2026 08:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.27)  26 JUN 2026 09:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/lucca/Desktop/TP_Final_TC1/ppt/main.tex
-(c:/Users/lucca/Desktop/TP_Final_TC1/ppt/main.tex
-LaTeX2e <2025-11-01>
-L3 programming layer <2026-01-19>
-(C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamer.cls
-Document Class: beamer 2026/01/22 v3.77 A class for typesetting presentations
-(C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasemodes.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
-Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count275
+**/home/nano/Facultad/TP_FInal_TC1/ppt/main.tex
+(/home/nano/Facultad/TP_FInal_TC1/ppt/main.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls
+Document Class: beamer 2024/01/06 v3.71 A class for typesetting presentations
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasemodes.sty (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count187
 )
-\beamer@tempbox=\box53
-\beamer@tempcount=\count276
-\c@beamerpauses=\count277
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasedecode.sty
-\beamer@slideinframe=\count278
-\beamer@minimum=\count279
-\beamer@decode@box=\box54
+\beamer@tempbox=\box51
+\beamer@tempcount=\count188
+\c@beamerpauses=\count189
+ (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasedecode.sty
+\beamer@slideinframe=\count190
+\beamer@minimum=\count191
+\beamer@decode@box=\box52
 )
-\beamer@commentbox=\box55
-\beamer@modecount=\count280
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
-Package: iftex 2024/12/12 v1.0g TeX engine tests
+\beamer@commentbox=\box53
+\beamer@modecount=\count192
+) (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
 )
-\headdp=\dimen148
-\footheight=\dimen149
-\sidebarheight=\dimen150
-\beamer@tempdim=\dimen151
-\beamer@finalheight=\dimen152
-\beamer@animht=\dimen153
-\beamer@animdp=\dimen154
-\beamer@animwd=\dimen155
-\beamer@leftmargin=\dimen156
-\beamer@rightmargin=\dimen157
-\beamer@leftsidebar=\dimen158
-\beamer@rightsidebar=\dimen159
-\beamer@boxsize=\dimen160
-\beamer@vboxoffset=\dimen161
-\beamer@descdefault=\dimen162
-\beamer@descriptionwidth=\dimen163
-\beamer@lastskip=\skip49
-\beamer@areabox=\box56
-\beamer@animcurrent=\box57
-\beamer@animshowbox=\box58
-\beamer@sectionbox=\box59
-\beamer@logobox=\box60
-\beamer@linebox=\box61
-\beamer@sectioncount=\count281
-\beamer@subsubsectionmax=\count282
-\beamer@subsectionmax=\count283
-\beamer@sectionmax=\count284
-\beamer@totalheads=\count285
-\beamer@headcounter=\count286
-\beamer@partstartpage=\count287
-\beamer@sectionstartpage=\count288
-\beamer@subsectionstartpage=\count289
-\beamer@animationtempa=\count290
-\beamer@animationtempb=\count291
-\beamer@xpos=\count292
-\beamer@ypos=\count293
-\beamer@ypos@offset=\count294
-\beamer@showpartnumber=\count295
-\beamer@currentsubsection=\count296
-\beamer@coveringdepth=\count297
-\beamer@sectionadjust=\count298
-\beamer@toclastsection=\count299
-\beamer@tocsectionnumber=\count300
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseoptions.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+\headdp=\dimen140
+\footheight=\dimen141
+\sidebarheight=\dimen142
+\beamer@tempdim=\dimen143
+\beamer@finalheight=\dimen144
+\beamer@animht=\dimen145
+\beamer@animdp=\dimen146
+\beamer@animwd=\dimen147
+\beamer@leftmargin=\dimen148
+\beamer@rightmargin=\dimen149
+\beamer@leftsidebar=\dimen150
+\beamer@rightsidebar=\dimen151
+\beamer@boxsize=\dimen152
+\beamer@vboxoffset=\dimen153
+\beamer@descdefault=\dimen154
+\beamer@descriptionwidth=\dimen155
+\beamer@lastskip=\skip48
+\beamer@areabox=\box54
+\beamer@animcurrent=\box55
+\beamer@animshowbox=\box56
+\beamer@sectionbox=\box57
+\beamer@logobox=\box58
+\beamer@linebox=\box59
+\beamer@sectioncount=\count193
+\beamer@subsubsectionmax=\count194
+\beamer@subsectionmax=\count195
+\beamer@sectionmax=\count196
+\beamer@totalheads=\count197
+\beamer@headcounter=\count198
+\beamer@partstartpage=\count199
+\beamer@sectionstartpage=\count266
+\beamer@subsectionstartpage=\count267
+\beamer@animationtempa=\count268
+\beamer@animationtempb=\count269
+\beamer@xpos=\count270
+\beamer@ypos=\count271
+\beamer@ypos@offset=\count272
+\beamer@showpartnumber=\count273
+\beamer@currentsubsection=\count274
+\beamer@coveringdepth=\count275
+\beamer@sectionadjust=\count276
+\beamer@toclastsection=\count277
+\beamer@tocsectionnumber=\count278
+ (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseoptions.sty (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
 ))
-\beamer@paperwidth=\skip50
-\beamer@paperheight=\skip51
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
-Package: geometry 2026/03/07 v6.0 Page Geometry
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+\beamer@paperwidth=\skip49
+\beamer@paperheight=\skip50
+ (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+ (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count301
-\Gm@cntv=\count302
-\c@Gm@tempcnt=\count303
-\Gm@bindingoffset=\dimen164
-\Gm@wd@mp=\dimen165
-\Gm@odd@mp=\dimen166
-\Gm@even@mp=\dimen167
-\Gm@layoutwidth=\dimen168
-\Gm@layoutheight=\dimen169
-\Gm@layouthoffset=\dimen170
-\Gm@layoutvoffset=\dimen171
+\Gm@cnth=\count279
+\Gm@cntv=\count280
+\c@Gm@tempcnt=\count281
+\Gm@bindingoffset=\dimen156
+\Gm@wd@mp=\dimen157
+\Gm@odd@mp=\dimen158
+\Gm@even@mp=\dimen159
+\Gm@layoutwidth=\dimen160
+\Gm@layoutheight=\dimen161
+\Gm@layouthoffset=\dimen162
+\Gm@layoutvoffset=\dimen163
 \Gm@dimlist=\toks18
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/math\pgfmath.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil-common.tex
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
 \pgfutil@everybye=\toks19
-\pgfutil@tempdima=\dimen172
-\pgfutil@tempdimb=\dimen173
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil-latex.def
-\pgfutil@abb=\box62
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.code.tex (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
-Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys.code.tex
+\pgfutil@tempdima=\dimen164
+\pgfutil@tempdimb=\dimen165
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box60
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
 \pgfkeys@pathtoks=\toks20
 \pgfkeys@temptoks=\toks21
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.tex
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex
 \pgfkeys@tmptoks=\toks22
-))) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code.tex (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil.code.tex
-\pgf@x=\dimen174
-\pgf@xa=\dimen175
-\pgf@xb=\dimen176
-\pgf@xc=\dimen177
-\pgf@y=\dimen178
-\pgf@ya=\dimen179
-\pgf@yb=\dimen180
-\pgf@yc=\dimen181
-\c@pgf@counta=\count304
-\c@pgf@countb=\count305
-\c@pgf@countc=\count306
-\c@pgf@countd=\count307
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparser.code.tex
-\pgfmath@dimen=\dimen182
-\pgfmath@count=\count308
-\pgfmath@box=\box63
+))) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex
+\pgf@x=\dimen166
+\pgf@xa=\dimen167
+\pgf@xb=\dimen168
+\pgf@xc=\dimen169
+\pgf@y=\dimen170
+\pgf@ya=\dimen171
+\pgf@yb=\dimen172
+\pgf@yc=\dimen173
+\c@pgf@counta=\count282
+\c@pgf@countb=\count283
+\c@pgf@countc=\count284
+\c@pgf@countd=\count285
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen174
+\pgfmath@count=\count286
+\pgfmath@box=\box61
 \pgfmath@toks=\toks23
 \pgfmath@stack@operand=\toks24
 \pgfmath@stack@operation=\toks25
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.basic.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.trigonometric.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.random.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.comparison.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.base.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.round.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.misc.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.integerarithmetics.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count309
-))) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo
-File: size11.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
-Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
-Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
-Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count287
+))) (/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+) (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 106.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
-File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+Package graphics Info: Driver file: pdftex.def on input line 107.
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen183
-\Gin@req@width=\dimen184
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsys.code.tex
-Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@x=\dimen185
-\pgf@y=\dimen186
-\pgf@xa=\dimen187
-\pgf@ya=\dimen188
-\pgf@xb=\dimen189
-\pgf@yb=\dimen190
-\pgf@xc=\dimen191
-\pgf@yc=\dimen192
-\pgf@xd=\dimen193
-\pgf@yd=\dimen194
+\Gin@req@height=\dimen175
+\Gin@req@width=\dimen176
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+\pgf@x=\dimen177
+\pgf@y=\dimen178
+\pgf@xa=\dimen179
+\pgf@ya=\dimen180
+\pgf@xb=\dimen181
+\pgf@yb=\dimen182
+\pgf@xc=\dimen183
+\pgf@yc=\dimen184
+\pgf@xd=\dimen185
+\pgf@yd=\dimen186
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count310
-\c@pgf@countb=\count311
-\c@pgf@countc=\count312
-\c@pgf@countd=\count313
+\c@pgf@counta=\count288
+\c@pgf@countb=\count289
+\c@pgf@countc=\count290
+\c@pgf@countd=\count291
 \t@pgf@toka=\toks26
 \t@pgf@tokb=\toks27
 \t@pgf@tokc=\toks28
-\pgf@sys@id@count=\count314
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.cfg
-File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@sys@id@count=\count292
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
 )
 Driver file for pgf: pgfsys-pdftex.def
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-pdftex.def
-File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-common-pdf.def
-File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
-))) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex
-File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfsyssoftpath@smallbuffer@items=\count315
-\pgfsyssoftpath@bigbuffer@items=\count316
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex
-File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
-Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+))) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count293
+\pgfsyssoftpath@bigbuffer@items=\count294
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 274.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
-Package xcolor Info: Model `RGB' extended on input line 1365.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcore.code.tex
-Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex
-File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@picminx=\dimen195
-\pgf@picmaxx=\dimen196
-\pgf@picminy=\dimen197
-\pgf@picmaxy=\dimen198
-\pgf@pathminx=\dimen199
-\pgf@pathmaxx=\dimen256
-\pgf@pathminy=\dimen257
-\pgf@pathmaxy=\dimen258
-\pgf@xx=\dimen259
-\pgf@xy=\dimen260
-\pgf@yx=\dimen261
-\pgf@yy=\dimen262
-\pgf@zx=\dimen263
-\pgf@zy=\dimen264
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathconstruct.code.tex
-File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@path@lastx=\dimen265
-\pgf@path@lasty=\dimen266
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathusage.code.tex
-File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@shorten@end@additional=\dimen267
-\pgf@shorten@start@additional=\dimen268
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorescopes.code.tex
-File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfpic=\box64
-\pgf@hbox=\box65
-\pgf@layerbox@main=\box66
-\pgf@picture@serial@count=\count317
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.tex
-File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgflinewidth=\dimen269
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransformations.code.tex
-File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@pt@x=\dimen270
-\pgf@pt@y=\dimen271
-\pgf@pt@temp=\dimen272
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorequick.code.tex
-File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreobjects.code.tex
-File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathprocessing.code.tex
-File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorearrows.code.tex
-File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfarrowsep=\dimen273
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreshade.code.tex
-File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@max=\dimen274
-\pgf@sys@shading@range@num=\count318
-\pgf@shadingcount=\count319
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreimage.code.tex
-File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex
-File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfexternal@startupbox=\box67
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorelayers.code.tex
-File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransparency.code.tex
-File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepatterns.code.tex
-File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorerdf.code.tex
-File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-))) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\xxcolor.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
+Package xcolor Info: Model `RGB' extended on input line 1366.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen187
+\pgf@picmaxx=\dimen188
+\pgf@picminy=\dimen189
+\pgf@picmaxy=\dimen190
+\pgf@pathminx=\dimen191
+\pgf@pathmaxx=\dimen192
+\pgf@pathminy=\dimen193
+\pgf@pathmaxy=\dimen194
+\pgf@xx=\dimen195
+\pgf@xy=\dimen196
+\pgf@yx=\dimen197
+\pgf@yy=\dimen198
+\pgf@zx=\dimen199
+\pgf@zy=\dimen256
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen257
+\pgf@path@lasty=\dimen258
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen259
+\pgf@shorten@start@additional=\dimen260
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfpic=\box62
+\pgf@hbox=\box63
+\pgf@layerbox@main=\box64
+\pgf@picture@serial@count=\count295
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen261
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen262
+\pgf@pt@y=\dimen263
+\pgf@pt@temp=\dimen264
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen265
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen266
+\pgf@sys@shading@range@num=\count296
+\pgf@shadingcount=\count297
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfexternal@startupbox=\box65
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/xxcolor.sty
 Package: xxcolor 2003/10/24 ver 0.1
-\XC@nummixins=\count320
-\XC@countmixins=\count321
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty
+\XC@nummixins=\count298
+\XC@countmixins=\count299
+) (/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
-Package: hyperref 2026-01-29 v7.01p Hypertext links for LaTeX
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
+ (/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
+) (/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+) (/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+ (/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+) (/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+ (/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
+)) (/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
-Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
+ (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
+) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count322
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.sty
-Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+\c@section@level=\count300
 )
-\@linkdim=\dimen275
-\Hy@linkcounter=\count323
-\Hy@pagecounter=\count324
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
-File: pd1enc.def 2026-01-29 v7.01p Hyperref: PDFDocEncoding definition (HO)
+\@linkdim=\dimen267
+\Hy@linkcounter=\count301
+\Hy@pagecounter=\count302
+ (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2024-01-20 v7.01h Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+) (/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count325
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
-File: puenc.def 2026-01-29 v7.01p Hyperref: PDF Unicode definition (HO)
+\Hy@SavedSpaceFactor=\count303
+ (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2024-01-20 v7.01h Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `bookmarks' set `true' on input line 4072.
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 4072.
-Package hyperref Info: Option `implicit' set `false' on input line 4072.
-Package hyperref Info: Hyper figures OFF on input line 4201.
-Package hyperref Info: Link nesting OFF on input line 4206.
-Package hyperref Info: Hyper index ON on input line 4209.
-Package hyperref Info: Plain pages OFF on input line 4216.
-Package hyperref Info: Backreferencing OFF on input line 4221.
+Package hyperref Info: Option `bookmarks' set `true' on input line 4062.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4062.
+Package hyperref Info: Option `implicit' set `false' on input line 4062.
+Package hyperref Info: Hyper figures OFF on input line 4179.
+Package hyperref Info: Link nesting OFF on input line 4184.
+Package hyperref Info: Hyper index ON on input line 4187.
+Package hyperref Info: Plain pages OFF on input line 4194.
+Package hyperref Info: Backreferencing OFF on input line 4199.
 Package hyperref Info: Implicit mode OFF; no redefinition of LaTeX internals.
-Package hyperref Info: Bookmarks ON on input line 4468.
-\c@Hy@tempcnt=\count326
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
-\Urlmuskip=\muskip17
+Package hyperref Info: Bookmarks ON on input line 4446.
+\c@Hy@tempcnt=\count304
+ (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4807.
-\XeTeXLinkMargin=\dimen276
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+LaTeX Info: Redefining \url on input line 4784.
+\XeTeXLinkMargin=\dimen268
+ (/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
+ (/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count327
-\Field@Width=\dimen277
-\Fld@charsize=\dimen278
-Package hyperref Info: Hyper figures OFF on input line 6084.
-Package hyperref Info: Link nesting OFF on input line 6089.
-Package hyperref Info: Hyper index ON on input line 6092.
-Package hyperref Info: backreferencing OFF on input line 6099.
-Package hyperref Info: Link coloring OFF on input line 6104.
-Package hyperref Info: Link coloring with OCG OFF on input line 6109.
-Package hyperref Info: PDF/A mode OFF on input line 6114.
-\Hy@abspage=\count328
+\Fld@menulength=\count305
+\Field@Width=\dimen269
+\Fld@charsize=\dimen270
+Package hyperref Info: Hyper figures OFF on input line 6063.
+Package hyperref Info: Link nesting OFF on input line 6068.
+Package hyperref Info: Hyper index ON on input line 6071.
+Package hyperref Info: backreferencing OFF on input line 6078.
+Package hyperref Info: Link coloring OFF on input line 6083.
+Package hyperref Info: Link coloring with OCG OFF on input line 6088.
+Package hyperref Info: PDF/A mode OFF on input line 6093.
+\Hy@abspage=\count306
 
 
 Package hyperref Message: Stopped early.
 
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
-File: hpdftex.def 2026-01-29 v7.01p Hyperref driver for pdfTeX
-\Fld@listcount=\count329
-\c@bookmark@seq@number=\count330
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
-Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2024-01-20 v7.01h Hyperref driver for pdfTeX
+ (/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+with kernel methods
+)
+\Fld@listcount=\count307
+\c@bookmark@seq@number=\count308
+ (/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+ (/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaserequires.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasecompatibility.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasefont.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+)) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaserequires.sty (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasecompatibility.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasefont.sty (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks29
 \symAMSa=\mathgroup4
@@ -378,477 +382,447 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/sansmathaccent\sansmathaccent.sty
-Package: sansmathaccent 2020/01/31
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlfile.sty
-Package: scrlfile 2026/02/02 v3.49.2 KOMA-Script package (file load hooks)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlfile-hook.sty
-Package: scrlfile-hook 2026/02/02 v3.49.2 KOMA-Script package (using LaTeX hooks)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlogo.sty
-Package: scrlogo 2026/02/02 v3.49.2 KOMA-Script package (logo)
-))))) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetranslator.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator.sty
+))) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetranslator.sty (/usr/share/texlive/texmf-dist/tex/latex/translator/translator.sty
 Package: translator 2021-05-31 v1.12d Easy translation of strings in LaTeX
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasemisc.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetwoscreens.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseoverlay.sty
-\beamer@argscount=\count331
-\beamer@lastskipcover=\skip52
-\beamer@trivlistdepth=\count332
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetitle.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasesection.sty
-\c@lecture=\count333
-\c@part=\count334
-\c@section=\count335
-\c@subsection=\count336
-\c@subsubsection=\count337
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseframe.sty
-\beamer@framebox=\box68
-\beamer@frametitlebox=\box69
-\beamer@zoombox=\box70
-\beamer@zoomcount=\count338
-\beamer@zoomframecount=\count339
-\beamer@frametextheight=\dimen279
-\c@subsectionslide=\count340
-\beamer@frametopskip=\skip53
-\beamer@framebottomskip=\skip54
-\beamer@frametopskipautobreak=\skip55
-\beamer@framebottomskipautobreak=\skip56
+)) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasemisc.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetwoscreens.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseoverlay.sty
+\beamer@argscount=\count309
+\beamer@lastskipcover=\skip51
+\beamer@trivlistdepth=\count310
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetitle.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasesection.sty
+\c@lecture=\count311
+\c@part=\count312
+\c@section=\count313
+\c@subsection=\count314
+\c@subsubsection=\count315
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseframe.sty
+\beamer@framebox=\box66
+\beamer@frametitlebox=\box67
+\beamer@zoombox=\box68
+\beamer@zoomcount=\count316
+\beamer@zoomframecount=\count317
+\beamer@frametextheight=\dimen271
+\c@subsectionslide=\count318
+\beamer@frametopskip=\skip52
+\beamer@framebottomskip=\skip53
+\beamer@frametopskipautobreak=\skip54
+\beamer@framebottomskipautobreak=\skip55
 \beamer@envbody=\toks30
-\framewidth=\dimen280
-\c@framenumber=\count341
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseverbatim.sty
+\framewidth=\dimen272
+\c@framenumber=\count319
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseverbatim.sty
 \beamer@verbatimfileout=\write4
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseframesize.sty
-\beamer@splitbox=\box71
-\beamer@autobreakcount=\count342
-\beamer@autobreaklastheight=\dimen281
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseframesize.sty
+\beamer@splitbox=\box69
+\beamer@autobreakcount=\count320
+\beamer@autobreaklastheight=\dimen273
 \beamer@frametitletoks=\toks31
 \beamer@framesubtitletoks=\toks32
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseframecomponents.sty
-\beamer@colheight=\skip57
-\beamer@footins=\box72
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasecolor.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasenotes.sty
-\beamer@frameboxcopy=\box73
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetoc.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetemplates.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseframecomponents.sty
+\beamer@footins=\box70
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasecolor.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasenotes.sty
+\beamer@frameboxcopy=\box71
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetoc.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetemplates.sty
 \beamer@sbttoks=\toks33
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseauxtemplates.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseboxes.sty
-\bmb@box=\box74
-\bmb@colorbox=\box75
-\bmb@boxwidth=\dimen282
-\bmb@boxheight=\dimen283
-\bmb@prevheight=\dimen284
-\bmb@temp=\dimen285
-\bmb@dima=\dimen286
-\bmb@dimb=\dimen287
-\bmb@prevheight=\dimen288
+ (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseauxtemplates.sty (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseboxes.sty
+\bmb@box=\box72
+\bmb@colorbox=\box73
+\bmb@boxwidth=\dimen274
+\bmb@boxheight=\dimen275
+\bmb@prevheight=\dimen276
+\bmb@temp=\dimen277
+\bmb@dima=\dimen278
+\bmb@dimb=\dimen279
+\bmb@prevheight=\dimen280
 )
-\beamer@blockheadheight=\dimen289
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaselocalstructure.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/tools\enumerate.sty
+\beamer@blockheadheight=\dimen281
+)) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaselocalstructure.sty (/usr/share/texlive/texmf-dist/tex/latex/tools/enumerate.sty
 Package: enumerate 2023/07/04 v3.00 enumerate extensions (DPC)
 \@enLab=\toks34
 )
-\beamer@bibiconwidth=\skip58
-\c@figure=\count343
-\c@table=\count344
-\abovecaptionskip=\skip59
-\belowcaptionskip=\skip60
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasenavigation.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasenavigationsymbols.tex)
-\beamer@section@min@dim=\dimen290
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetheorems.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
-Package: amsmath 2025/07/09 v2.17z AMS math features
-\@mathmargin=\skip61
+\beamer@bibiconwidth=\skip56
+\c@figure=\count321
+\c@table=\count322
+\abovecaptionskip=\skip57
+\belowcaptionskip=\skip58
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasenavigation.sty (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasenavigationsymbols.tex)
+\beamer@section@min@dim=\dimen282
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetheorems.sty (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2023/05/13 v2.17o AMS math features
+\@mathmargin=\skip59
 
 For additional information on amsmath, use the `?' option.
-(C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
-Package: amstext 2024/11/17 v2.01 AMS text
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+ (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks35
-\ex@=\dimen291
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+\ex@=\dimen283
+)) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen292
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+\pmbraise@=\dimen284
+) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count345
-LaTeX Info: Redefining \frac on input line 233.
-\uproot@=\count346
-\leftroot@=\count347
-LaTeX Info: Redefining \overline on input line 398.
-LaTeX Info: Redefining \colon on input line 409.
-\classnum@=\count348
-\DOTSCASE@=\count349
-LaTeX Info: Redefining \ldots on input line 495.
-LaTeX Info: Redefining \dots on input line 498.
-LaTeX Info: Redefining \cdots on input line 619.
-\Mathstrutbox@=\box76
-\strutbox@=\box77
-LaTeX Info: Redefining \big on input line 721.
-LaTeX Info: Redefining \Big on input line 722.
-LaTeX Info: Redefining \bigg on input line 723.
-LaTeX Info: Redefining \Bigg on input line 724.
-\big@size=\dimen293
-LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
-\macc@depth=\count350
-LaTeX Info: Redefining \bmod on input line 904.
-LaTeX Info: Redefining \pmod on input line 909.
-LaTeX Info: Redefining \smash on input line 939.
-LaTeX Info: Redefining \relbar on input line 969.
-LaTeX Info: Redefining \Relbar on input line 970.
-\c@MaxMatrixCols=\count351
-\dotsspace@=\muskip18
-\c@parentequation=\count352
-\dspbrk@lvl=\count353
+\inf@bad=\count323
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count324
+\leftroot@=\count325
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count326
+\DOTSCASE@=\count327
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box74
+\strutbox@=\box75
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen285
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count328
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count329
+\dotsspace@=\muskip17
+\c@parentequation=\count330
+\dspbrk@lvl=\count331
 \tag@help=\toks36
-\row@=\count354
-\column@=\count355
-\maxfields@=\count356
+\row@=\count332
+\column@=\count333
+\maxfields@=\count334
 \andhelp@=\toks37
-\eqnshift@=\dimen294
-\alignsep@=\dimen295
-\tagshift@=\dimen296
-\tagwidth@=\dimen297
-\totwidth@=\dimen298
-\lineht@=\dimen299
+\eqnshift@=\dimen286
+\alignsep@=\dimen287
+\tagshift@=\dimen288
+\tagwidth@=\dimen289
+\totwidth@=\dimen290
+\lineht@=\dimen291
 \@envbody=\toks38
-\multlinegap=\skip62
-\multlinetaggap=\skip63
+\multlinegap=\skip60
+\multlinetaggap=\skip61
 \mathdisplay@stack=\toks39
-LaTeX Info: Redefining \[ on input line 2950.
-LaTeX Info: Redefining \] on input line 2951.
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amscls\amsthm.sty
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+) (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks40
 \thm@bodyfont=\toks41
 \thm@headfont=\toks42
 \thm@notefont=\toks43
 \thm@headpunct=\toks44
-\thm@preskip=\skip64
-\thm@postskip=\skip65
-\thm@headsep=\skip66
+\thm@preskip=\skip62
+\thm@postskip=\skip63
+\thm@headsep=\skip64
 \dth@everypar=\toks45
 )
-\c@theorem=\count357
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasethemes.sty)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerthemedefault.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerfontthemedefault.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamercolorthemedefault.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerinnerthemedefault.sty
-\beamer@dima=\dimen300
-\beamer@dimb=\dimen301
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerouterthemedefault.sty))) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamertheme-metropolis\beamerthememetropolis.sty
+\c@theorem=\count335
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasethemes.sty)) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerthemedefault.sty (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerfontthemedefault.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamercolorthemedefault.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerinnerthemedefault.sty
+\beamer@dima=\dimen292
+\beamer@dimb=\dimen293
+) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerouterthemedefault.sty))) (/usr/share/texlive/texmf-dist/tex/latex/beamertheme-metropolis/beamerthememetropolis.sty
 Package: beamerthememetropolis 2017/01/23 v1.2 Metropolis Beamer theme
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgfopts\pgfopts.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/pgfopts/pgfopts.sty
 Package: pgfopts 2014/07/10 v2.1a LaTeX package options with pgfkeys
 \pgfopts@list@add@a@toks=\toks46
 \pgfopts@list@add@b@toks=\toks47
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamertheme-metropolis\beamerinnerthememetropolis.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/beamertheme-metropolis/beamerinnerthememetropolis.sty
 Package: beamerinnerthememetropolis 2017/01/23 Metropolis inner theme
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
-Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
-\calc@Acount=\count358
-\calc@Bcount=\count359
-\calc@Adimen=\dimen302
-\calc@Bdimen=\dimen303
-\calc@Askip=\skip67
-\calc@Bskip=\skip68
-LaTeX Info: Redefining \setlength on input line 86.
-LaTeX Info: Redefining \addtolength on input line 87.
-\calc@Ccount=\count360
-\calc@Cskip=\skip69
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
-Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmoduleshapes.code.tex
-File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfnodeparttextbox=\box78
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmoduleplot.code.tex
-File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-0-65.sty
-Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@nodesepstart=\dimen304
-\pgf@nodesepend=\dimen305
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-1-18.sty
-Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgffor.sty (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgffor.code.tex
-Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
-\pgffor@iter=\dimen306
-\pgffor@skip=\dimen307
+ (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count336
+\calc@Bcount=\count337
+\calc@Adimen=\dimen294
+\calc@Bdimen=\dimen295
+\calc@Askip=\skip65
+\calc@Bskip=\skip66
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count338
+\calc@Cskip=\skip67
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodeparttextbox=\box76
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+\pgf@nodesepstart=\dimen296
+\pgf@nodesepend=\dimen297
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+\pgffor@iter=\dimen298
+\pgffor@skip=\dimen299
 \pgffor@stack=\toks48
 \pgffor@toks=\toks49
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
-Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibraryplothandlers.code.tex
-File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@plot@mark@count=\count361
-\pgfplotmarksize=\dimen308
+)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@plot@mark@count=\count339
+\pgfplotmarksize=\dimen300
 )
-\tikz@lastx=\dimen309
-\tikz@lasty=\dimen310
-\tikz@lastxsaved=\dimen311
-\tikz@lastysaved=\dimen312
-\tikz@lastmovetox=\dimen313
-\tikz@lastmovetoy=\dimen314
-\tikzleveldistance=\dimen315
-\tikzsiblingdistance=\dimen316
-\tikz@figbox=\box79
-\tikz@figbox@bg=\box80
-\tikz@tempbox=\box81
-\tikz@tempbox@bg=\box82
-\tikztreelevel=\count362
-\tikznumberofchildren=\count363
-\tikznumberofcurrentchild=\count364
-\tikz@fig@count=\count365
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodulematrix.code.tex
-File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfmatrixcurrentrow=\count366
-\pgfmatrixcurrentcolumn=\count367
-\pgf@matrix@numberofcolumns=\count368
+\tikz@lastx=\dimen301
+\tikz@lasty=\dimen302
+\tikz@lastxsaved=\dimen303
+\tikz@lastysaved=\dimen304
+\tikz@lastmovetox=\dimen305
+\tikz@lastmovetoy=\dimen306
+\tikzleveldistance=\dimen307
+\tikzsiblingdistance=\dimen308
+\tikz@figbox=\box77
+\tikz@figbox@bg=\box78
+\tikz@tempbox=\box79
+\tikz@tempbox@bg=\box80
+\tikztreelevel=\count340
+\tikznumberofchildren=\count341
+\tikznumberofcurrentchild=\count342
+\tikz@fig@count=\count343
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfmatrixcurrentrow=\count344
+\pgfmatrixcurrentcolumn=\count345
+\pgf@matrix@numberofcolumns=\count346
 )
-\tikz@expandcount=\count369
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarytopaths.code.tex
-File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\tikz@expandcount=\count347
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )))
-\metropolis@titleseparator@linewidth=\skip70
-\metropolis@progressonsectionpage=\skip71
-\metropolis@progressonsectionpage@linewidth=\skip72
-\metropolis@blocksep=\skip73
-\metropolis@blockadjust=\skip74
-\metropolis@parskip=\skip75
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamertheme-metropolis\beamerouterthememetropolis.sty
+\metropolis@titleseparator@linewidth=\skip68
+\metropolis@progressonsectionpage=\skip69
+\metropolis@progressonsectionpage@linewidth=\skip70
+\metropolis@blocksep=\skip71
+\metropolis@blockadjust=\skip72
+\metropolis@parskip=\skip73
+) (/usr/share/texlive/texmf-dist/tex/latex/beamertheme-metropolis/beamerouterthememetropolis.sty
 Package: beamerouterthememetropolis 2017/01/23 Metropolis outer theme
-\metropolis@frametitle@padding=\skip76
-\metropolis@progressinheadfoot=\skip77
-\metropolis@progressinheadfoot@linewidth=\skip78
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamertheme-metropolis\beamercolorthememetropolis.sty
+\metropolis@frametitle@padding=\skip74
+\metropolis@progressinheadfoot=\skip75
+\metropolis@progressinheadfoot@linewidth=\skip76
+) (/usr/share/texlive/texmf-dist/tex/latex/beamertheme-metropolis/beamercolorthememetropolis.sty
 Package: beamercolorthememetropolis 2017/01/23 Metropolis color theme
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamertheme-metropolis\beamerfontthememetropolis.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/beamertheme-metropolis/beamerfontthememetropolis.sty
 Package: beamerfontthememetropolis 2017/01/23 Metropolis font theme
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifxetex.sty
+ (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifxetex.sty
 Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifluatex.sty
+) (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifluatex.sty
 Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 )
 
 Package beamerthememetropolis Warning: You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts on input line 95.
 
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamercolorthemeseahorse.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerfontthemeprofessionalfonts.sty) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
-Package: babel 2026/03/08 v26.4 The multilingual framework for LuaLaTeX, pdfLaTeX and XeLaTeX
-\babel@savecnt=\count370
-LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input line 2078.
-LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input line 2080.
-LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input line 2082.
-LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input line 2083.
-LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) on input line 2084.
-LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) on input line 2086.
-LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) on input line 2111.
-\U@D=\dimen317
-\l@unhyphenated=\language79
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
+)) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamercolorthemeseahorse.sty) (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerfontthemeprofessionalfonts.sty) (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2024/01/07 v24.1 The Babel package
+\babel@savecnt=\count348
+\U@D=\dimen309
+\l@unhyphenated=\language12
+ (/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read3
-LaTeX Info: Redefining \textlatin on input line 3974.
-\bbl@dirlevel=\count371
-Package babel Info: Configuration files are deprecated, as
-(babel)             they can break document portability.
-(babel)             Reported on input line 4206.
-
-*************************************
-* Local config file bblopts.cfg used
-*
-(C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg
-File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of babel
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/es\babel-spanish.tex)
-Package babel Info: Importing font and identification data for spanish
-(babel)             from babel-es.ini. Reported on input line 4330.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/babel-spanish\spanish.ldf
+LaTeX Info: Redefining \textlatin on input line 3986.
+\bbl@dirlevel=\count349
+ (/usr/share/texlive/texmf-dist/tex/generic/babel-spanish/spanish.ldf
 Language: spanish.ldf 2021/05/27 v5.0q Spanish support from the babel system
 \es@quottoks=\toks50
-\es@quotdepth=\count372
+\es@quotdepth=\count350
 Package babel Info: Making " an active character on input line 570.
 Package babel Info: Making . an active character on input line 675.
 Package babel Info: Making < an active character on input line 722.
 Package babel Info: Making > an active character on input line 722.
-))
-LaTeX Encoding Info:    Redeclaring text command \guillemotleft (encoding OT1) on input line 8.
-LaTeX Encoding Info:    Redeclaring text command \guillemotright (encoding OT1) on input line 8.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
-Package: inputenc 2024/02/08 v1.3d Input encoding file
+)) (/usr/share/texlive/texmf-dist/tex/generic/babel/locale/es/babel-spanish.tex
+Package babel Info: Importing font and identification data for spanish
+(babel)             from babel-es.ini. Reported on input line 11.
+) (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks51
 \inpenc@posthook=\toks52
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
-Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/siunitx\siunitx.sty
-Package: siunitx 2025-07-09 v3.4.14 A comprehensive (SI) units package
-\l__siunitx_number_uncert_offset_int=\count373
-\l__siunitx_number_exponent_fixed_int=\count374
-\l__siunitx_number_min_decimal_int=\count375
-\l__siunitx_number_min_integer_int=\count376
-\l__siunitx_number_round_precision_int=\count377
-\l__siunitx_number_lower_threshold_int=\count378
-\l__siunitx_number_upper_threshold_int=\count379
-\l__siunitx_number_group_first_int=\count380
-\l__siunitx_number_group_size_int=\count381
-\l__siunitx_number_group_minimum_int=\count382
-\l__siunitx_angle_tmp_dim=\dimen318
-\l__siunitx_angle_marker_box=\box83
-\l__siunitx_angle_unit_box=\box84
-\l__siunitx_compound_count_int=\count383
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translations\translations.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+) (/usr/share/texlive/texmf-dist/tex/latex/siunitx/siunitx.sty
+Package: siunitx 2024-01-25 v3.3.10 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count351
+\l__siunitx_number_exponent_fixed_int=\count352
+\l__siunitx_number_min_decimal_int=\count353
+\l__siunitx_number_min_integer_int=\count354
+\l__siunitx_number_round_precision_int=\count355
+\l__siunitx_number_lower_threshold_int=\count356
+\l__siunitx_number_upper_threshold_int=\count357
+\l__siunitx_number_group_first_int=\count358
+\l__siunitx_number_group_size_int=\count359
+\l__siunitx_number_group_minimum_int=\count360
+\l__siunitx_angle_tmp_dim=\dimen310
+\l__siunitx_angle_marker_box=\box81
+\l__siunitx_angle_unit_box=\box82
+\l__siunitx_compound_count_int=\count361
+ (/usr/share/texlive/texmf-dist/tex/latex/translations/translations.sty
 Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
 )
-\l__siunitx_table_tmp_box=\box85
-\l__siunitx_table_tmp_dim=\dimen319
-\l__siunitx_table_column_width_dim=\dimen320
-\l__siunitx_table_integer_box=\box86
-\l__siunitx_table_decimal_box=\box87
-\l__siunitx_table_uncert_box=\box88
-\l__siunitx_table_before_box=\box89
-\l__siunitx_table_after_box=\box90
-\l__siunitx_table_before_dim=\dimen321
-\l__siunitx_table_carry_dim=\dimen322
-\l__siunitx_unit_tmp_int=\count384
-\l__siunitx_unit_position_int=\count385
-\l__siunitx_unit_total_int=\count386
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
-Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
-\col@sep=\dimen323
-\ar@mcellbox=\box91
-\extrarowheight=\dimen324
+\l__siunitx_table_tmp_box=\box83
+\l__siunitx_table_tmp_dim=\dimen311
+\l__siunitx_table_column_width_dim=\dimen312
+\l__siunitx_table_integer_box=\box84
+\l__siunitx_table_decimal_box=\box85
+\l__siunitx_table_uncert_box=\box86
+\l__siunitx_table_before_box=\box87
+\l__siunitx_table_after_box=\box88
+\l__siunitx_table_before_dim=\dimen313
+\l__siunitx_table_carry_dim=\dimen314
+\l__siunitx_unit_tmp_int=\count362
+\l__siunitx_unit_position_int=\count363
+\l__siunitx_unit_total_int=\count364
+ (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen315
+\ar@mcellbox=\box89
+\extrarowheight=\dimen316
 \NC@list=\toks53
-\extratabsurround=\skip79
-\backup@length=\skip80
-\ar@cellbox=\box92
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+\extratabsurround=\skip77
+\backup@length=\skip78
+\ar@cellbox=\box90
+)) (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen325
-\lightrulewidth=\dimen326
-\cmidrulewidth=\dimen327
-\belowrulesep=\dimen328
-\belowbottomsep=\dimen329
-\aboverulesep=\dimen330
-\abovetopsep=\dimen331
-\cmidrulesep=\dimen332
-\cmidrulekern=\dimen333
-\defaultaddspace=\dimen334
-\@cmidla=\count387
-\@cmidlb=\count388
-\@aboverulesep=\dimen335
-\@belowrulesep=\dimen336
-\@thisruleclass=\count389
-\@lastruleclass=\count390
-\@thisrulewidth=\dimen337
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/circuitikz\circuitikz.sty
-Package: circuitikz 2026/02/04{} The CircuiTikz circuit drawing package version 1.8.5
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarycalc.code.tex
-File: tikzlibrarycalc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibraryarrows.meta.code.tex
-File: pgflibraryarrows.meta.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfarrowinset=\dimen338
-\pgfarrowlength=\dimen339
-\pgfarrowwidth=\dimen340
-\pgfarrowlinewidth=\dimen341
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarybending.code.tex
-File: tikzlibrarybending.code.tex 2025-08-29 v3.1.11a (3.1.11a)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodulebending.code.tex
-File: pgfmodulebending.code.tex 2025-08-29 v3.1.11a (3.1.11a)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodulenonlineartransformations.code.tex
-File: pgfmodulenonlineartransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgftransformnonlinearflatness=\dimen342
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibrarycurvilinear.code.tex
-File: pgflibrarycurvilinear.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@curvilinear@time@a=\dimen343
-\pgf@curvilinear@length@a=\dimen344
-\pgf@curvilinear@length@b=\dimen345
-\pgf@curvilinear@length@c=\dimen346
-\pgf@curvilinear@length@d=\dimen347
+\heavyrulewidth=\dimen317
+\lightrulewidth=\dimen318
+\cmidrulewidth=\dimen319
+\belowrulesep=\dimen320
+\belowbottomsep=\dimen321
+\aboverulesep=\dimen322
+\abovetopsep=\dimen323
+\cmidrulesep=\dimen324
+\cmidrulekern=\dimen325
+\defaultaddspace=\dimen326
+\@cmidla=\count365
+\@cmidlb=\count366
+\@aboverulesep=\dimen327
+\@belowrulesep=\dimen328
+\@thisruleclass=\count367
+\@lastruleclass=\count368
+\@thisrulewidth=\dimen329
+) (/usr/share/texlive/texmf-dist/tex/latex/circuitikz/circuitikz.sty
+Package: circuitikz 2023/12/09{} The CircuiTikz circuit drawing package version 1.6.6
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarycalc.code.tex
+File: tikzlibrarycalc.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
+File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowinset=\dimen330
+\pgfarrowlength=\dimen331
+\pgfarrowwidth=\dimen332
+\pgfarrowlinewidth=\dimen333
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarybending.code.tex
+File: tikzlibrarybending.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulebending.code.tex
+File: pgfmodulebending.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulenonlineartransformations.code.tex
+File: pgfmodulenonlineartransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgftransformnonlinearflatness=\dimen334
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibrarycurvilinear.code.tex
+File: pgflibrarycurvilinear.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@curvilinear@time@a=\dimen335
+\pgf@curvilinear@length@a=\dimen336
+\pgf@curvilinear@length@b=\dimen337
+\pgf@curvilinear@length@c=\dimen338
+\pgf@curvilinear@length@d=\dimen339
 )
-\pgf@arrows@the@rigidity=\dimen348
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryfpu.code.tex (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibraryfpu.code.tex)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcirc.defines.tex
-\pgf@circ@count@a=\count391
-\pgf@circ@count@b=\count392
-\pgf@circ@count@c=\count393
-\pgf@circ@res@up=\dimen349
-\pgf@circ@res@down=\dimen350
-\pgf@circ@res@zero=\dimen351
-\pgf@circ@res@left=\dimen352
-\pgf@circ@res@right=\dimen353
-\pgf@circ@res@other=\dimen354
-\pgf@circ@res@step=\dimen355
-\pgf@circ@res@temp=\dimen356
-\pgf@circ@Rlen=\dimen357
-\pgf@circ@scaled@Rlen=\dimen358
-\pgfstartlinewidth=\dimen359
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircutils.tex
-\ctikz@scratchbox=\box93
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircpath.tex
-\ctikz@vif@count=\count394
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircshapes.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircmonopoles.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircbipoles.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcirctripoles.tex
-\pgf@circ@res@count=\count395
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircquadpoles.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircmultipoles.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcirclabel.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircvoltage.tex
-\pgfcirc@labelshift=\dimen360
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcirccurrent.tex) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/circuitikz\pgfcircflow.tex)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\adjustbox.sty
-Package: adjustbox 2025/02/26 v1.3c Adjusting TeX boxes (trim, clip, ...)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
+\pgf@arrows@the@rigidity=\dimen340
+)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryfpu.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryfpu.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcirc.defines.tex
+\pgf@circ@count@a=\count369
+\pgf@circ@count@b=\count370
+\pgf@circ@count@c=\count371
+\pgf@circ@res@up=\dimen341
+\pgf@circ@res@down=\dimen342
+\pgf@circ@res@zero=\dimen343
+\pgf@circ@res@left=\dimen344
+\pgf@circ@res@right=\dimen345
+\pgf@circ@res@other=\dimen346
+\pgf@circ@res@step=\dimen347
+\pgf@circ@res@temp=\dimen348
+\pgf@circ@Rlen=\dimen349
+\pgf@circ@scaled@Rlen=\dimen350
+\pgfstartlinewidth=\dimen351
+) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircutils.tex
+\ctikz@scratchbox=\box91
+) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircpath.tex) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircshapes.tex) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircmonopoles.tex) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircbipoles.tex) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcirctripoles.tex
+\pgf@circ@res@count=\count372
+) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircquadpoles.tex) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircmultipoles.tex) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcirclabel.tex) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircvoltage.tex
+\pgfcirc@labelshift=\dimen352
+) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcirccurrent.tex) (/usr/share/texlive/texmf-dist/tex/generic/circuitikz/pgfcircflow.tex)) (/usr/share/texlive/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+Package: adjustbox 2022/10/17 v1.3a Adjusting TeX boxes (trim, clip, ...)
+ (/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
 Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkeyval.tex (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkvutils.tex
+ (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
 \XKV@toks=\toks54
 \XKV@tempa@toks=\toks55
 )
-\XKV@depth=\count396
+\XKV@depth=\count373
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-)) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\adjcalc.sty
+)) (/usr/share/texlive/texmf-dist/tex/latex/adjustbox/adjcalc.sty
 Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back-ends (calc, etex, pgfmath)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\trimclip.sty
-Package: trimclip 2025/02/21 v1.2a Trim and clip general TeX material
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/collectbox\collectbox.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/adjustbox/trimclip.sty
+Package: trimclip 2020/08/19 v1.2 Trim and clip general TeX material
+ (/usr/share/texlive/texmf-dist/tex/latex/collectbox/collectbox.sty
 Package: collectbox 2022/10/17 v0.4c Collect macro arguments as boxes
-\collectedbox=\box94
+\collectedbox=\box92
 )
-\tc@llx=\dimen361
-\tc@lly=\dimen362
-\tc@urx=\dimen363
-\tc@ury=\dimen364
+\tc@llx=\dimen353
+\tc@lly=\dimen354
+\tc@urx=\dimen355
+\tc@ury=\dimen356
 Package trimclip Info: Using driver 'tc-pdftex.def'.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\tc-pdftex.def
-File: tc-pdftex.def 2025/02/26 v2.3 Clipping driver for pdftex
+ (/usr/share/texlive/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
 ))
-\adjbox@Width=\dimen365
-\adjbox@Height=\dimen366
-\adjbox@Depth=\dimen367
-\adjbox@Totalheight=\dimen368
-\adjbox@pwidth=\dimen369
-\adjbox@pheight=\dimen370
-\adjbox@pdepth=\dimen371
-\adjbox@ptotalheight=\dimen372
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/ifoddpage\ifoddpage.sty
+\adjbox@Width=\dimen357
+\adjbox@Height=\dimen358
+\adjbox@Depth=\dimen359
+\adjbox@Totalheight=\dimen360
+\adjbox@pwidth=\dimen361
+\adjbox@pheight=\dimen362
+\adjbox@pdepth=\dimen363
+\adjbox@ptotalheight=\dimen364
+ (/usr/share/texlive/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
 Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
-\c@checkoddpage=\count397
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/varwidth\varwidth.sty
+\c@checkoddpage=\count374
+) (/usr/share/texlive/texmf-dist/tex/latex/varwidth/varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box95
-\sift@deathcycles=\count398
-\@vwid@loff=\dimen373
-\@vwid@roff=\dimen374
-)
-==> First Aid for varwidth.sty applied!
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/tools\multicol.sty
-Package: multicol 2025/10/21 v2.0b multicolumn formatting (FMi)
-\c@tracingmulticols=\count399
-\mult@box=\box96
-\multicol@leftmargin=\dimen375
-\c@unbalance=\count400
-\c@collectmore=\count401
-\doublecol@number=\count402
-\multicoltolerance=\count403
-\multicolpretolerance=\count404
-\full@width=\dimen376
-\page@free=\dimen377
-\premulticols=\dimen378
-\postmulticols=\dimen379
-\multicolsep=\skip81
-\multicolbaselineskip=\skip82
-\partial@page=\box97
-\last@line=\box98
-\mc@boxedresult=\box99
-\maxbalancingoverflow=\dimen380
-\mult@rightbox=\box100
-\mult@grightbox=\box101
-\mult@firstbox=\box102
-\mult@gfirstbox=\box103
+\@vwid@box=\box93
+\sift@deathcycles=\count375
+\@vwid@loff=\dimen365
+\@vwid@roff=\dimen366
+)) (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2023/03/30 v1.9f multicolumn formatting (FMi)
+\c@tracingmulticols=\count376
+\mult@box=\box94
+\multicol@leftmargin=\dimen367
+\c@unbalance=\count377
+\c@collectmore=\count378
+\doublecol@number=\count379
+\multicoltolerance=\count380
+\multicolpretolerance=\count381
+\full@width=\dimen368
+\page@free=\dimen369
+\premulticols=\dimen370
+\postmulticols=\dimen371
+\multicolsep=\skip79
+\multicolbaselineskip=\skip80
+\partial@page=\box95
+\last@line=\box96
+\mc@boxedresult=\box97
+\maxbalancingoverflow=\dimen372
+\mult@rightbox=\box98
+\mult@grightbox=\box99
+\mult@firstbox=\box100
+\mult@gfirstbox=\box101
+\@tempa=\box102
+\@tempa=\box103
 \@tempa=\box104
 \@tempa=\box105
 \@tempa=\box106
@@ -883,24 +857,21 @@ Package: multicol 2025/10/21 v2.0b multicolumn formatting (FMi)
 \@tempa=\box135
 \@tempa=\box136
 \@tempa=\box137
-\@tempa=\box138
-\@tempa=\box139
-\c@minrows=\count405
-\c@columnbadness=\count406
-\c@finalcolumnbadness=\count407
-\last@try=\dimen381
-\multicolovershoot=\dimen382
-\multicolundershoot=\dimen383
-\mult@nat@firstbox=\box140
-\colbreak@box=\box141
-\mc@col@check@num=\count408
-\g__mc_curr_col_int=\count409
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarypositioning.code.tex
-File: tikzlibrarypositioning.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.geometric.code.tex
-File: tikzlibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.geometric.code.tex
-File: pgflibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\c@minrows=\count382
+\c@columnbadness=\count383
+\c@finalcolumnbadness=\count384
+\last@try=\dimen373
+\multicolovershoot=\dimen374
+\multicolundershoot=\dimen375
+\mult@nat@firstbox=\box138
+\colbreak@box=\box139
+\mc@col@check@num=\count385
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
@@ -910,14 +881,13 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\\' on input line 40.
 
-(C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
-File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count410
-) (main.aux
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count386
+\l__pdf_internal_box=\box140
+) (./main.aux
 LaTeX Info: Redefining \. on input line 12.
 LaTeX Info: Redefining \% on input line 12.
-Package babel Info: 'spanish' activates 'spanish' shorthands.
-(babel)             Reported on input line 12.
 )
 \openout1 = `main.aux'.
 
@@ -974,62 +944,66 @@ LaTeX Font Info:    ... okay on input line 44.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-(C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count411
-\scratchdimen=\dimen384
-\scratchbox=\box142
-\nofMPsegments=\count412
-\nofMParguments=\count413
+\scratchcounter=\count387
+\scratchdimen=\dimen376
+\scratchbox=\box141
+\nofMPsegments=\count388
+\nofMParguments=\count389
 \everyMPshowfont=\toks56
-\MPscratchCnt=\count414
-\MPscratchDim=\dimen385
-\MPnumerator=\count415
-\makeMPintoPDFobject=\count416
+\MPscratchCnt=\count390
+\MPscratchDim=\dimen377
+\MPnumerator=\count391
+\makeMPintoPDFobject=\count392
 \everyMPtoPDFconversion=\toks57
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+ (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package hyperref Info: Link coloring OFF on input line 44.
- (main.out) (main.out)
+ (./main.out) (./main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
 
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-basic-dictionary-English.dict
+ (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary-English.dict
 Dictionary: translator-basic-dictionary, Language: English 
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-bibliography-dictionary-English.dict
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-bibliography-dictionary-English.dict
 Dictionary: translator-bibliography-dictionary, Language: English 
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-environment-dictionary-English.dict
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-environment-dictionary-English.dict
 Dictionary: translator-environment-dictionary, Language: English 
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-months-dictionary-English.dict
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-months-dictionary-English.dict
 Dictionary: translator-months-dictionary, Language: English 
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-numbers-dictionary-English.dict
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-numbers-dictionary-English.dict
 Dictionary: translator-numbers-dictionary, Language: English 
-) (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-theorem-dictionary-English.dict
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
 LaTeX Info: Redefining \. on input line 44.
 LaTeX Info: Redefining \% on input line 44.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\translations-basic-dictionary-spanish.trsl
+ (/usr/share/texlive/texmf-dist/tex/latex/translations/translations-basic-dictionary-spanish.trsl
 File: translations-basic-dictionary-spanish.trsl (spanish translation file `translations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' for `spanish'. on input line 44.
- (main.nav)
+ (./main.nav)
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 49.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
+File: ts1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+)
 Overfull \vbox (15.63992pt too high) detected at line 49
  []
 
 [1
 
-{C:/Users/lucca/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Trying to load font information for U+msa on input line 71.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 71.
- (C:\Users\lucca\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [2
 
@@ -1042,7 +1016,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ] [6
 
 ]
-\absvshift=\dimen386
+\absvshift=\dimen378
 
 Overfull \vbox (21.31555pt too high) detected at line 248
  []
@@ -1050,7 +1024,7 @@ Overfull \vbox (21.31555pt too high) detected at line 248
 [7
 
 ]
-<figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf, id=87, 794.97pt x 433.62pt>
+<figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf, id=88, 794.97pt x 433.62pt>
 File: figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf Graphic file (type pdf)
 <use figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf>
 Package pdftex.def Info: figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf  used on input line 253.
@@ -1058,23 +1032,15 @@ Package pdftex.def Info: figuras/transitorio_2_1_tensiones_comparacion_alineado.
  [8
 
  <./figuras/transitorio_2_1_tensiones_comparacion_alineado.pdf>]
-<figuras/transitorio_2_1_corriente_capacitor_simulada.pdf, id=142, 794.97pt x 433.62pt>
-File: figuras/transitorio_2_1_corriente_capacitor_simulada.pdf Graphic file (type pdf)
-<use figuras/transitorio_2_1_corriente_capacitor_simulada.pdf>
-Package pdftex.def Info: figuras/transitorio_2_1_corriente_capacitor_simulada.pdf  used on input line 258.
-(pdftex.def)             Requested size: 289.30646pt x 157.80351pt.
- [9
-
- <./figuras/transitorio_2_1_corriente_capacitor_simulada.pdf>]
 Overfull \vbox (27.33699pt too high) detected at line 336
  []
 
-[10
+[9
 
-] [11
+] [10
 
 ]
-<figuras/montecarlo_transitorio_21_histogramas.pdf, id=203, 1020.2019pt x 456.50504pt>
+<figuras/montecarlo_transitorio_21_histogramas.pdf, id=155, 1020.2019pt x 456.50504pt>
 File: figuras/montecarlo_transitorio_21_histogramas.pdf Graphic file (type pdf)
 <use figuras/montecarlo_transitorio_21_histogramas.pdf>
 Package pdftex.def Info: figuras/montecarlo_transitorio_21_histogramas.pdf  used on input line 400.
@@ -1083,117 +1049,117 @@ Package pdftex.def Info: figuras/montecarlo_transitorio_21_histogramas.pdf  used
 Overfull \vbox (6.11128pt too high) detected at line 400
  []
 
-[12
+[11
 
  <./figuras/montecarlo_transitorio_21_histogramas.pdf>]
-<figuras/montecarlo_transitorio_21_dispersion.pdf, id=264, 615.49902pt x 398.68903pt>
+<figuras/montecarlo_transitorio_21_dispersion.pdf, id=216, 615.49902pt x 398.68903pt>
 File: figuras/montecarlo_transitorio_21_dispersion.pdf Graphic file (type pdf)
 <use figuras/montecarlo_transitorio_21_dispersion.pdf>
 Package pdftex.def Info: figuras/montecarlo_transitorio_21_dispersion.pdf  used on input line 428.
 (pdftex.def)             Requested size: 246.96536pt x 159.97162pt.
- [13
+ [12
 
- <./figuras/montecarlo_transitorio_21_dispersion.pdf>] [14
+ <./figuras/montecarlo_transitorio_21_dispersion.pdf>] [13
+
+] [14
 
 ] [15
 
-] [16
-
 ]
-<figuras/bode_filtros_teoricos.pdf, id=350, 650.43pt x 361.35pt>
+<figuras/bode_filtros_teoricos.pdf, id=302, 650.43pt x 361.35pt>
 File: figuras/bode_filtros_teoricos.pdf Graphic file (type pdf)
 <use figuras/bode_filtros_teoricos.pdf>
 Package pdftex.def Info: figuras/bode_filtros_teoricos.pdf  used on input line 499.
 (pdftex.def)             Requested size: 195.18013pt x 108.4334pt.
-<figuras/bode_fase_circuitos_2_3_4_5.pdf, id=351, 758.835pt x 448.07399pt>
+<figuras/bode_fase_circuitos_2_3_4_5.pdf, id=303, 758.835pt x 448.07399pt>
 File: figuras/bode_fase_circuitos_2_3_4_5.pdf Graphic file (type pdf)
 <use figuras/bode_fase_circuitos_2_3_4_5.pdf>
 Package pdftex.def Info: figuras/bode_fase_circuitos_2_3_4_5.pdf  used on input line 499.
 (pdftex.def)             Requested size: 195.18509pt x 115.25214pt.
- [17
+ [16
 
  <./figuras/bode_filtros_teoricos.pdf> <./figuras/bode_fase_circuitos_2_3_4_5.pdf>]
-<figuras/polos_ceros_circuitos.pdf, id=457, 578.16pt x 505.89pt>
+<figuras/polos_ceros_circuitos.pdf, id=410, 578.16pt x 505.89pt>
 File: figuras/polos_ceros_circuitos.pdf Graphic file (type pdf)
 <use figuras/polos_ceros_circuitos.pdf>
 Package pdftex.def Info: figuras/polos_ceros_circuitos.pdf  used on input line 532.
 (pdftex.def)             Requested size: 185.50018pt x 162.31265pt.
- [18
+ [17
 
  <./figuras/polos_ceros_circuitos.pdf>]
-<figuras/bode_circuito2.pdf, id=499, 578.16pt x 433.62pt>
+<figuras/bode_circuito2.pdf, id=452, 578.16pt x 433.62pt>
 File: figuras/bode_circuito2.pdf Graphic file (type pdf)
 <use figuras/bode_circuito2.pdf>
 Package pdftex.def Info: figuras/bode_circuito2.pdf  used on input line 543.
 (pdftex.def)             Requested size: 186.35591pt x 139.76694pt.
-<figuras/bode_circuito5.pdf, id=500, 578.16pt x 433.62pt>
+<figuras/bode_circuito5.pdf, id=453, 578.16pt x 433.62pt>
 File: figuras/bode_circuito5.pdf Graphic file (type pdf)
 <use figuras/bode_circuito5.pdf>
 Package pdftex.def Info: figuras/bode_circuito5.pdf  used on input line 543.
 (pdftex.def)             Requested size: 186.35591pt x 139.76694pt.
- [19
+ [18
 
  <./figuras/bode_circuito2.pdf> <./figuras/bode_circuito5.pdf>]
-<figuras/montecarlo_circuito5.pdf, id=597, 650.43pt x 505.89pt>
+<figuras/montecarlo_circuito5.pdf, id=549, 650.43pt x 505.89pt>
 File: figuras/montecarlo_circuito5.pdf Graphic file (type pdf)
 <use figuras/montecarlo_circuito5.pdf>
 Package pdftex.def Info: figuras/montecarlo_circuito5.pdf  used on input line 560.
 (pdftex.def)             Requested size: 188.40152pt x 146.53452pt.
- [20
+ [19
 
- <./figuras/montecarlo_circuito5.pdf>] [21
+ <./figuras/montecarlo_circuito5.pdf>] [20
 
-] [22
+] [21
 
 ]
-<figuras/comparacion_opciones_filtro.pdf, id=662, 578.16pt x 361.35pt>
+<figuras/comparacion_opciones_filtro.pdf, id=615, 578.16pt x 361.35pt>
 File: figuras/comparacion_opciones_filtro.pdf Graphic file (type pdf)
 <use figuras/comparacion_opciones_filtro.pdf>
 Package pdftex.def Info: figuras/comparacion_opciones_filtro.pdf  used on input line 599.
 (pdftex.def)             Requested size: 207.13173pt x 129.45734pt.
- [23
+ [22
 
  <./figuras/comparacion_opciones_filtro.pdf>]
 Overfull \vbox (17.53271pt too high) detected at line 705
  []
 
-[24
+[23
 
 ]
 Overfull \vbox (6.05208pt too high) detected at line 769
  []
 
-[25
+[24
 
-] [26
+] [25
 
 ]
-<figuras/esquematico_altium.png, id=741, 1273.75874pt x 867.24pt>
+<figuras/esquematico_altium.png, id=694, 1273.75874pt x 867.24pt>
 File: figuras/esquematico_altium.png Graphic file (type png)
 <use figuras/esquematico_altium.png>
 Package pdftex.def Info: figuras/esquematico_altium.png  used on input line 814.
 (pdftex.def)             Requested size: 225.14626pt x 153.29106pt.
- [27
+ [26
 
  <./figuras/esquematico_altium.png>]
-<figuras/bode_filtro_final.pdf, id=749, 578.16pt x 433.62pt>
+<figuras/bode_filtro_final.pdf, id=702, 578.16pt x 433.62pt>
 File: figuras/bode_filtro_final.pdf Graphic file (type pdf)
 <use figuras/bode_filtro_final.pdf>
 Package pdftex.def Info: figuras/bode_filtro_final.pdf  used on input line 852.
 (pdftex.def)             Requested size: 216.4213pt x 162.31596pt.
- [28
+ [27
 
- <./figuras/bode_filtro_final.pdf>] [29
+ <./figuras/bode_filtro_final.pdf>] [28
 
 ]
-<figuras/diagrama_polos_ceros_filtro_final.pdf, id=808, 686.565pt x 419.166pt>
+<figuras/diagrama_polos_ceros_filtro_final.pdf, id=762, 686.565pt x 419.166pt>
 File: figuras/diagrama_polos_ceros_filtro_final.pdf Graphic file (type pdf)
 <use figuras/diagrama_polos_ceros_filtro_final.pdf>
 Package pdftex.def Info: figuras/diagrama_polos_ceros_filtro_final.pdf  used on input line 934.
 (pdftex.def)             Requested size: 262.89835pt x 160.50636pt.
- [30
+ [29
 
- <./figuras/diagrama_polos_ceros_filtro_final.pdf>] [31
+ <./figuras/diagrama_polos_ceros_filtro_final.pdf>] [30
 
 ]
 \tf@nav=\write6
@@ -1205,29 +1171,30 @@ Package pdftex.def Info: figuras/diagrama_polos_ceros_filtro_final.pdf  used on 
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
- (main.aux
+ (./main.aux
 LaTeX Info: Redefining \. on input line 12.
 LaTeX Info: Redefining \% on input line 12.
 )
  ***********
-LaTeX2e <2025-11-01>
-L3 programming layer <2026-01-19>
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: A49B1EAAD442C5AC8EDADB5BA30808D2;470.
  ) 
 Here is how much of TeX's memory you used:
- 52791 strings out of 467867
- 1305184 string characters out of 5418334
- 1927281 words of memory out of 5000000
- 80914 multiletter control sequences out of 15000+600000
- 655388 words of font info for 113 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 128i,20n,123p,1911b,1416s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss0600.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx0600.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss0900.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx0900.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1440.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1095.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1200.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss0800.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1000.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1000.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1200.pk> <C:\Users\lucca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1440.pk><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lucca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on main.pdf (31 pages, 769495 bytes).
+ 50384 strings out of 476047
+ 1230314 string characters out of 5792075
+ 1959975 words of memory out of 5000000
+ 71657 multiletter control sequences out of 15000+600000
+ 585736 words of font info for 109 fonts, out of 8000000 for 9000
+ 85 hyphenation exceptions out of 8191
+ 102i,20n,123p,1908b,1346s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0600.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0600.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0900.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0900.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss0800.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0800.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1440.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1095.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1095.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1200.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0800.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1000.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1000.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1200.600pk> </home/nano/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1440.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on main.pdf (30 pages, 651991 bytes).
 PDF statistics:
- 1431 PDF objects out of 1440 (max. 8388607)
- 66 named destinations out of 1000 (max. 500000)
- 137 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1386 PDF objects out of 1440 (max. 8388607)
+ 375 compressed objects within 4 object streams
+ 64 named destinations out of 1000 (max. 500000)
+ 132 words of extra memory for PDF output out of 10000 (max. 10000000)
 
